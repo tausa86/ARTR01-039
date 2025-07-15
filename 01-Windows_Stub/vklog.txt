@@ -1,0 +1,3 @@
+WinMain() -> Log file created successfully
+[INFO] WinMain() -> Initialize successful
+[INFO] TsUninitialize() -> Log file closed successfully and program closed successfully
