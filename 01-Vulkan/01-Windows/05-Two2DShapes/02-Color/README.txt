@@ -1,0 +1,1 @@
+Shaders are from multicolor triangle and we will use recommended topology of triangle list
