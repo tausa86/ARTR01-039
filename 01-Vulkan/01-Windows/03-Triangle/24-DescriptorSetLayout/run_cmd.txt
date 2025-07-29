@@ -1,0 +1,46 @@
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>build.bat
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>del VK.exe
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>del VK.obj
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>cl.exe /c /EHsc /I "D:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30037 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(2604): error C2065: 'VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT': undeclared identifier
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>link.exe VK.obj VK.res /LIBPATH:D:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.29.30037.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>build.bat
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>del VK.exe
+Could Not Find D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout\VK.exe
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>del VK.obj
+Could Not Find D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout\VK.obj
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>cl.exe /c /EHsc /I "D:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30037 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\24-DescriptorSetLayout>link.exe VK.obj VK.res /LIBPATH:D:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.29.30037.0
+Copyright (C) Microsoft Corporation.  All rights reserved.

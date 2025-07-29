@@ -1,0 +1,146 @@
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen>cd 20-Render
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>dir
+ Volume in drive C is Windows-SSD
+ Volume Serial Number is F473-F901
+
+ Directory of C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render
+
+08-04-2025  22:16    <DIR>          .
+08-04-2025  22:17    <DIR>          ..
+01-02-2025  16:48               188 build.bat
+08-04-2025  22:13           111,641 VK.c
+08-04-2025  22:14           612,864 VK.exe
+15-01-2025  12:33                40 VK.h
+30-01-2025  23:30           432,254 VK.ico
+08-04-2025  22:14            75,081 VK.obj
+01-02-2025  16:44                43 VK.rc
+08-04-2025  22:14           432,588 VK.res
+08-04-2025  22:14            33,167 vklog.txt
+               9 File(s)      1,697,866 bytes
+               2 Dir(s)  305,442,615,296 bytes free
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>build.bat
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>del VK.exe
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>del VK.obj
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34435 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.42.34435.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>VK.exe
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>build.bat
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>del VK.exe
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>del VK.obj
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34435 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(627): error C2039: 'pSignalSemaphore': is not a member of 'VkSubmitInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3319): note: see declaration of 'VkSubmitInfo'
+VK.c(650): error C2039: 'pSwapchain': is not a member of 'VkPresentInfoKHR'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(7785): note: see declaration of 'VkPresentInfoKHR'
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.42.34435.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>build.bat
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>del VK.exe
+Could Not Find C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render\VK.exe
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>del VK.obj
+Could Not Find C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render\VK.obj
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34435 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.42.34435.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>VK.exe
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>build.bat
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>del VK.exe
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>del VK.obj
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34435 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.42.34435.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>VK.exe
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>build.bat
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>del VK.exe
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>del VK.obj
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34435 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.42.34435.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\Programming\workspace\ARTR\01-Vulkan\01-Windows\02-BlueScreen\20-Render>VK.exe

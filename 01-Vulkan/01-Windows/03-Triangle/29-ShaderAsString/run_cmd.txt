@@ -1,0 +1,83 @@
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>build.bat
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>del VK.exe
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>del VK.obj
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>cl.exe /c /EHsc /I "D:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30037 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(125): error C2370: 'VkPipelineLayout': redefinition; different storage class
+D:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(119): note: see declaration of 'VkPipelineLayout'
+VK.c(2659): error C2039: 'pushConstantRanges': is not a member of 'VkPipelineLayoutCreateInfo'
+D:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3907): note: see declaration of 'VkPipelineLayoutCreateInfo'
+VK.c(2661): error C2275: 'VkPipelineLayout': illegal use of this type as an expression
+D:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(119): note: see declaration of 'VkPipelineLayout'
+VK.c(2661): error C2198: 'vkCreatePipelineLayout': too few arguments for call
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>link.exe VK.obj VK.res /LIBPATH:D:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.29.30037.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>build.bat
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>del VK.exe
+Could Not Find D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout\VK.exe
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>del VK.obj
+Could Not Find D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout\VK.obj
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>cl.exe /c /EHsc /I "D:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30037 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(2661): error C2275: 'VkPipelineLayout': illegal use of this type as an expression
+D:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(119): note: see declaration of 'VkPipelineLayout'
+VK.c(2661): error C2198: 'vkCreatePipelineLayout': too few arguments for call
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>link.exe VK.obj VK.res /LIBPATH:D:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.29.30037.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>build.bat
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>del VK.exe
+Could Not Find D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout\VK.exe
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>del VK.obj
+Could Not Find D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout\VK.obj
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>cl.exe /c /EHsc /I "D:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30037 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>link.exe VK.obj VK.res /LIBPATH:D:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.29.30037.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+D:\Study\ARTR\01-Vulkan\01-Windows\03-Triangle\25-PipelineLayout>

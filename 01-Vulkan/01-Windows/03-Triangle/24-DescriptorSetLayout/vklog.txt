@@ -1,0 +1,12 @@
+WinMain() -> Log file created successfully
+[INFO] TsFillInstanceExtensionNames() -> First call to vkEnumerateInstanceExtensionProperties() succeeded at 1304
+[INFO] TsFillInstanceExtensionNames() -> Second call to vkEnumerateInstanceExtensionProperties() succeeded at 1326
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_debug_report
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_debug_utils
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_portability_enumeration
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_LUNARG_direct_driver_loading
+[ERROR] TsFillInstanceExtensionNames() -> VK_KHR_SURFACE_EXTENSION_NAME not found at 1406
+[ERROR] TsCreateVulkanInstance() -> TsFillInstanceExtensionNames() failed at 1188
+[ERROR] TsInitialize() -> TsCreateVulkanInstance() failed at 376
+[ERROR] WinMain() -> TsInitialize() failed. Exiting...
+[INFO] TsUninitialize() -> Log file closed successfully and program closed successfully

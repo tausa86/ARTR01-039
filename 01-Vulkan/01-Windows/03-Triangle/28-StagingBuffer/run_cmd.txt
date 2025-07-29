@@ -1,0 +1,267 @@
+**********************************************************************
+** Visual Studio 2019 Developer Command Prompt v16.4.5
+** Copyright (c) 2019 Microsoft Corporation
+**********************************************************************
+[vcvarsall.bat] Environment initialized for: 'x64'
+
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community>cd C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28->build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28->del VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28->del VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28->cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28->rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28->link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28->VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28->cd ..
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle>cd 28-StagingBuffer
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(4486): error C2065: 'VK_STRUCTURE_TYPE_CREATE_INFO': undeclared identifier
+VK.c(4518): error C2143: syntax error: missing ')' before 'sizeof'
+VK.c(4518): error C2198: 'memset': too few arguments for call
+VK.c(4524): error C2039: 'memoryIndex': is not a member of 'VkMemoryAllocateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3339): note: see declaration of 'VkMemoryAllocateInfo'
+VK.c(4526): error C2065: 'vkPhysicalDeviceProperties_selected': undeclared identifier
+VK.c(4526): error C2224: left of '.memoryTypeCount' must have struct/union type
+VK.c(4533): error C2039: 'memoryTypeIndex': is not a member of 'VkMemoryRequirements'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3346): note: see declaration of 'VkMemoryRequirements'
+VK.c(4538): warning C4552: '>>': result of expression not used
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(4518): error C2143: syntax error: missing ')' before 'sizeof'
+VK.c(4518): error C2198: 'memset': too few arguments for call
+VK.c(4524): error C2039: 'memoryIndex': is not a member of 'VkMemoryAllocateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3339): note: see declaration of 'VkMemoryAllocateInfo'
+VK.c(4526): error C2065: 'vkPhysicalDeviceProperties_selected': undeclared identifier
+VK.c(4526): error C2224: left of '.memoryTypeCount' must have struct/union type
+VK.c(4533): error C2039: 'memoryTypeIndex': is not a member of 'VkMemoryRequirements'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3346): note: see declaration of 'VkMemoryRequirements'
+VK.c(4538): warning C4552: '>>': result of expression not used
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(4524): error C2039: 'memoryIndex': is not a member of 'VkMemoryAllocateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3339): note: see declaration of 'VkMemoryAllocateInfo'
+VK.c(4526): error C2065: 'vkPhysicalDeviceProperties_selected': undeclared identifier
+VK.c(4526): error C2224: left of '.memoryTypeCount' must have struct/union type
+VK.c(4533): error C2039: 'memoryTypeIndex': is not a member of 'VkMemoryRequirements'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3346): note: see declaration of 'VkMemoryRequirements'
+VK.c(4538): warning C4552: '>>': result of expression not used
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(4526): error C2065: 'vkPhysicalDeviceProperties_selected': undeclared identifier
+VK.c(4526): error C2224: left of '.memoryTypeCount' must have struct/union type
+VK.c(4533): error C2039: 'memoryTypeIndex': is not a member of 'VkMemoryRequirements'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3346): note: see declaration of 'VkMemoryRequirements'
+VK.c(4538): warning C4552: '>>': result of expression not used
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(4533): error C2039: 'memoryTypeIndex': is not a member of 'VkMemoryRequirements'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3346): note: see declaration of 'VkMemoryRequirements'
+VK.c(4538): warning C4552: '>>': result of expression not used
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(4533): error C2039: 'memoryTypeIndex': is not a member of 'VkMemoryRequirements'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3346): note: see declaration of 'VkMemoryRequirements'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>del VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\28-StagingBuffer>VK.exe

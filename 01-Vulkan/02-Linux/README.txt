@@ -1,0 +1,1 @@
+All assignments in Ubuntu 24.04 LTS

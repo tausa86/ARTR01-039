@@ -1,0 +1,1 @@
+Shaders are same as Colored Triangle

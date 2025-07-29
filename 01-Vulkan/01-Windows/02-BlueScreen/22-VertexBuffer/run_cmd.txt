@@ -1,0 +1,301 @@
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community>cd C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(68): error C2061: syntax error: identifier 'vkSwpachainKHR'
+VK.c(68): error C2059: syntax error: ';'
+VK.c(68): error C2513: ' ': no variable declared before '='
+VK.c(1294): error C2065: 'vkSurfaceKHR': undeclared identifier
+VK.c(1294): warning C4047: 'function': 'VkSurfaceKHR' differs in levels of indirection from 'int'
+VK.c(1294): warning C4024: 'vkGetPhysicalDeviceSurfaceCapabilitiesKHR': different types for formal and actual parameter 2
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cd C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(436): error C2106: '=': left operand must be l-value
+VK.c(1355): error C2039: 'supportTrasform': is not a member of 'VkSurfaceCapabilitiesKHR'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(7686): note: see declaration of 'VkSurfaceCapabilitiesKHR'
+VK.c(1379): error C2143: syntax error: missing ')' before 'sizeof'
+VK.c(1379): error C2198: 'memset': too few arguments for call
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(1355): error C2039: 'supportTrasform': is not a member of 'VkSurfaceCapabilitiesKHR'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(7686): note: see declaration of 'VkSurfaceCapabilitiesKHR'
+VK.c(1379): error C2143: syntax error: missing ')' before 'sizeof'
+VK.c(1379): error C2198: 'memset': too few arguments for call
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(1355): error C2039: 'supportedTrasform': is not a member of 'VkSurfaceCapabilitiesKHR'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(7686): note: see declaration of 'VkSurfaceCapabilitiesKHR'
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(1355): error C2039: 'supportedTrasforms': is not a member of 'VkSurfaceCapabilitiesKHR'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(7686): note: see declaration of 'VkSurfaceCapabilitiesKHR'
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.obj : error LNK2019: unresolved external symbol vkDestroySwapchain referenced in function TsUninitialize
+VK.exe : fatal error LNK1120: 1 unresolved externals
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+VK.c(1334): error C2001: newline in constant
+VK.c(1335): error C2146: syntax error: missing ')' before identifier 'at'
+VK.c(1334): warning C4473: 'fprintf' : not enough arguments passed for format string
+VK.c(1334): note: placeholders and their parameters expect 4 variadic arguments, but 0 were provided
+VK.c(1334): note: the missing variadic argument 1 is required by format string '%d'
+VK.c(1335): error C2017: illegal escape sequence
+VK.c(1335): error C2001: newline in constant
+VK.c(1336): error C2059: syntax error: ')'
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.c
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\02-BlueScreen\12-SwapChain>
