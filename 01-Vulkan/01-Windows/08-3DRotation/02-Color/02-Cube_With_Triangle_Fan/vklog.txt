@@ -1,7 +1,7 @@
 WinMain() -> Log file created successfully
-[ERROR] TsResize() -> Initialization yet not completed or failed at 775 
-[INFO] TsFillInstanceExtensionNames() -> First call to vkEnumerateInstanceExtensionProperties() succeeded at 2201
-[INFO] TsFillInstanceExtensionNames() -> Second call to vkEnumerateInstanceExtensionProperties() succeeded at 2245
+[ERROR] TsResize() -> Initialization yet not completed or failed at 835 
+[INFO] TsFillInstanceExtensionNames() -> First call to vkEnumerateInstanceExtensionProperties() succeeded at 2239
+[INFO] TsFillInstanceExtensionNames() -> Second call to vkEnumerateInstanceExtensionProperties() succeeded at 2283
 [INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_surface
 [INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_win32_surface
 [INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_external_memory_capabilities
@@ -17,15 +17,15 @@ WinMain() -> Log file created successfully
 [INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_NV_external_memory_capabilities
 [INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_portability_enumeration
 [INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_LUNARG_direct_driver_loading
-[INFO] TsFillInstanceExtensionNames() -> VK_KHR_SURFACE_EXTENSION_NAME found at 2415
-[INFO] TsFillInstanceExtensionNames() -> VK_KHR_WIN32_SURFACE_EXTENSION_NAME found at 2437
-[INFO] TsFillInstanceExtensionNames() -> Validation is ON and required VK_EXT_DEBUG_REPORT_EXTENSION_NAME is supported at 2477
+[INFO] TsFillInstanceExtensionNames() -> VK_KHR_SURFACE_EXTENSION_NAME found at 2453
+[INFO] TsFillInstanceExtensionNames() -> VK_KHR_WIN32_SURFACE_EXTENSION_NAME found at 2475
+[INFO] TsFillInstanceExtensionNames() -> Validation is ON and required VK_EXT_DEBUG_REPORT_EXTENSION_NAME is supported at 2515
 [INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_KHR_surface
 [INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_KHR_win32_surface
 [INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_EXT_debug_report
-[INFO] TsCreateVulkanInstance() -> TsFillInstanceExtensionNames() succeeded at 1979
-[INFO] TsFillValidationLayerNames() -> First call to vkEnumerateInstanceLayerProperties() succeeded with validationLayerCount 10 at 2545
-[INFO] TsFillValidationLayerNames() -> Second call to vkEnumerateInstanceLayerProperties() succeeded at 2585
+[INFO] TsCreateVulkanInstance() -> TsFillInstanceExtensionNames() succeeded at 2017
+[INFO] TsFillValidationLayerNames() -> First call to vkEnumerateInstanceLayerProperties() succeeded with validationLayerCount 10 at 2583
+[INFO] TsFillValidationLayerNames() -> Second call to vkEnumerateInstanceLayerProperties() succeeded at 2623
 [INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_NV_optimus
 [INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_api_dump
 [INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_gfxreconstruct
@@ -36,26 +36,26 @@ WinMain() -> Log file created successfully
 [INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_profiles
 [INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_shader_object
 [INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_crash_diagnostic
-[INFO] TsFillValidationLayerNames() -> VK_LAYER_KHRONOS_validation is supported at 2719
+[INFO] TsFillValidationLayerNames() -> VK_LAYER_KHRONOS_validation is supported at 2757
 [INFO] TsFillValidationLayerNames() -> Enabled Vulkan Validation Layer Name VK_LAYER_KHRONOS_validation
-[INFO] TsCreateVulkanInstance() -> TsFillValidationLayerNames() succeeded at 2007
-[INFO] TsCreateInstanceInf() -> vkCreateInstance() succeeded at 2121
-[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkCreateDebugReportCallbackEXT() at 2787
-[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkDestroyDebugReportCallbackEXT() at 2811
-[ERROR] TsCreateValidationCallbackFunction() -> vkCreateDebugReportCallbackEXT_fnptr() failed with 0 at 2845
-[INFO] TsCreateVulkanInstance() -> TsCreateValidationCallbackFunction() succeeded at 2149
-[INFO] TsInitialize() -> TsCreateVulkanInstance() succeeded at 453 
-[INFO] TsGetSupportedSurface() -> vkCreateWin32SurfaceKHR() succeeded at 1933
-[INFO] TsInitialize() -> TsGetSupportedSurface() succeeded at 465 
-[INFO] TsGetPhysicalDevice() -> First call to vkEnumeratePhysicalDevices() succeeded at 1769
-[INFO] TsGetPhysicalDevice() -> Second call to vkEnumeratePhysicalDevices() succeeded at 1784
-[INFO] TsGetPhysicalDevice() -> Succeeded to free isQueueSurfaceSupported_array at 1836
-[INFO] TsGetPhysicalDevice() -> Succeeded to free vkQueueFamilyProperties_array at 1843
-[INFO] TsGetPhysicalDevice() -> vkGetPhysicalDeviceProperties() GeForce MX110 physical device with graphics enabled is selected at 1857
-[INFO] TsGetPhysicalDevice() -> is succeeded to select required physical device with graphics enabled at 1858
+[INFO] TsCreateVulkanInstance() -> TsFillValidationLayerNames() succeeded at 2045
+[INFO] TsCreateInstanceInf() -> vkCreateInstance() succeeded at 2159
+[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkCreateDebugReportCallbackEXT() at 2825
+[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkDestroyDebugReportCallbackEXT() at 2849
+[ERROR] TsCreateValidationCallbackFunction() -> vkCreateDebugReportCallbackEXT_fnptr() failed with 0 at 2883
+[INFO] TsCreateVulkanInstance() -> TsCreateValidationCallbackFunction() succeeded at 2187
+[INFO] TsInitialize() -> TsCreateVulkanInstance() succeeded at 461 
+[INFO] TsGetSupportedSurface() -> vkCreateWin32SurfaceKHR() succeeded at 1971
+[INFO] TsInitialize() -> TsGetSupportedSurface() succeeded at 473 
+[INFO] TsGetPhysicalDevice() -> First call to vkEnumeratePhysicalDevices() succeeded at 1807
+[INFO] TsGetPhysicalDevice() -> Second call to vkEnumeratePhysicalDevices() succeeded at 1822
+[INFO] TsGetPhysicalDevice() -> Succeeded to free isQueueSurfaceSupported_array at 1874
+[INFO] TsGetPhysicalDevice() -> Succeeded to free vkQueueFamilyProperties_array at 1881
+[INFO] TsGetPhysicalDevice() -> vkGetPhysicalDeviceProperties() GeForce MX110 physical device with graphics enabled is selected at 1895
+[INFO] TsGetPhysicalDevice() -> is succeeded to select required physical device with graphics enabled at 1896
 [INFO] TsGetPhysicalDevice() -> Selected physical device supports tessellation shader
 [INFO] TsGetPhysicalDevice() -> Selected physical device supports geometry shader
-[INFO] TsInitialize() -> TsGetPhysicalDevice() succeeded at 477 
+[INFO] TsInitialize() -> TsGetPhysicalDevice() succeeded at 485 
 [INFO] ********** Print Vulkan Info **********
 [INFO] API Version = 1.2.142
 [INFO] Device Name = GeForce MX110
@@ -67,11 +67,11 @@ WinMain() -> Log file created successfully
 [INFO] Device Type = Integrated GPU (iGPU)
 [INFO] Vendor ID = 0x8086
 [INFO] Device ID = 0x3ea0
-[INFO] TsPrintVKInfo() -> Succeeded to free global vkPhysicalDevice_array at 1738
-[INFO] TsInitialize() -> TsPrintVkInfo() succeeded at 489 
-[INFO] TsFillDeviceExtensionNames() -> First call to vkEnumerateDeviceExtensionProperties() succeeded at 2904
+[INFO] TsPrintVKInfo() -> Succeeded to free global vkPhysicalDevice_array at 1776
+[INFO] TsInitialize() -> TsPrintVkInfo() succeeded at 497 
+[INFO] TsFillDeviceExtensionNames() -> First call to vkEnumerateDeviceExtensionProperties() succeeded at 2942
 [INFO] TsFillDeviceExtensionNames() -> Device Count = 91
-[INFO] TsFillDeviceExtensionNames() -> Second call to vkEnumerateDeviceExtensionProperties() succeeded at 2952
+[INFO] TsFillDeviceExtensionNames() -> Second call to vkEnumerateDeviceExtensionProperties() succeeded at 2990
 [INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_16bit_storage
 [INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_8bit_storage
 [INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_bind_memory2
@@ -163,91 +163,95 @@ WinMain() -> Log file created successfully
 [INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_shader_subgroup_partitioned
 [INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_win32_keyed_mutex
 [INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NVX_multiview_per_view_attributes
-[INFO] TsFillDeviceExtensionNames() -> VK_KHR_SWAPCHAIN_EXTENSION_NAME found at 3080
+[INFO] TsFillDeviceExtensionNames() -> VK_KHR_SWAPCHAIN_EXTENSION_NAME found at 3118
 [INFO] TsFillDeviceExtensionNames() -> Enabled Vulkan Device Extension Name = VK_KHR_swapchain
-[INFO] TsCreateVulkanDevice() -> TsFillDeviceExtensionNames() succeeded at 3145
-[INFO] TsCreateVulkanDevice() -> vkCreateDevice() succeeded at 3233
-[INFO] TsInitialize() -> TsCreateVulkanDevice() succeeded at 501 
+[INFO] TsCreateVulkanDevice() -> TsFillDeviceExtensionNames() succeeded at 3183
+[INFO] TsCreateVulkanDevice() -> vkCreateDevice() succeeded at 3271
+[INFO] TsInitialize() -> TsCreateVulkanDevice() succeeded at 509 
 [INFO] TsGetDeviceQueue() -> vkGetDeviceQueue() succeeded
-[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3305
-[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3321
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3364
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3396
 [INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> vkSurfaceFormatKHR_array freed successfully vkFormat_color: 44 and vkColorSpaceKHR: 0
-[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 3441 
-[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 3456 
-[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 784 x 561 maxImageCount = 8 and minImageCount = 2 at 3491
-[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3373
-[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3388
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 3634 
+[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 3664 
+[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 784 x 561 maxImageCount = 8 and minImageCount = 2 at 3708
+[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3496
+[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3528
 [INFO] TsGetPhysicalDevicePresentMode() -> vkPresentModeKHR_array freed successfully vkPresentModeKHR: 1 
-[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 3556 
-[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 3620 
-[INFO] TsInitialize() -> TsCreateSwapchain() succeeded at 518 
-[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 3657 
-[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 3673 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 3747 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 3747 
-[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 3917
-[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 3763 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 3794 
-[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 3842 
-[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 3854 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 3883 
-[INFO] TsInitialize() -> TsCreateImagesAndImageViews() succeeded gives swapchain image count: 2 at 530 
-[INFO] TsCreateCommandPool() -> vkCreateCommandPool() second call succeeded at 3953 
-[INFO] TsInitialize() -> TsCreateCommandPool() succeeded at 545 
-[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4035 
-[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4035 
-[INFO] TsInitialize() -> TsCreateCommandBuffers() succeeded at 569 
-[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() succeeded at 4091 
-[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() succeeded at 4165 
-[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() succeeded at 4189 
-[INFO] TsCreateVertexBuffer() -> vkMapMemory() succeeded at 4231 
-[INFO] TsInitialize() -> TsCreateVertexBuffer() succeeded at 585 
-[INFO] TsCreateUniformBuffer() -> vkCreateBuffer() succeeded at 4279 
-[INFO] TsCreateUniformBuffer() -> vkAllocateMemory() succeeded at 4327 
-[INFO] TsCreateUniformBuffer() -> vkBindBufferMemory() succeeded at 4339 
-[INFO] TsCreateUniformBuffer() -> TsUpdateUnifomBuffer() succeeded at 4351 
-[INFO] TsInitialize() -> TsCreateUniformBuffer() succeeded at 597 
-[INFO] TsCreateShaders() -> Succeeded to open Shader.vert.spv at 4440
-[INFO] TsCreateShaders() -> Succeeded to read Shader.vert.spv at 4464
-[INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded at 4504
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 3773 
+[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 3837 
+[INFO] TsInitialize() -> TsCreateSwapchain() succeeded at 526 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 3874 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 3893 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 3975 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 3975 
+[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 4145
+[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 3991 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 4022 
+[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 4070 
+[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4082 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4111 
+[INFO] TsInitialize() -> TsCreateImagesAndImageViews() succeeded gives swapchain image count: 2 at 538 
+[INFO] TsCreateCommandPool() -> vkCreateCommandPool() second call succeeded at 4184 
+[INFO] TsInitialize() -> TsCreateCommandPool() succeeded at 553 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4270 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4270 
+[INFO] TsInitialize() -> TsCreateCommandBuffers() succeeded at 577 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() succeeded at 4400 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() succeeded at 4474 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() succeeded at 4494 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() succeeded at 4517 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() for vertexData_color succeeded at 4554 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() for vertexData_color succeeded at 4599 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() for vertexData_color succeeded at 4615 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() for vertexData_color succeeded at 4639 
+[INFO] TsInitialize() -> TsCreateVertexBuffer() succeeded at 593 
+[INFO] TsCreateUniformBuffer() -> vkCreateBuffer() succeeded at 4686 
+[INFO] TsCreateUniformBuffer() -> vkAllocateMemory() succeeded at 4734 
+[INFO] TsCreateUniformBuffer() -> vkBindBufferMemory() succeeded at 4746 
+[INFO] TsCreateUniformBuffer() -> TsUpdateUnifomBuffer() succeeded at 4758 
+[INFO] TsInitialize() -> TsCreateUniformBuffer() succeeded at 605 
+[INFO] TsCreateShaders() -> Succeeded to open Shader.vert.spv at 4880
+[INFO] TsCreateShaders() -> Succeeded to read Shader.vert.spv at 4904
+[INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded at 4944
 [INFO] TsCreateShaders() -> Vertex Shader Module is successfully created!!!
-[INFO] TsCreateShaders() -> Succeeded to open Shader.frag.spv at 4554
-[INFO] TsCreateShaders() -> Succeeded to read Shader.frag.spv at 4602
-[INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded in fragment shader at 4648
+[INFO] TsCreateShaders() -> Succeeded to open Shader.frag.spv at 4994
+[INFO] TsCreateShaders() -> Succeeded to read Shader.frag.spv at 5042
+[INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded in fragment shader at 5088
 [INFO] TsCreateShaders() -> Fragment Shader Module is successfully created!!!
-[INFO] TsInitialize() -> TsCreateShaders() succeeded at 609 
-[INFO] TsCreateDescriptorSetLayout() -> vkCreateDescriptorSetLayout() Succeeded at 4715
-[INFO] TsInitialize() -> TsCreateDescriptorSetLayout() succeeded at 621 
-[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 4780
-[INFO] TsInitialize() -> TsCreatePipelineLayout() succeeded at 633 
-[INFO] TsCreateDescriptorPool() -> vkCreateDescriptorPool() succeeded at 4823 
-[INFO] TsInitialize() -> TsCreateDescriptorPool() succeeded at 645 
-[INFO] TsCreateDescriptorSet() -> vkAllocateDescriptorSets() succeeded at 4855 
-[INFO] vkUpdateDescriptorSets() is run successfully!!! at 4886
-[INFO] TsInitialize() -> TsCreateDescriptorSet() succeeded at 657 
-[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 4983 
-[INFO] TsInitialize() -> TsCreateRenderPass() succeeded at 669 
-[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 5267
-[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 5371
-[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 5387
-[INFO] TsInitialize() -> TsCreatePipeline() succeeded at 681 
-[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 5444 
-[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 5444 
-[INFO] TsInitialize() -> TsCreateFrameBuffers() succeeded at 693 
-[INFO] TsCreateSemaphores() -> vkCreateSemaphore() succeeded for vkSemaphore_backbuffer at 5503 
-[INFO] TsCreateSemaphores() -> vkCreateSemaphore() succeeded for vkSemaphore_rendercomplete at 5527 
-[INFO] TsInitialize() -> TsCreateSemaphores() succeeded at 705 
-[INFO] TsCreateFences() -> vkCreateFence() succeeded for 0 index at 5599 
-[INFO] TsCreateFences() -> vkCreateFence() succeeded for 1 index at 5599 
-[INFO] TsInitialize() -> TsCreateFences() succeeded at 717 
-[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 5633 
-[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 5651 
-[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 5738 
-[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 5633 
-[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 5651 
-[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 5738 
-[INFO] TsInitialize() -> TsBuildCommandBuffers() succeeded at 744 
-[INFO] TsInitialize() -> Initialization completed successfully at 751 
+[INFO] TsInitialize() -> TsCreateShaders() succeeded at 617 
+[INFO] TsCreateDescriptorSetLayout() -> vkCreateDescriptorSetLayout() Succeeded at 5155
+[INFO] TsInitialize() -> TsCreateDescriptorSetLayout() succeeded at 629 
+[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 5220
+[INFO] TsInitialize() -> TsCreatePipelineLayout() succeeded at 641 
+[INFO] TsCreateDescriptorPool() -> vkCreateDescriptorPool() succeeded at 5263 
+[INFO] TsInitialize() -> TsCreateDescriptorPool() succeeded at 653 
+[INFO] TsCreateDescriptorSet() -> vkAllocateDescriptorSets() succeeded at 5295 
+[INFO] vkUpdateDescriptorSets() is run successfully!!! at 5326
+[INFO] TsInitialize() -> TsCreateDescriptorSet() succeeded at 665 
+[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 5437 
+[INFO] TsInitialize() -> TsCreateRenderPass() succeeded at 683 
+[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 5652
+[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 5704
+[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 5712
+[INFO] TsInitialize() -> TsCreatePipeline() succeeded at 707 
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 5773 
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 5773 
+[INFO] TsInitialize() -> TsCreateFrameBuffers() succeeded at 731 
+[INFO] TsCreateSemaphores() -> vkCreateSemaphore() succeeded for vkSemaphore_backbuffer at 5837 
+[INFO] TsCreateSemaphores() -> vkCreateSemaphore() succeeded for vkSemaphore_rendercomplete at 5861 
+[INFO] TsInitialize() -> TsCreateSemaphores() succeeded at 755 
+[INFO] TsCreateFences() -> vkCreateFence() succeeded for 0 index at 5933 
+[INFO] TsCreateFences() -> vkCreateFence() succeeded for 1 index at 5933 
+[INFO] TsInitialize() -> TsCreateFences() succeeded at 776 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 5967 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 5985 
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 6101 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 5967 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 5985 
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 6101 
+[INFO] TsInitialize() -> TsBuildCommandBuffers() succeeded at 804 
+[INFO] TsInitialize() -> Initialization completed successfully at 811 
 [INFO] Winmain() TsInitialize() succeeded
 [INFO] TsUninitialize() -> vkDeviceWaitIdle() is done
 [INFO] TsUninitialize() -> vkDestroyFence() is successfully done for 0 index
@@ -264,6 +268,8 @@ WinMain() -> Log file created successfully
 [INFO] TsUninitialize() -> vkDestroyShaderModule() vkShaderModule_vertex_shader is successfully done
 [INFO] TsUninitialize() -> vkDestroyBuffer() is successfully done for uniformData.vkBuffer
 [INFO] TsUninitialize() -> vkFreeMemory() is successfully done for uniformData.vkDeviceMemory
+[INFO] TsUninitialize() -> vkFreeMemory() for vertexData_color is successfully done
+[INFO] TsUninitialize() -> vkDestroyBuffer() for vertexData_color is successfully done
 [INFO] TsUninitialize() -> vkFreeMemory() is successfully done
 [INFO] TsUninitialize() -> vkDestroyBuffer() is successfully done
 [INFO] TsUninitialize() -> vkDestroyPipeline() is successfully done
