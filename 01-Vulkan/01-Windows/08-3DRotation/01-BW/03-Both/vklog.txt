@@ -221,3 +221,80 @@ WinMain() -> Log file created successfully
 [INFO] TsCreateShaders() -> Succeeded to open Shader.frag.spv at 5062
 [INFO] TsCreateShaders() -> Succeeded to read Shader.frag.spv at 5110
 [INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded in fragment shader at 5156
+[INFO] TsCreateShaders() -> Fragment Shader Module is successfully created!!!at 5168
+[INFO] TsInitialize() -> TsCreateShaders() succeeded at 619 
+[INFO] TsCreateDescriptorSetLayout() -> vkCreateDescriptorSetLayout() Succeeded at 5214
+[INFO] TsInitialize() -> TsCreateDescriptorSetLayout() succeeded at 631 
+[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 5279
+[INFO] TsInitialize() -> TsCreatePipelineLayout() succeeded at 643 
+[INFO] TsCreateDescriptorPool() -> vkCreateDescriptorPool() succeeded at 5322 
+[INFO] TsInitialize() -> TsCreateDescriptorPool() succeeded at 655 
+[INFO] TsCreateDescriptorSet() -> Pyramid vkAllocateDescriptorSets() succeeded at 5355 
+[INFO] Pyramid vkUpdateDescriptorSets() is run successfully!!! at 5386
+[INFO] TsCreateDescriptorSet() -> Cube vkAllocateDescriptorSets() succeeded at 5397 
+[INFO] Cube vkUpdateDescriptorSets() is run successfully!!! at 5426
+[INFO] TsInitialize() -> TsCreateDescriptorSet() succeeded at 667 
+[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 5538 
+[INFO] TsInitialize() -> TsCreateRenderPass() succeeded at 685 
+[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 5883
+[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 5987
+[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 6003
+[INFO] TsInitialize() -> TsCreatePipeline() succeeded at 709 
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 6065 
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 6065 
+[INFO] TsInitialize() -> TsCreateFrameBuffers() succeeded at 733 
+[INFO] TsCreateSemaphores() -> vkCreateSemaphore() succeeded for vkSemaphore_backbuffer at 6124 
+[INFO] TsCreateSemaphores() -> vkCreateSemaphore() succeeded for vkSemaphore_rendercomplete at 6148 
+[INFO] TsInitialize() -> TsCreateSemaphores() succeeded at 757 
+[INFO] TsCreateFences() -> vkCreateFence() succeeded for 0 index at 6220 
+[INFO] TsCreateFences() -> vkCreateFence() succeeded for 1 index at 6220 
+[INFO] TsInitialize() -> TsCreateFences() succeeded at 772 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 6254 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 6272 
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 6356 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 6254 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 6272 
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 6356 
+[INFO] TsInitialize() -> TsBuildCommandBuffers() succeeded at 797 
+[INFO] TsInitialize() -> Initialization completed successfully at 804 
+[INFO] Winmain() TsInitialize() succeeded
+[INFO] TsUninitialize() -> vkDeviceWaitIdle() is done
+[INFO] TsUninitialize() -> vkDestroyFence() is successfully done for 0 index
+[INFO] TsUninitialize() -> vkDestroyFence() is successfully done for 1 index
+[INFO] TsUninitialize() -> vkFence_array released successfully
+[INFO] TsUninitialize() -> vkSemaphore_rendercomplete released successfully
+[INFO] TsUninitialize() -> vkSemaphore_backbuffer released successfully
+[INFO] TsUninitialize() -> vkDestroyFramebuffer() is successfully done for 0 index
+[INFO] TsUninitialize() -> vkDestroyFramebuffer() is successfully done for 1 index
+[INFO] TsUninitialize() -> vkFrameBuffer_array released successfully
+[INFO] TsUninitialize() -> vkDestroyPipelineLayout() vkPipelineLayout is successfully released
+[INFO] TsUninitialize() -> vkDestroyDescriptorSetLayout() vkDescriptorSetLayout is successfully released
+[INFO] TsUninitialize() -> vkDestroyShaderModule() vkShaderModule_fragment_shader is successfully done
+[INFO] TsUninitialize() -> vkDestroyShaderModule() vkShaderModule_vertex_shader is successfully done
+[INFO] TsUninitialize() -> vkDestroyBuffer() is successfully done for uniformData_cube.vkBuffer
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for uniformData_cube.vkDeviceMemory
+[INFO] TsUninitialize() -> vkDestroyBuffer() is successfully done for uniformData_pyramid.vkBuffer
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for uniformData_pyramid.vkDeviceMemory
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for vertexData_position_cube.vkDeviceMemory
+[INFO] TsUninitialize() -> vkDestroyBuffer() is successfully done for vertexData_position_cube.vkBuffer
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for vertexData_position_pyramid.vkDeviceMemory
+[INFO] TsUninitialize() -> vkDestroyBuffer() is successfully done for vertexData_position_pyramid.vkBuffer
+[INFO] TsUninitialize() -> vkDestroyPipeline() is successfully done
+[INFO] TsUninitialize() -> vkDestroyDescriptorPool() is successfully done & Descriptor Set is destroyed successfully
+[INFO] TsUninitialize() -> vkDestroyRenderPass() is successfully done
+[INFO] TsUninitialize() -> vkFreeCommandBuffers() is successfully done for iteration: 0
+[INFO] TsUninitialize() -> vkFreeCommandBuffers() is successfully done for iteration: 1
+[INFO] TsUninitialize() -> vkCommandBuffer_array is successfully freed
+[INFO] TsUninitialize() -> vkDestroyCommandPool() is successfully done
+[INFO] TsUninitialize() -> vkDestroyImageView() is successfully done for vkImageView_depth
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for vkDeviceMemory_depth
+[INFO] TsUninitialize() -> vkDestroyImage() is successfully done for vkImage_depth
+[INFO] TsUninitialize() -> vkDestroyImageView() is successfully done for iteration: 0
+[INFO] TsUninitialize() -> vkDestroyImageView() is successfully done for iteration: 1
+[INFO] TsUninitialize() -> swapchainImageView_array is successfully destroyed
+[INFO] TsUninitialize() -> swapchainImage_array is successfully destroyed
+[INFO] TsUninitialize() -> vkDestroySwapchainKHR() is successfully done
+[INFO] TsUninitialize() -> vkDestroyDevice() is successfully done
+[INFO] TsUninitialize() -> vkDestroySurfaceKHR() successfully done
+[INFO] TsUninitialize() -> vkDestroyInstance() successfully done
+[INFO] TsUninitialize() -> Log file closed successfully and program closed successfully

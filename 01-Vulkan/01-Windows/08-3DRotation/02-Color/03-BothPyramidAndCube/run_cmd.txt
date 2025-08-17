@@ -1,0 +1,218 @@
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4496): error C2065: 'vertexData_color': undeclared identifier
+VK.cpp(4593): error C2065: 'vertexData_color': undeclared identifier
+VK.cpp(4591): error C2660: 'vkMapMemory': function does not take 5 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4444): note: see declaration of 'vkMapMemory'
+VK.cpp(4591): note: while trying to match the argument list '(VkDevice, int, VkDeviceSize, int, void **)'
+VK.cpp(4614): error C2065: 'vertexData_color': undeclared identifier
+VK.cpp(4614): error C2660: 'vkUnmapMemory': function does not take 1 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4452): note: see declaration of 'vkUnmapMemory'
+VK.cpp(4614): note: while trying to match the argument list '(VkDevice)'
+VK.cpp(4745): error C2065: 'cubeColors': undeclared identifier
+VK.cpp(4767): error C2065: 'vertexData_color': undeclared identifier
+VK.cpp(4767): error C2660: 'vkGetBufferMemoryRequirements': function does not take 2 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4483): note: see declaration of 'vkGetBufferMemoryRequirements'
+VK.cpp(4767): note: while trying to match the argument list '(VkDevice, VkMemoryRequirements *)'
+VK.cpp(6431): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+VK.cpp(6431): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+VK.cpp(6433): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4593): error C2065: 'vertexData_color': undeclared identifier
+VK.cpp(4591): error C2660: 'vkMapMemory': function does not take 5 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4444): note: see declaration of 'vkMapMemory'
+VK.cpp(4591): note: while trying to match the argument list '(VkDevice, int, VkDeviceSize, int, void **)'
+VK.cpp(4614): error C2065: 'vertexData_color': undeclared identifier
+VK.cpp(4614): error C2660: 'vkUnmapMemory': function does not take 1 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4452): note: see declaration of 'vkUnmapMemory'
+VK.cpp(4614): note: while trying to match the argument list '(VkDevice)'
+VK.cpp(4745): error C2065: 'cubeColors': undeclared identifier
+VK.cpp(4767): error C2065: 'vertexData_color': undeclared identifier
+VK.cpp(4767): error C2660: 'vkGetBufferMemoryRequirements': function does not take 2 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4483): note: see declaration of 'vkGetBufferMemoryRequirements'
+VK.cpp(4767): note: while trying to match the argument list '(VkDevice, VkMemoryRequirements *)'
+VK.cpp(6431): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+VK.cpp(6431): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+VK.cpp(6433): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4745): error C2065: 'cubeColors': undeclared identifier
+VK.cpp(4767): error C2065: 'vertexData_color': undeclared identifier
+VK.cpp(4767): error C2660: 'vkGetBufferMemoryRequirements': function does not take 2 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4483): note: see declaration of 'vkGetBufferMemoryRequirements'
+VK.cpp(4767): note: while trying to match the argument list '(VkDevice, VkMemoryRequirements *)'
+VK.cpp(6431): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+VK.cpp(6431): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+VK.cpp(6433): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4745): error C2065: 'cubeColors': undeclared identifier
+VK.cpp(6431): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+VK.cpp(6431): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+VK.cpp(6433): error C2065: 'vkDeviceSize_offset_array': undeclared identifier
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4745): error C2065: 'cubeColors': undeclared identifier
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>del VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\08-3DRotation\02-Color\03-BothPyramidAndCube>VK.exe
