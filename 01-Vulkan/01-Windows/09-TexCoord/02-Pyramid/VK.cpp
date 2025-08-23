@@ -608,8 +608,9 @@ VkResult TsInitialize(void)
                vkTsResult = TsCreateTexture("Stone.png");
                if (VK_SUCCESS != vkTsResult)
                {
-                              fprintf(gpTsFile, "[ERROR] TsInitialize() -> TsCreateTexture() failed for Stone.png with %d at %d\n", vkTsResult, __LINE__);
-                              return(vkTsResult);
+                    fflush(gpTsFile);
+                    fprintf(gpTsFile, "[ERROR] TsInitialize() -> TsCreateTexture() failed for Stone.png with %d at %d\n", vkTsResult, __LINE__);
+                    return(vkTsResult);
                }
                else
                {
@@ -876,7 +877,7 @@ VkResult TsResize(int iTsWidth, int iTsHeight)
     if (vkDevice)
     {
         vkDeviceWaitIdle(vkDevice); // First synchronization function
-        fprintf(gpTsFile, "[INFO] TsResize() -> vkDeviceWaitIdle() is done\n");
+        //fprintf(gpTsFile, "[INFO] TsResize() -> vkDeviceWaitIdle() is done\n");
 
         // Check presence of swapchain
         if(VK_NULL_HANDLE == vkSwapchainKHR)
@@ -890,189 +891,120 @@ VkResult TsResize(int iTsWidth, int iTsHeight)
         for(uint32_t i = 0; i < swapchainImageCount; i++)
         {
                         vkDestroyFramebuffer(vkDevice, vkFrameBuffer_array[i], NULL);
-                        fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyFramebuffer() is successfully done for %d index\n", i);
+                        //fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyFramebuffer() is successfully done for %d index\n", i);
         }
 
         if(vkFrameBuffer_array)
         {
                         free(vkFrameBuffer_array);
                         vkFrameBuffer_array = NULL;
-                        fprintf(gpTsFile, "[INFO] TsResize() -> vkFrameBuffer_array released successfully\n");
+                        //fprintf(gpTsFile, "[INFO] TsResize() -> vkFrameBuffer_array released successfully\n");
         }
 
         for(uint32_t i = 0; i < swapchainImageCount; i++)
+        {
+            vkFreeCommandBuffers(vkDevice, vkCommandPool, 1, &vkCommandBuffer_array[i]);
+            //fprintf(gpTsFile, "[INFO] TsResize() -> vkFreeCommandBuffers() is successfully done for iteration: %d\n", i);
+        }
 
-                              {
-
-                                             vkFreeCommandBuffers(vkDevice, vkCommandPool, 1, &vkCommandBuffer_array[i]);
-
-                                             fprintf(gpTsFile, "[INFO] TsResize() -> vkFreeCommandBuffers() is successfully done for iteration: %d\n", i);
-
-                              }
-
- 
-
-                              if(vkCommandBuffer_array)
-
-                              {
-
-                                             free(vkCommandBuffer_array);
-
-                                             vkCommandBuffer_array = NULL;
-
-                                             fprintf(gpTsFile, "[INFO] TsResize() -> vkCommandBuffer_array is successfully freed\n");
-
-                              }
+        if(vkCommandBuffer_array)
+        {
+            free(vkCommandBuffer_array);
+            vkCommandBuffer_array = NULL;
+            //fprintf(gpTsFile, "[INFO] TsResize() -> vkCommandBuffer_array is successfully freed\n");
+        }
 
         if(vkPipeline)
         {
             vkDestroyPipeline(vkDevice, vkPipeline, NULL);
             vkPipeline = VK_NULL_HANDLE;
-            fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyPipeline() is successfully done\n");
+            //fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyPipeline() is successfully done\n");
         }
 
         if(vkPipelineLayout)
-
-                              {
-
-                                vkDestroyPipelineLayout(vkDevice, vkPipelineLayout, NULL);
-
-                                vkPipelineLayout = VK_NULL_HANDLE;
-
-                                fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyPipelineLayout() vkPipelineLayout is successfully released\n");
-
-                              }
+        {
+            vkDestroyPipelineLayout(vkDevice, vkPipelineLayout, NULL);
+            vkPipelineLayout = VK_NULL_HANDLE;
+            //fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyPipelineLayout() vkPipelineLayout is successfully released\n");
+        }
 
         // Destroy renderpass
         if(vkRenderPass)
         {
-                        vkDestroyRenderPass(vkDevice, vkRenderPass, NULL);
-                        vkRenderPass = VK_NULL_HANDLE;
-                        fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyRenderPass() is successfully done\n");
+            vkDestroyRenderPass(vkDevice, vkRenderPass, NULL);
+            vkRenderPass = VK_NULL_HANDLE;
+            //fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyRenderPass() is successfully done\n");
         }   
         
         // For depth image view
         if(vkImageView_depth)
         {
-                        vkDestroyImageView(vkDevice, vkImageView_depth, NULL);
-                        vkImageView_depth = VK_NULL_HANDLE;
+            vkDestroyImageView(vkDevice, vkImageView_depth, NULL);
+            vkImageView_depth = VK_NULL_HANDLE;
         }
 
         // For depth device memory
         if(vkDeviceMemory_depth)
         {
-                        vkFreeMemory(vkDevice, vkDeviceMemory_depth, NULL);
-                        vkDeviceMemory_depth = VK_NULL_HANDLE;                     
+            vkFreeMemory(vkDevice, vkDeviceMemory_depth, NULL);
+            vkDeviceMemory_depth = VK_NULL_HANDLE;                     
         } 
 
         // For depth image
         if(vkImage_depth)
         {
-                        vkDestroyImage(vkDevice, vkImage_depth, NULL);
-                        vkImage_depth = VK_NULL_HANDLE;
+            vkDestroyImage(vkDevice, vkImage_depth, NULL);
+            vkImage_depth = VK_NULL_HANDLE;
         }
 
         // destroy image views
+        for(uint32_t i = 0; i < swapchainImageCount; i++)
+        {
+            vkDestroyImageView(vkDevice, swapchainImageView_array[i], NULL);
+            //fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyImageView() is successfully done for iteration: %d\n", i);
+        }
 
-                              for(uint32_t i = 0; i < swapchainImageCount; i++)
+        // Free swapchain image view array
+        if(swapchainImageView_array)
+        {
+            free(swapchainImageView_array);
+            swapchainImageView_array = NULL;
+            //fprintf(gpTsFile, "[INFO] TsResize() -> swapchainImageView_array is successfully destroyed\n");
+        }
 
-                              {
-
-                                             vkDestroyImageView(vkDevice, swapchainImageView_array[i], NULL);
-
-                                             fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyImageView() is successfully done for iteration: %d\n", i);
-
-                              }
-
- 
-
-                              // Free swapchain image view array
-
-                              if(swapchainImageView_array)
-
-                              {
-
-                                             free(swapchainImageView_array);
-
-                                             swapchainImageView_array = NULL;
-
-                                             fprintf(gpTsFile, "[INFO] TsResize() -> swapchainImageView_array is successfully destroyed\n");
-
-                              }
-
- 
-
-                              /*// Free swapchain images
-
-                              for(uint32_t i = 0; i < swapchainImageCount; i++)
-
-                              {
-
-                                             vkDestroyImage(vkDevice, swapchainImage_array[i], NULL);
-
-                                             fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroyImage() is successfully done for iteration: %d\n", i);
-
-                              }*/
-
- 
-
-                              if(swapchainImage_array)
-
-                              {
-
-                                             free(swapchainImage_array);
-
-                                             swapchainImage_array = NULL;
-
-                                             fprintf(gpTsFile, "[INFO] TsResize() -> swapchainImage_array is successfully destroyed\n");
-
-                              }
+        if(swapchainImage_array)
+        {
+            free(swapchainImage_array);
+            swapchainImage_array = NULL;
+            //fprintf(gpTsFile, "[INFO] TsResize() -> swapchainImage_array is successfully destroyed\n");
+        }
 
         // Destroy Swapchain
-
         if (vkSwapchainKHR)
-
         {
-
-                        vkDestroySwapchainKHR(vkDevice, vkSwapchainKHR, NULL);
-
-                        vkSwapchainKHR = VK_NULL_HANDLE;
-
-                        fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroySwapchainKHR() is successfully done\n");
-
+            vkDestroySwapchainKHR(vkDevice, vkSwapchainKHR, NULL);
+            vkSwapchainKHR = VK_NULL_HANDLE;
+            //fprintf(gpTsFile, "[INFO] TsResize() -> vkDestroySwapchainKHR() is successfully done\n");
         }
 
         // Recreate for resize
         // Create Swapchain
         vkTsResult = TsCreateSwapchain(VK_FALSE);
-
         if (VK_SUCCESS != vkTsResult)
-
         {
-
-                        // Print actual returned VkResult value and hardcoded return value
-
-                        fprintf(gpTsFile, "[ERROR] TsResize() -> TsCreateSwapchain() failed with %d at %d\n", vkTsResult, __LINE__);
-
-                        vkTsResult = VK_ERROR_INITIALIZATION_FAILED; // Sir will answer while TsResize() chya wedes sangtil ki ka Hardcoded return value?
-
-                        return(vkTsResult);
-
+            // Print actual returned VkResult value and hardcoded return value
+            //fprintf(gpTsFile, "[ERROR] TsResize() -> TsCreateSwapchain() failed with %d at %d\n", vkTsResult, __LINE__);
+            vkTsResult = VK_ERROR_INITIALIZATION_FAILED; // Sir will answer while TsResize() chya wedes sangtil ki ka Hardcoded return value?
+            return(vkTsResult);
         }
 
         // [STEP-13] Create Vulkan ImagesAndImageViews
-
-               vkTsResult = TsCreateImagesAndImageViews();
-
-               if (VK_SUCCESS != vkTsResult)
-
-               {
-
-                              fprintf(gpTsFile, "[ERROR] TsResize() -> TsCreateImagesAndImageViews() failed with %d at %d\n", vkTsResult, __LINE__);
-
-                              return(vkTsResult);
-
-               }
+        vkTsResult = TsCreateImagesAndImageViews();
+        if (VK_SUCCESS != vkTsResult)
+        {
+            //fprintf(gpTsFile, "[ERROR] TsResize() -> TsCreateImagesAndImageViews() failed with %d at %d\n", vkTsResult, __LINE__);
+            return(vkTsResult);
+        }
 
                // RenderPass
 
@@ -4703,10 +4635,11 @@ VkResult TsCreateTexture(const char * textureFileName)
     // Step-1 Get image info using functions from stb_image.h
     FILE* fp = NULL;
 
-    fp = fopen(textureFileName, "rb");
+    fp = fopen(textureFileName, "rb");  // read binary mode
 
     if(NULL == fp)
     {
+        fflush(gpTsFile);
         fprintf(gpTsFile, "[ERROR] TsCreateTexture() -> fopen() failed for %s at %d \n", textureFileName, __LINE__);
         vkTsResult = VK_ERROR_INITIALIZATION_FAILED;
         return(vkTsResult);
@@ -4718,6 +4651,7 @@ VkResult TsCreateTexture(const char * textureFileName)
     image_data = stbi_load_from_file(fp, &texture_width, &texture_height, &texture_channels, STBI_rgb_alpha);
     if(NULL == image_data || texture_width <= 0 || texture_height <= 0 || texture_channels <= 0)
     {
+        fflush(gpTsFile);
         fprintf(gpTsFile, "[ERROR] TsCreateTexture() -> stbi_load_from_file() failed to get image info at %d \n", __LINE__);
         vkTsResult = VK_ERROR_INITIALIZATION_FAILED;
         return(vkTsResult);
@@ -4730,26 +4664,27 @@ VkResult TsCreateTexture(const char * textureFileName)
     VkBuffer vkBuffer_staging_buffer = VK_NULL_HANDLE;
     VkDeviceMemory vkDeviceMemory_staging_buffer = VK_NULL_HANDLE;
 
-    VkBufferCreateInfo vkBufferCreateInfo_satging_buffer;
-    memset((void *)&vkBuffer_staging_buffer, 0, sizeof(VkBufferCreateInfo));
+    VkBufferCreateInfo vkBufferCreateInfo_staging_buffer;
+    memset((void *)&vkBufferCreateInfo_staging_buffer, 0, sizeof(VkBufferCreateInfo));
 
-    vkBufferCreateInfo_satging_buffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-    vkBufferCreateInfo_satging_buffer.pNext = NULL;
-    vkBufferCreateInfo_satging_buffer.flags = 0;
+    vkBufferCreateInfo_staging_buffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+    vkBufferCreateInfo_staging_buffer.pNext = NULL;
+    vkBufferCreateInfo_staging_buffer.flags = 0;
 
-    vkBufferCreateInfo_satging_buffer.size = vkDeviceSize_image_size;
-    vkBufferCreateInfo_satging_buffer.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;   // Because this data is our source buffer for transfer of data
-    vkBufferCreateInfo_satging_buffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+    vkBufferCreateInfo_staging_buffer.size = vkDeviceSize_image_size;
+    vkBufferCreateInfo_staging_buffer.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;   // Because this data is our source buffer for transfer of data
+    vkBufferCreateInfo_staging_buffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-    vkTsResult = vkCreateBuffer(vkDevice, &vkBufferCreateInfo_satging_buffer, NULL, &vkBuffer_staging_buffer);
+    vkTsResult = vkCreateBuffer(vkDevice, &vkBufferCreateInfo_staging_buffer, NULL, &vkBuffer_staging_buffer);
      if (VK_SUCCESS != vkTsResult)
     {
-        fprintf(gpTsFile, "[ERROR] TsCreateTexture() -> vkCreateBuffer() for vkBuffer_staging_buffer failed at %d\n", __LINE__);
+        fflush(gpTsFile);
+        fprintf(gpTsFile, "[ERROR] TsCreateTexture() -> vkCreateBuffer() for vkBufferCreateInfo_staging_buffer failed at %d\n", __LINE__);
         return(vkTsResult);
     }
     else
     {
-        fprintf(gpTsFile, "[INFO] TsCreateTexture() -> vkCreateBuffer() for vkBuffer_staging_buffer succeeded at %d \n", __LINE__);
+        fprintf(gpTsFile, "[INFO] TsCreateTexture() -> vkCreateBuffer() for vkBufferCreateInfo_staging_buffer succeeded at %d \n", __LINE__);
     }
 
     VkMemoryRequirements vkMemoryRequirements_staging_buffer;
@@ -4782,6 +4717,7 @@ VkResult TsCreateTexture(const char * textureFileName)
     vkTsResult = vkAllocateMemory(vkDevice, &vkMemoryAllocateInfo_staging_buffer, NULL, &vkDeviceMemory_staging_buffer);
     if (VK_SUCCESS != vkTsResult)
     {
+        fflush(gpTsFile);
         fprintf(gpTsFile, "[ERROR] TsCreateTexture() -> vkAllocateMemory() for vkDeviceMemory_staging_buffer failed at %d\n", __LINE__);
         return(vkTsResult);
     }
@@ -4793,6 +4729,7 @@ VkResult TsCreateTexture(const char * textureFileName)
     vkTsResult = vkBindBufferMemory(vkDevice, vkBuffer_staging_buffer, vkDeviceMemory_staging_buffer, 0);
     if (VK_SUCCESS != vkTsResult)
     {
+        fflush(gpTsFile);
         fprintf(gpTsFile, "[ERROR] TsCreateTexture() -> vkBindBufferMemory() for vkDeviceMemory_staging_buffer failed at %d\n", __LINE__);
         return(vkTsResult);
     }
@@ -4805,6 +4742,7 @@ VkResult TsCreateTexture(const char * textureFileName)
     vkTsResult = vkMapMemory(vkDevice, vkDeviceMemory_staging_buffer, 0, vkMemoryAllocateInfo_staging_buffer.allocationSize, 0, &data);
      if (VK_SUCCESS != vkTsResult)
     {
+        fflush(gpTsFile);
         fprintf(gpTsFile, "[ERROR] TsCreateTexture() -> vkMapMemory() for vkDeviceMemory_staging_buffer failed at %d\n", __LINE__);
         return(vkTsResult);
     }
@@ -5813,14 +5751,22 @@ VkResult TsCreateDescriptorSetLayout(void)
 
     // Code
     // Initialize descriptor set binding
-    VkDescriptorSetLayoutBinding vkDescriptorSetLayoutBinding;
-    memset((void *)&vkDescriptorSetLayoutBinding, 0, sizeof(VkDescriptorSetLayoutBinding));
+    VkDescriptorSetLayoutBinding vkDescriptorSetLayoutBinding_array[2]; // 0th index is for uniform and 1st index is for texture image
+    memset((void *)vkDescriptorSetLayoutBinding_array, 0, sizeof(VkDescriptorSetLayoutBinding) * ARRAY_SIZE(vkDescriptorSetLayoutBinding_array));
 
-    vkDescriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-    vkDescriptorSetLayoutBinding.binding = 0;   // Binding point i.e. 0th index of (binding = 0) in vertex shader
-    vkDescriptorSetLayoutBinding.descriptorCount = 1;
-    vkDescriptorSetLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-    vkDescriptorSetLayoutBinding.pImmutableSamplers = NULL; 
+    // For MVP uniform
+    vkDescriptorSetLayoutBinding_array[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+    vkDescriptorSetLayoutBinding_array[0].binding = 0;   // Binding point i.e. 0th index of layout(binding = 0) in vertex shader
+    vkDescriptorSetLayoutBinding_array[0].descriptorCount = 1;  // 1 for DescriptorSet
+    vkDescriptorSetLayoutBinding_array[0].stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+    vkDescriptorSetLayoutBinding_array[0].pImmutableSamplers = NULL;
+    
+    // For Texture Image and Sampler
+    vkDescriptorSetLayoutBinding_array[1].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+    vkDescriptorSetLayoutBinding_array[1].binding = 1;   // Binding point i.e. 1st index of layout(binding = 1) in fragment shader
+    vkDescriptorSetLayoutBinding_array[1].descriptorCount = 1;  // 1 for DescriptorSet
+    vkDescriptorSetLayoutBinding_array[1].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+    vkDescriptorSetLayoutBinding_array[1].pImmutableSamplers = NULL;
 
     VkDescriptorSetLayoutCreateInfo vkDescriptorSetLayoutCreateInfo;
     memset((void *)&vkDescriptorSetLayoutCreateInfo, 0, sizeof(VkDescriptorSetLayoutCreateInfo));
@@ -5833,12 +5779,13 @@ VkResult TsCreateDescriptorSetLayout(void)
     // Hence .bindingCount and .pBindings members of VkDescriptoSetLayoutCreateInfo are not used 
     // But in this application and henceforth our shader is going to have at least 1 uniform means at least 1 descriptor set
     // And hence above these 2 members are used by the new type VkDescriptorSetLayoutBinding
-    vkDescriptorSetLayoutCreateInfo.bindingCount = 1;   // Descriptor set sadhyala nahiye
-    vkDescriptorSetLayoutCreateInfo.pBindings = &vkDescriptorSetLayoutBinding;   // Pointing to array of VkDescriptorSetLayout structure
+    vkDescriptorSetLayoutCreateInfo.bindingCount = ARRAY_SIZE(vkDescriptorSetLayoutBinding_array);   // Descriptor set sadhyala nahiye
+    vkDescriptorSetLayoutCreateInfo.pBindings = vkDescriptorSetLayoutBinding_array;   // Pointing to array of VkDescriptorSetLayout structure
 
     vkTsResult = vkCreateDescriptorSetLayout(vkDevice, &vkDescriptorSetLayoutCreateInfo, NULL, &vkDescriptorSetLayout);
     if(VK_SUCCESS != vkTsResult)
     {
+        fflush(gpTsFile);
         fprintf(gpTsFile, "[ERROR] TsCreateDescriptorSetLayout() -> vkCreateDescriptorSetLayout() Failed at %d\n", __LINE__);
         return(vkTsResult);
     }
@@ -5848,75 +5795,41 @@ VkResult TsCreateDescriptorSetLayout(void)
     }
  
     return(vkTsResult);
-
 }
-
  
 
 // [STEP-25]
-
 VkResult TsCreatePipelineLayout(void)
-
 {
-
     // Local variable declaration
-
     VkResult vkTsResult = VK_SUCCESS;
-
  
-
     // Code
-
     VkPipelineLayoutCreateInfo vkPipelineLayoutCreateInfo;
-
     memset((void *)&vkPipelineLayoutCreateInfo, 0, sizeof(VkPipelineLayoutCreateInfo));
 
- 
-
     vkPipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-
     vkPipelineLayoutCreateInfo.pNext = NULL;
-
     vkPipelineLayoutCreateInfo.flags = 0;   // Reserved for future use
-
  
-
     vkPipelineLayoutCreateInfo.setLayoutCount = 1;  // Even empty we need atleast 1 here
-
     vkPipelineLayoutCreateInfo.pSetLayouts = &vkDescriptorSetLayout;
-
  
-
     vkPipelineLayoutCreateInfo.pushConstantRangeCount = 0;
-
     vkPipelineLayoutCreateInfo.pPushConstantRanges = NULL;
-
  
-
     vkTsResult = vkCreatePipelineLayout(vkDevice, &vkPipelineLayoutCreateInfo, NULL, &vkPipelineLayout);
-
     if(VK_SUCCESS != vkTsResult)
-
     {
-
         fprintf(gpTsFile, "[ERROR] TsCreatePipelineLayout() -> vkCreatePipelineLayout() Failed at %d\n", __LINE__);
-
         return(vkTsResult);
-
     }
-
     else
-
     {
-
         fprintf(gpTsFile, "[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at %d\n", __LINE__);
-
     }
-
- 
 
     return(vkTsResult);
-
 }
 
  VkResult TsCreateDescriptorPool(void)
@@ -5927,11 +5840,16 @@ VkResult TsCreatePipelineLayout(void)
     // Code
     // Before creating actual descriptor pool
     // Vulkan expects descriptor pool size
-    VkDescriptorPoolSize vkDescriptorPoolSize;
-    memset((void *)&vkDescriptorPoolSize, 0, sizeof(VkDescriptorPoolSize));
+    VkDescriptorPoolSize vkDescriptorPoolSize_array[2]; // 0 for MVP uniform UBO and 1 for Texture nd sampler
+    memset((void *)vkDescriptorPoolSize_array, 0, sizeof(VkDescriptorPoolSize) * ARRAY_SIZE(vkDescriptorPoolSize_array));
 
-    vkDescriptorPoolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-    vkDescriptorPoolSize.descriptorCount = 1;
+    // For uniform
+    vkDescriptorPoolSize_array[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+    vkDescriptorPoolSize_array[0].descriptorCount = 1;
+
+    // For Textue and Sampler
+    vkDescriptorPoolSize_array[1].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+    vkDescriptorPoolSize_array[1].descriptorCount = 1;
 
     VkDescriptorPoolCreateInfo vkDescriptorPoolCreateInfo;
     memset((void *)&vkDescriptorPoolCreateInfo, 0, sizeof(VkDescriptorPoolCreateInfo));
@@ -5940,9 +5858,9 @@ VkResult TsCreatePipelineLayout(void)
     vkDescriptorPoolCreateInfo.pNext = NULL;
     vkDescriptorPoolCreateInfo.flags = 0;
 
-    vkDescriptorPoolCreateInfo.poolSizeCount = 1;   // VkDescriptoPoolSize structure cha count
-    vkDescriptorPoolCreateInfo.pPoolSizes = &vkDescriptorPoolSize;
-    vkDescriptorPoolCreateInfo.maxSets = 1; // Kiti sets pahijet
+    vkDescriptorPoolCreateInfo.poolSizeCount = ARRAY_SIZE(vkDescriptorPoolSize_array);   // VkDescriptoPoolSize structure cha count
+    vkDescriptorPoolCreateInfo.pPoolSizes = vkDescriptorPoolSize_array;
+    vkDescriptorPoolCreateInfo.maxSets = 2; // Kiti sets pahijet
 
     vkTsResult = vkCreateDescriptorPool(vkDevice, &vkDescriptorPoolCreateInfo, NULL, &vkDescriptorPool);
     if (VK_SUCCESS != vkTsResult)
@@ -5960,7 +5878,7 @@ VkResult TsCreatePipelineLayout(void)
 
 VkResult TsCreateDescriptorSet(void)
 {
-    // 
+    // Local variable declaration
     VkResult vkTsResult = VK_SUCCESS;
 
     // Code
@@ -5970,10 +5888,10 @@ VkResult TsCreateDescriptorSet(void)
 
     vkDescriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
     vkDescriptorSetAllocateInfo.pNext = NULL;
-   // vkDescriptorSetAllocateInfo.flags = 0;
 
     vkDescriptorSetAllocateInfo.descriptorPool = vkDescriptorPool;
-    vkDescriptorSetAllocateInfo.descriptorSetCount = 1;
+    // though we have 2 descriptors 1 for MVP uniform and 1 texture sampler, both are in one same descriptor set
+    vkDescriptorSetAllocateInfo.descriptorSetCount = 1; // As we are adding multiple descriptors into single descriptor set. 
     vkDescriptorSetAllocateInfo.pSetLayouts = &vkDescriptorSetLayout;
 
     vkTsResult = vkAllocateDescriptorSets(vkDevice, &vkDescriptorSetAllocateInfo, &vkDescriptorSet);
@@ -5988,32 +5906,56 @@ VkResult TsCreateDescriptorSet(void)
     }
 
     // Describe whether buffer as uniform or image as uniform
+    // For MVP uniform
     VkDescriptorBufferInfo vkDescriptorBufferInfo;
     memset((void *)&vkDescriptorBufferInfo, 0, sizeof(VkDescriptorBufferInfo));
-
+    
     vkDescriptorBufferInfo.buffer = uniformData.vkBuffer;
     vkDescriptorBufferInfo.offset = 0;  // Start from 0th offset pasoon
     vkDescriptorBufferInfo.range = sizeof(MyuniformData);
 
+    // For Texture Image and Sampler
+    VkDescriptorImageInfo vkDescriptorImageInfo;
+    memset((void *)&vkDescriptorImageInfo, 0, sizeof(VkDescriptorImageInfo));
+
+    vkDescriptorImageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;   
+    vkDescriptorImageInfo.imageView = vkImageView_texture;
+    vkDescriptorImageInfo.sampler = vkSampler_texture;
+
     // Now update the above descriptor set directly to the shader
     // There are 2 ways to update 1) writing directly to shader pr 2) copying from one shader to another shader
     // We will prefer directly writing to the shader, this requires initialization of following structure
-    VkWriteDescriptorSet vkWriteDescriptorSet;
-    memset((void *)&vkWriteDescriptorSet, 0, sizeof(VkWriteDescriptorSet));
+    // For above 2 structures
+    VkWriteDescriptorSet vkWriteDescriptorSet_array[2];
+    memset((void *)vkWriteDescriptorSet_array, 0, sizeof(VkWriteDescriptorSet) * ARRAY_SIZE(vkWriteDescriptorSet_array));
 
-    vkWriteDescriptorSet.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-    vkWriteDescriptorSet.pNext = NULL;
+    // For uniform
+    vkWriteDescriptorSet_array[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+    vkWriteDescriptorSet_array[0].pNext = NULL;
 
-    vkWriteDescriptorSet.dstSet = vkDescriptorSet;;
-    vkWriteDescriptorSet.dstArrayElement = 0;
-    vkWriteDescriptorSet.descriptorCount = 1;
-    vkWriteDescriptorSet.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-    vkWriteDescriptorSet.pBufferInfo = &vkDescriptorBufferInfo;
-    vkWriteDescriptorSet.pImageInfo = NULL;
-    vkWriteDescriptorSet.pTexelBufferView = NULL;
-    vkWriteDescriptorSet.dstBinding = 0;    // Because our uniform is at binding = 0 in shader
+    vkWriteDescriptorSet_array[0].dstSet = vkDescriptorSet;
+    vkWriteDescriptorSet_array[0].dstArrayElement = 0;
+    vkWriteDescriptorSet_array[0].descriptorCount = 1;
+    vkWriteDescriptorSet_array[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+    vkWriteDescriptorSet_array[0].pBufferInfo = &vkDescriptorBufferInfo;
+    vkWriteDescriptorSet_array[0].pImageInfo = NULL;
+    vkWriteDescriptorSet_array[0].pTexelBufferView = NULL;
+    vkWriteDescriptorSet_array[0].dstBinding = 0;    // Because our uniform is at binding = 0 in shader
 
-    vkUpdateDescriptorSets(vkDevice, 1, &vkWriteDescriptorSet, 0, NULL);    // No error checking
+    // For texture image and sampler
+    vkWriteDescriptorSet_array[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+    vkWriteDescriptorSet_array[1].pNext = NULL;
+
+    vkWriteDescriptorSet_array[1].dstSet = vkDescriptorSet;
+    vkWriteDescriptorSet_array[1].dstArrayElement = 0;
+    vkWriteDescriptorSet_array[1].descriptorCount = 1;
+    vkWriteDescriptorSet_array[1].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+    vkWriteDescriptorSet_array[1].pBufferInfo = NULL;
+    vkWriteDescriptorSet_array[1].pImageInfo = &vkDescriptorImageInfo;
+    vkWriteDescriptorSet_array[1].pTexelBufferView = NULL;
+    vkWriteDescriptorSet_array[1].dstBinding = 1;    // Because our sampler is at binding = 1 in shader
+
+    vkUpdateDescriptorSets(vkDevice, ARRAY_SIZE(vkWriteDescriptorSet_array), vkWriteDescriptorSet_array, 0, NULL);    // No error checking
 
     fprintf(gpTsFile, "[INFO] vkUpdateDescriptorSets() is run successfully!!! at %d\n", __LINE__);
 
