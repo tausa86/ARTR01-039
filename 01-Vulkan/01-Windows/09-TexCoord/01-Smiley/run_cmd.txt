@@ -1,0 +1,315 @@
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4718): error C2065: 'STBI_rgb_aplha': undeclared identifier
+VK.cpp(4779): error C2039: 'memoryTypeBits': is not a member of 'VkMemoryAllocateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3515): note: see declaration of 'VkMemoryAllocateInfo'
+VK.cpp(4818): error C2440: '=': cannot convert from 'void' to 'VkResult'
+VK.cpp(4818): note: Expressions of type void cannot be converted to other types
+VK.cpp(4864): error C2440: '=': cannot convert from 'const void *' to 'VkStructureType'
+VK.cpp(4864): note: There is no context in which this conversion is possible
+VK.cpp(4994): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5090): error C2039: 'mipLevels': is not a member of 'VkImageSubresourceLayers'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4116): note: see declaration of 'VkImageSubresourceLayers'
+VK.cpp(5093): error C2039: 'levelCount': is not a member of 'VkImageSubresourceLayers'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4116): note: see declaration of 'VkImageSubresourceLayers'
+VK.cpp(5101): error C2660: 'vkCmdCopyBufferToImage': function does not take 7 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4974): note: see declaration of 'vkCmdCopyBufferToImage'
+VK.cpp(5101): note: while trying to match the argument list '(VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, int, int, VkBufferImageCopy *)'
+VK.cpp(5242): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5340): error C2039: 'maxFilter': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+VK.cpp(5348): error C2039: 'maxAnisotrpy': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4818): error C2440: '=': cannot convert from 'void' to 'VkResult'
+VK.cpp(4818): note: Expressions of type void cannot be converted to other types
+VK.cpp(4864): error C2440: '=': cannot convert from 'const void *' to 'VkStructureType'
+VK.cpp(4864): note: There is no context in which this conversion is possible
+VK.cpp(4994): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5090): error C2039: 'mipLevels': is not a member of 'VkImageSubresourceLayers'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4116): note: see declaration of 'VkImageSubresourceLayers'
+VK.cpp(5093): error C2039: 'levelCount': is not a member of 'VkImageSubresourceLayers'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4116): note: see declaration of 'VkImageSubresourceLayers'
+VK.cpp(5101): error C2660: 'vkCmdCopyBufferToImage': function does not take 7 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4974): note: see declaration of 'vkCmdCopyBufferToImage'
+VK.cpp(5101): note: while trying to match the argument list '(VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, int, int, VkBufferImageCopy *)'
+VK.cpp(5242): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5340): error C2039: 'maxFilter': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+VK.cpp(5348): error C2039: 'maxAnisotrpy': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4864): error C2440: '=': cannot convert from 'const void *' to 'VkStructureType'
+VK.cpp(4864): note: There is no context in which this conversion is possible
+VK.cpp(4994): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5090): error C2039: 'mipLevels': is not a member of 'VkImageSubresourceLayers'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4116): note: see declaration of 'VkImageSubresourceLayers'
+VK.cpp(5093): error C2039: 'levelCount': is not a member of 'VkImageSubresourceLayers'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4116): note: see declaration of 'VkImageSubresourceLayers'
+VK.cpp(5101): error C2660: 'vkCmdCopyBufferToImage': function does not take 7 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4974): note: see declaration of 'vkCmdCopyBufferToImage'
+VK.cpp(5101): note: while trying to match the argument list '(VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, int, int, VkBufferImageCopy *)'
+VK.cpp(5242): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5340): error C2039: 'maxFilter': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+VK.cpp(5348): error C2039: 'maxAnisotrpy': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4994): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5090): error C2039: 'mipLevels': is not a member of 'VkImageSubresourceLayers'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4116): note: see declaration of 'VkImageSubresourceLayers'
+VK.cpp(5093): error C2039: 'levelCount': is not a member of 'VkImageSubresourceLayers'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4116): note: see declaration of 'VkImageSubresourceLayers'
+VK.cpp(5101): error C2660: 'vkCmdCopyBufferToImage': function does not take 7 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4974): note: see declaration of 'vkCmdCopyBufferToImage'
+VK.cpp(5101): note: while trying to match the argument list '(VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, int, int, VkBufferImageCopy *)'
+VK.cpp(5242): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5340): error C2039: 'maxFilter': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+VK.cpp(5348): error C2039: 'maxAnisotrpy': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(5091): error C2039: 'mipLevels': is not a member of 'VkImageSubresourceLayers'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4116): note: see declaration of 'VkImageSubresourceLayers'
+VK.cpp(5094): error C2039: 'levelCount': is not a member of 'VkImageSubresourceLayers'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4116): note: see declaration of 'VkImageSubresourceLayers'
+VK.cpp(5102): error C2660: 'vkCmdCopyBufferToImage': function does not take 7 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4974): note: see declaration of 'vkCmdCopyBufferToImage'
+VK.cpp(5102): note: while trying to match the argument list '(VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, int, int, VkBufferImageCopy *)'
+VK.cpp(5243): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5341): error C2039: 'maxFilter': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+VK.cpp(5349): error C2039: 'maxAnisotrpy': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(5102): error C2660: 'vkCmdCopyBufferToImage': function does not take 7 arguments
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4974): note: see declaration of 'vkCmdCopyBufferToImage'
+VK.cpp(5102): note: while trying to match the argument list '(VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, int, int, VkBufferImageCopy *)'
+VK.cpp(5243): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5341): error C2039: 'maxFilter': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+VK.cpp(5349): error C2039: 'maxAnisotrpy': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(5240): error C2146: syntax error: missing ';' before identifier 'vkTsResult'
+VK.cpp(5338): error C2039: 'maxFilter': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+VK.cpp(5346): error C2039: 'maxAnisotrpy': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(5346): error C2039: 'maxAnisotrpy': is not a member of 'VkSamplerCreateInfo'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3917): note: see declaration of 'VkSamplerCreateInfo'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>build.bat
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.exe
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.exe
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>del VK.obj
+Could Not Find C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid\VK.obj
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.44.35211.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\01-Windows\09-TexCoord\02-Pyramid>
