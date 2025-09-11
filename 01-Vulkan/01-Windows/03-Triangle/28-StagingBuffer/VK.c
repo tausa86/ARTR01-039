@@ -4722,6 +4722,19 @@ VkResult TsCreateVertexBuffer(void)
 
     vkCmdCopyBuffer(vkCommandBuffer, vertexData_stagingBuffer_position.vkBuffer, vertexData_position.vkBuffer, 1, &vkBufferCopy);   // 1 => Number of regions and &vkBufferCopy => is a ARRAY
 
+    VkBufferMemoryBarrier vkBufferMemoryBarrier;
+    memset((void *)&vkBufferMemoryBarrier, 0, sizeof(VkBufferMemoryBarrier));   
+
+    vkBufferMemoryBarrier.sType = VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER;
+    vkBufferMemoryBarrier.pNext = NULL;
+    vkBufferMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;  // Memory access stage in pipeline
+    vkBufferMemoryBarrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT; // Memory access stage in pipeline
+    vkBufferMemoryBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+    vkBufferMemoryBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+    vkBufferMemoryBarrier.buffer = vertexData_position.vkBuffer;
+    vkBufferMemoryBarrier.offset = 0;
+    vkBufferMemoryBarrier.size = sizeof(positionData);
+
     vkTsResult = vkEndCommandBuffer(vkCommandBuffer);
     if (VK_SUCCESS != vkTsResult)
     {

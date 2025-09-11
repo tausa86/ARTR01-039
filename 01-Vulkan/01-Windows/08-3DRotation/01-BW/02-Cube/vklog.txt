@@ -62,11 +62,6 @@ WinMain() -> Log file created successfully
 [INFO] Device Type = Discrete GPU (dGPU)
 [INFO] Vendor ID = 0x10de
 [INFO] Device ID = 0x174e
-[INFO] API Version = 1.2.151
-[INFO] Device Name = Intel(R) UHD Graphics 620
-[INFO] Device Type = Integrated GPU (iGPU)
-[INFO] Vendor ID = 0x8086
-[INFO] Device ID = 0x3ea0
 [INFO] TsPrintVKInfo() -> Succeeded to free global vkPhysicalDevice_array at 1805
 [INFO] TsInitialize() -> TsPrintVkInfo() succeeded at 496 
 [INFO] TsFillDeviceExtensionNames() -> First call to vkEnumerateDeviceExtensionProperties() succeeded at 2971
