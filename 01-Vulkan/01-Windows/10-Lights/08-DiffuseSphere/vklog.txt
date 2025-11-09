@@ -1,0 +1,223 @@
+WinMain() -> Log file created successfully
+[ERROR] TsResize() -> Initialization yet not completed or failed at 882 
+[INFO] TsFillInstanceExtensionNames() -> First call to vkEnumerateInstanceExtensionProperties() succeeded at 2362
+[INFO] TsFillInstanceExtensionNames() -> Second call to vkEnumerateInstanceExtensionProperties() succeeded at 2406
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_surface
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_win32_surface
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_external_memory_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_external_semaphore_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_external_fence_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_get_physical_device_properties2
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_get_surface_capabilities2
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_device_group_creation
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_swapchain_colorspace
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_surface_protected_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_debug_report
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_debug_utils
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_NV_external_memory_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_portability_enumeration
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_LUNARG_direct_driver_loading
+[INFO] TsFillInstanceExtensionNames() -> VK_KHR_SURFACE_EXTENSION_NAME found at 2576
+[INFO] TsFillInstanceExtensionNames() -> VK_KHR_WIN32_SURFACE_EXTENSION_NAME found at 2598
+[INFO] TsFillInstanceExtensionNames() -> Validation is ON and required VK_EXT_DEBUG_REPORT_EXTENSION_NAME is supported at 2638
+[INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_KHR_surface
+[INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_KHR_win32_surface
+[INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_EXT_debug_report
+[INFO] TsCreateVulkanInstance() -> TsFillInstanceExtensionNames() succeeded at 2140
+[INFO] TsFillValidationLayerNames() -> First call to vkEnumerateInstanceLayerProperties() succeeded with validationLayerCount 10 at 2706
+[INFO] TsFillValidationLayerNames() -> Second call to vkEnumerateInstanceLayerProperties() succeeded at 2746
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_NV_optimus
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_api_dump
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_gfxreconstruct
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_synchronization2
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_validation
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_monitor
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_screenshot
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_profiles
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_shader_object
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_crash_diagnostic
+[INFO] TsFillValidationLayerNames() -> VK_LAYER_KHRONOS_validation is supported at 2880
+[INFO] TsFillValidationLayerNames() -> Enabled Vulkan Validation Layer Name VK_LAYER_KHRONOS_validation
+[INFO] TsCreateVulkanInstance() -> TsFillValidationLayerNames() succeeded at 2168
+[INFO] TsCreateInstanceInf() -> vkCreateInstance() succeeded at 2282
+[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkCreateDebugReportCallbackEXT() at 2948
+[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkDestroyDebugReportCallbackEXT() at 2972
+[ERROR] TsCreateValidationCallbackFunction() -> vkCreateDebugReportCallbackEXT_fnptr() failed with 0 at 3006
+[INFO] TsCreateVulkanInstance() -> TsCreateValidationCallbackFunction() succeeded at 2310
+[INFO] TsInitialize() -> TsCreateVulkanInstance() succeeded at 507 
+[INFO] TsGetSupportedSurface() -> vkCreateWin32SurfaceKHR() succeeded at 2094
+[INFO] TsInitialize() -> TsGetSupportedSurface() succeeded at 519 
+[INFO] TsGetPhysicalDevice() -> First call to vkEnumeratePhysicalDevices() succeeded at 1930
+[INFO] TsGetPhysicalDevice() -> Second call to vkEnumeratePhysicalDevices() succeeded at 1945
+[INFO] TsGetPhysicalDevice() -> Succeeded to free isQueueSurfaceSupported_array at 1997
+[INFO] TsGetPhysicalDevice() -> Succeeded to free vkQueueFamilyProperties_array at 2004
+[INFO] TsGetPhysicalDevice() -> vkGetPhysicalDeviceProperties() GeForce MX110 physical device with graphics enabled is selected at 2018
+[INFO] TsGetPhysicalDevice() -> is succeeded to select required physical device with graphics enabled at 2019
+[INFO] TsGetPhysicalDevice() -> Selected physical device supports tessellation shader
+[INFO] TsGetPhysicalDevice() -> Selected physical device supports geometry shader
+[INFO] TsInitialize() -> TsGetPhysicalDevice() succeeded at 531 
+[INFO] ********** Print Vulkan Info **********
+[INFO] API Version = 1.2.142
+[INFO] Device Name = GeForce MX110
+[INFO] Device Type = Discrete GPU (dGPU)
+[INFO] Vendor ID = 0x10de
+[INFO] Device ID = 0x174e
+[INFO] TsPrintVKInfo() -> Succeeded to free global vkPhysicalDevice_array at 1899
+[INFO] TsInitialize() -> TsPrintVkInfo() succeeded at 543 
+[INFO] TsFillDeviceExtensionNames() -> First call to vkEnumerateDeviceExtensionProperties() succeeded at 3065
+[INFO] TsFillDeviceExtensionNames() -> Device Count = 91
+[INFO] TsFillDeviceExtensionNames() -> Second call to vkEnumerateDeviceExtensionProperties() succeeded at 3113
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_16bit_storage
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_8bit_storage
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_bind_memory2
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_buffer_device_address
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_create_renderpass2
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_dedicated_allocation
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_depth_stencil_resolve
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_descriptor_update_template
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_device_group
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_draw_indirect_count
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_driver_properties
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_fence
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_fence_win32
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_memory
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_memory_win32
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_semaphore
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_semaphore_win32
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_get_memory_requirements2
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_image_format_list
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_imageless_framebuffer
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_maintenance1
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_maintenance2
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_maintenance3
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_multiview
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_pipeline_executable_properties
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_push_descriptor
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_relaxed_block_layout
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_sampler_mirror_clamp_to_edge
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_sampler_ycbcr_conversion
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_separate_depth_stencil_layouts
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_atomic_int64
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_clock
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_draw_parameters
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_float16_int8
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_float_controls
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_non_semantic_info
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_subgroup_extended_types
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_spirv_1_4
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_storage_buffer_storage_class
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_swapchain
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_swapchain_mutable_format
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_timeline_semaphore
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_uniform_buffer_standard_layout
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_variable_pointers
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_vulkan_memory_model
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_win32_keyed_mutex
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_blend_operation_advanced
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_buffer_device_address
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_calibrated_timestamps
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_conditional_rendering
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_custom_border_color
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_depth_clip_enable
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_depth_range_unrestricted
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_descriptor_indexing
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_discard_rectangles
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_external_memory_host
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_full_screen_exclusive
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_hdr_metadata
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_host_query_reset
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_index_type_uint8
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_inline_uniform_block
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_line_rasterization
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_memory_budget
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_memory_priority
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_pci_bus_info
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_pipeline_creation_cache_control
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_pipeline_creation_feedback
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_private_data
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_robustness2
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_scalar_block_layout
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_separate_stencil_usage
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_shader_demote_to_helper_invocation
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_shader_subgroup_ballot
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_shader_subgroup_vote
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_subgroup_size_control
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_texel_buffer_alignment
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_tooling_info
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_transform_feedback
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_vertex_attribute_divisor
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_ycbcr_image_arrays
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_dedicated_allocation
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_dedicated_allocation_image_aliasing
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_device_diagnostic_checkpoints
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_device_diagnostics_config
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_device_generated_commands
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_external_memory
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_external_memory_win32
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_shader_sm_builtins
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_shader_subgroup_partitioned
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_win32_keyed_mutex
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NVX_multiview_per_view_attributes
+[INFO] TsFillDeviceExtensionNames() -> VK_KHR_SWAPCHAIN_EXTENSION_NAME found at 3241
+[INFO] TsFillDeviceExtensionNames() -> Enabled Vulkan Device Extension Name = VK_KHR_swapchain
+[INFO] TsCreateVulkanDevice() -> TsFillDeviceExtensionNames() succeeded at 3306
+[INFO] TsCreateVulkanDevice() -> vkCreateDevice() succeeded at 3394
+[INFO] TsInitialize() -> TsCreateVulkanDevice() succeeded at 555 
+[INFO] TsGetDeviceQueue() -> vkGetDeviceQueue() succeeded
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3487
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3519
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> vkSurfaceFormatKHR_array freed successfully vkFormat_color: 44 and vkColorSpaceKHR: 0
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 3757 
+[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 3787 
+[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 784 x 561 maxImageCount = 8 and minImageCount = 2 at 3831
+[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3619
+[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3651
+[INFO] TsGetPhysicalDevicePresentMode() -> vkPresentModeKHR_array freed successfully vkPresentModeKHR: 1 
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 3896 
+[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 3960 
+[INFO] TsInitialize() -> TsCreateSwapchain() succeeded at 572 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 3998 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 4014 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 4088 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 4088 
+[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 4258
+[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 4104 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 4135 
+[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 4183 
+[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4195 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4224 
+[INFO] TsInitialize() -> TsCreateImagesAndImageViews() succeeded gives swapchain image count: 2 at 584 
+[INFO] TsCreateCommandPool() -> vkCreateCommandPool() second call succeeded at 4301 
+[INFO] TsInitialize() -> TsCreateCommandPool() succeeded at 599 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4387 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4387 
+[INFO] TsInitialize() -> TsCreateCommandBuffers() succeeded at 621 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() succeeded at 4437 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() succeeded at 4483 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() succeeded at 4495 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() gTsSphereVertices succeeded at 4518 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() gTsSphereNormals succeeded at 4555 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() gTsSphereNormals succeeded at 4599 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() gTsSphereNormals succeeded at 4613 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() gTsSphereNormals succeeded at 4636 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() gTsSphereTexcoords succeeded at 4673 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() gTsSphereTexcoords succeeded at 4717 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() gTsSphereTexcoords succeeded at 4730 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() gTsSphereTexcoords succeeded at 4753 
+[INFO] TsInitialize() -> TsCreateVertexBuffer() succeeded at 638 
+[INFO] TsCreateIndexBuffer() -> vkCreateBuffer() for vertexData_index buffer succeeded at 4800 
+[INFO] TsCreateIndexBuffer() -> vkAllocateMemory() for vertexData_index succeeded at 4847 
+[INFO] TsCreateIndexBuffer() -> vkBindBufferMemory() for vertexData_index succeeded at 4859 
+[INFO] TsCreateIndexBuffer() -> vkMapMemory() for vertexData_index succeeded at 4882 
+[INFO] TsInitialize() -> TsCreateIndexBuffer() succeeded at 649 
+[INFO] TsCreateUniformBuffer() -> vkCreateBuffer() succeeded at 4929 
+[INFO] TsCreateUniformBuffer() -> vkAllocateMemory() succeeded at 4977 
+[INFO] TsCreateUniformBuffer() -> vkBindBufferMemory() succeeded at 4989 
+[INFO] TsCreateUniformBuffer() -> TsUpdateUnifomBuffer() succeeded at 5001 
+[INFO] TsInitialize() -> TsCreateUniformBuffer() succeeded at 661 
+[INFO] TsCreateShaders() -> Succeeded to open Shader.vert.spv at 5142
+[INFO] TsCreateShaders() -> Succeeded to read Shader.vert.spv at 5166
+[INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded at 5206
+[INFO] TsCreateShaders() -> Vertex Shader Module is successfully created!!!
+[INFO] TsCreateShaders() -> Succeeded to open Shader.frag.spv at 5256
+[INFO] TsCreateShaders() ->
