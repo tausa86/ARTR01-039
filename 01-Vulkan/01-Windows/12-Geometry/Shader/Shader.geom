@@ -13,12 +13,12 @@ void main(void)
     // Code
     for(int i = 0; i < 3; i++)
     {
-        gl_Position = myUniformData.mvpMatrix * (gl_in[i].gl_Position + vec4(0.0, 1.0, 0.0, 1.0));
+        gl_Position = (gl_in[i].gl_Position + vec4(0.0, -1.0, 0.0, 1.0));
         EmitVertex();
-        gl_Position = myUniformData.mvpMatrix * (gl_in[i].gl_Position + vec4(-1.0, -1.0, 0.0, 1.0));
+        gl_Position = (gl_in[i].gl_Position + vec4(-1.0, 1.0, 0.0, 1.0));
         EmitVertex();
-        gl_Position = myUniformData.mvpMatrix * (gl_in[i].gl_Position + vec4(1.0, -1.0, 0.0, 1.0));
+        gl_Position = (gl_in[i].gl_Position + vec4(1.0, 1.0, 0.0, 1.0));
         EmitVertex();
-    }
-    EndPrimitive();
+        EndPrimitive();
+    }  
 }
