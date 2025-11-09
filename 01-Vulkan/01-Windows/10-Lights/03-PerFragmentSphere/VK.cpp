@@ -5080,7 +5080,7 @@ VkResult TsUpdateUnifomBuffer(void)
     myuniformData.materialSpecular[2] = 0.7f;
     myuniformData.materialSpecular[3] = 1.0f;
 
-    myuniformData.materialShininess = 128.0f;
+    myuniformData.materialShininess = 50.0f;
 
     // Update key press related uniform
     if(TRUE == bLight)

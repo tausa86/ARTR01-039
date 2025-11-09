@@ -20,8 +20,8 @@ layout(binding = 0) uniform myuniformData
   vec4 lightPosition;
 
   // Material related uniform
-  vec4 materialDiffuse;
   vec4 materialAmbient;
+  vec4 materialDiffuse;  
   vec4 materialSpecular;
   float materialShininess;
 

@@ -19,8 +19,8 @@ layout(binding = 0) uniform myuniformData
   vec4 lightPosition;
 
   // Material related uniform
-  vec4 materialDiffuse;
   vec4 materialAmbient;
+  vec4 materialDiffuse;  
   vec4 materialSpecular;
   float materialShininess;
 
@@ -40,12 +40,12 @@ void main(void)
     
     if(1 == uMyuniformData.lKeyIsPressed)
     {
-      vec4 iCoordinates = uMyuniformData.viewMatrix * uMyuniformData.modelMatrix * vPosition;
+      vec4 eyeCoordinates = uMyuniformData.viewMatrix * uMyuniformData.modelMatrix * vPosition;
       mat3 normalMatrix = mat3(transpose(inverse(uMyuniformData.viewMatrix * uMyuniformData.modelMatrix)));
 
       outTransformedNormal = normalMatrix * vNormal;
-      outLightDirection = vec3(uMyuniformData.lightPosition - iCoordinates);
-      outViewerVector = -iCoordinates.xyz;
+      outLightDirection = vec3(uMyuniformData.lightPosition) - eyeCoordinates.xyz;
+      outViewerVector = -eyeCoordinates.xyz;
     }
     
 }
