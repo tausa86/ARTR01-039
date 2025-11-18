@@ -1,0 +1,289 @@
+Only for GLM we are changing VK.cpp 
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(131): error C2039: 'math4': is not a member of 'glm'
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\glm\ext\matrix_transform.inl(1): note: see declaration of 'glm'
+VK.cpp(131): error C3646: 'modelMatrix': unknown override specifier
+VK.cpp(131): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+VK.cpp(132): error C2039: 'math4': is not a member of 'glm'
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\glm\ext\matrix_transform.inl(1): note: see declaration of 'glm'
+VK.cpp(132): error C3646: 'viewMatrix': unknown override specifier
+VK.cpp(132): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+VK.cpp(629): error C2146: syntax error: missing ';' before identifier 'TsCreateDescriptorPool'
+VK.cpp(4633): error C2039: 'modelMatrix': is not a member of 'MyuniformData'
+VK.cpp(129): note: see declaration of 'MyuniformData'
+VK.cpp(4634): error C2039: 'viewMatrix': is not a member of 'MyuniformData'
+VK.cpp(129): note: see declaration of 'MyuniformData'
+VK.cpp(4640): error C2039: 'Ortho': is not a member of 'glm'
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\glm\ext\matrix_transform.inl(1): note: see declaration of 'glm'
+VK.cpp(4640): error C3861: 'Ortho': identifier not found
+VK.cpp(4651): error C2039: 'Ortho': is not a member of 'glm'
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\glm\ext\matrix_transform.inl(1): note: see declaration of 'glm'
+VK.cpp(4651): error C3861: 'Ortho': identifier not found
+VK.cpp(4665): error C2664: 'VkResult vkMapMemory(VkDevice,VkDeviceMemory,VkDeviceSize,VkDeviceSize,VkMemoryMapFlags,void **)': cannot convert argument 6 from 'void *' to 'void **'
+VK.cpp(4671): note: Conversion from 'void*' to pointer to non-'void' requires an explicit cast
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4268): note: see declaration of 'vkMapMemory'
+VK.cpp(5082): error C2275: 'VkDescriptorPoolSize': illegal use of this type as an expression
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3786): note: see declaration of 'VkDescriptorPoolSize'
+VK.cpp(5130): error C2065: 'Void': undeclared identifier
+VK.cpp(5130): error C2059: syntax error: ')'
+VK.cpp(5149): error C2039: 'pbufferInfo': is not a member of 'VkWriteDescriptorSet'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3824): note: see declaration of 'VkWriteDescriptorSet'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(629): error C2146: syntax error: missing ';' before identifier 'TsCreateDescriptorPool'
+VK.cpp(4640): error C2039: 'Ortho': is not a member of 'glm'
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\glm\ext\matrix_transform.inl(1): note: see declaration of 'glm'
+VK.cpp(4640): error C3861: 'Ortho': identifier not found
+VK.cpp(4651): error C2039: 'Ortho': is not a member of 'glm'
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\glm\ext\matrix_transform.inl(1): note: see declaration of 'glm'
+VK.cpp(4651): error C3861: 'Ortho': identifier not found
+VK.cpp(4665): error C2664: 'VkResult vkMapMemory(VkDevice,VkDeviceMemory,VkDeviceSize,VkDeviceSize,VkMemoryMapFlags,void **)': cannot convert argument 6 from 'void *' to 'void **'
+VK.cpp(4671): note: Conversion from 'void*' to pointer to non-'void' requires an explicit cast
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4268): note: see declaration of 'vkMapMemory'
+VK.cpp(5082): error C2275: 'VkDescriptorPoolSize': illegal use of this type as an expression
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3786): note: see declaration of 'VkDescriptorPoolSize'
+VK.cpp(5130): error C2065: 'Void': undeclared identifier
+VK.cpp(5130): error C2059: syntax error: ')'
+VK.cpp(5149): error C2039: 'pbufferInfo': is not a member of 'VkWriteDescriptorSet'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3824): note: see declaration of 'VkWriteDescriptorSet'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4640): error C2039: 'Ortho': is not a member of 'glm'
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\glm\ext\matrix_transform.inl(1): note: see declaration of 'glm'
+VK.cpp(4640): error C3861: 'Ortho': identifier not found
+VK.cpp(4651): error C2039: 'Ortho': is not a member of 'glm'
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\glm\ext\matrix_transform.inl(1): note: see declaration of 'glm'
+VK.cpp(4651): error C3861: 'Ortho': identifier not found
+VK.cpp(4665): error C2664: 'VkResult vkMapMemory(VkDevice,VkDeviceMemory,VkDeviceSize,VkDeviceSize,VkMemoryMapFlags,void **)': cannot convert argument 6 from 'void *' to 'void **'
+VK.cpp(4671): note: Conversion from 'void*' to pointer to non-'void' requires an explicit cast
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4268): note: see declaration of 'vkMapMemory'
+VK.cpp(5082): error C2275: 'VkDescriptorPoolSize': illegal use of this type as an expression
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3786): note: see declaration of 'VkDescriptorPoolSize'
+VK.cpp(5130): error C2065: 'Void': undeclared identifier
+VK.cpp(5130): error C2059: syntax error: ')'
+VK.cpp(5149): error C2039: 'pbufferInfo': is not a member of 'VkWriteDescriptorSet'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3824): note: see declaration of 'VkWriteDescriptorSet'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(4665): error C2664: 'VkResult vkMapMemory(VkDevice,VkDeviceMemory,VkDeviceSize,VkDeviceSize,VkMemoryMapFlags,void **)': cannot convert argument 6 from 'void *' to 'void **'
+VK.cpp(4671): note: Conversion from 'void*' to pointer to non-'void' requires an explicit cast
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(4268): note: see declaration of 'vkMapMemory'
+VK.cpp(5082): error C2275: 'VkDescriptorPoolSize': illegal use of this type as an expression
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3786): note: see declaration of 'VkDescriptorPoolSize'
+VK.cpp(5130): error C2065: 'Void': undeclared identifier
+VK.cpp(5130): error C2059: syntax error: ')'
+VK.cpp(5149): error C2039: 'pbufferInfo': is not a member of 'VkWriteDescriptorSet'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3824): note: see declaration of 'VkWriteDescriptorSet'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(5082): error C2275: 'VkDescriptorPoolSize': illegal use of this type as an expression
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3786): note: see declaration of 'VkDescriptorPoolSize'
+VK.cpp(5130): error C2065: 'Void': undeclared identifier
+VK.cpp(5130): error C2059: syntax error: ')'
+VK.cpp(5149): error C2039: 'pbufferInfo': is not a member of 'VkWriteDescriptorSet'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3824): note: see declaration of 'VkWriteDescriptorSet'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(5130): error C2065: 'Void': undeclared identifier
+VK.cpp(5130): error C2059: syntax error: ')'
+VK.cpp(5149): error C2039: 'pbufferInfo': is not a member of 'VkWriteDescriptorSet'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3824): note: see declaration of 'VkWriteDescriptorSet'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+VK.cpp(5149): error C2039: 'pbufferInfo': is not a member of 'VkWriteDescriptorSet'
+C:\VulkanSDK\Vulkan\Include\vulkan\vulkan_core.h(3824): note: see declaration of 'VkWriteDescriptorSet'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+LINK : fatal error LNK1181: cannot open input file 'VK.obj'
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>build.bat
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.exe
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>del VK.obj
+Could Not Find C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho\VK.obj
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>cl.exe /c /EHsc /I "C:\VulkanSDK\Vulkan\Include" VK.cpp
+Microsoft (R) C/C++ Optimizing Compiler Version 19.24.28316 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+VK.cpp
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>rc.exe VK.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>link.exe VK.obj VK.res /LIBPATH:C:\VulkanSDK\Vulkan\Lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+Microsoft (R) Incremental Linker Version 14.24.28316.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>VK.exe
+
+C:\ARTR\01-Vulkan\01-Windows\03-Triangle\31-Ortho>
