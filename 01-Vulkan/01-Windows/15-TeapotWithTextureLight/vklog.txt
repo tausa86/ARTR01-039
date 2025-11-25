@@ -362,4 +362,151 @@ WinMain() -> Log file created successfully
 [INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4295 
 [INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4324 
 [INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 6542 
-[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayo
+[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 6296
+[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 6877
+[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 6981
+[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 6997
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 7059 
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 7059 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4487 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4487 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 7248 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 7266 
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 7365 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 7248 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 7266 
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 7365 
+[INFO] TsResize() -> vkDeviceWaitIdle() is done
+[INFO] TsResize() -> vkDestroyFramebuffer() is successfully done for 0 index
+[INFO] TsResize() -> vkDestroyFramebuffer() is successfully done for 1 index
+[INFO] TsResize() -> vkFrameBuffer_array released successfully
+[INFO] TsResize() -> vkFreeCommandBuffers() is successfully done for iteration: 0
+[INFO] TsResize() -> vkFreeCommandBuffers() is successfully done for iteration: 1
+[INFO] TsResize() -> vkCommandBuffer_array is successfully freed
+[INFO] TsResize() -> vkDestroyPipeline() is successfully done
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3587
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3619
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> vkSurfaceFormatKHR_array freed successfully vkFormat_color: 44 and vkColorSpaceKHR: 0
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 3857 
+[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 3887 
+[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 1536 x 864 maxImageCount = 8 and minImageCount = 2 at 3931
+[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3719
+[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3751
+[INFO] TsGetPhysicalDevicePresentMode() -> vkPresentModeKHR_array freed successfully vkPresentModeKHR: 1 
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 3996 
+[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 4060 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 4098 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 4114 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 4188 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 4188 
+[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 4358
+[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 4204 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 4235 
+[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 4283 
+[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4295 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4324 
+[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 6542 
+[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 6296
+[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 6877
+[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 6981
+[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 6997
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 7059 
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 7059 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4487 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4487 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 7248 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 7266 
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 7365 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 7248 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 7266 
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 7365 
+[INFO] TsResize() -> vkDeviceWaitIdle() is done
+[INFO] TsResize() -> vkDestroyFramebuffer() is successfully done for 0 index
+[INFO] TsResize() -> vkDestroyFramebuffer() is successfully done for 1 index
+[INFO] TsResize() -> vkFrameBuffer_array released successfully
+[INFO] TsResize() -> vkFreeCommandBuffers() is successfully done for iteration: 0
+[INFO] TsResize() -> vkFreeCommandBuffers() is successfully done for iteration: 1
+[INFO] TsResize() -> vkCommandBuffer_array is successfully freed
+[INFO] TsResize() -> vkDestroyPipeline() is successfully done
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3587
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3619
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> vkSurfaceFormatKHR_array freed successfully vkFormat_color: 44 and vkColorSpaceKHR: 0
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 3857 
+[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 3887 
+[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 784 x 561 maxImageCount = 8 and minImageCount = 2 at 3931
+[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3719
+[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3751
+[INFO] TsGetPhysicalDevicePresentMode() -> vkPresentModeKHR_array freed successfully vkPresentModeKHR: 1 
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 3996 
+[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 4060 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 4098 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 4114 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 4188 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 4188 
+[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 4358
+[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 4204 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 4235 
+[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 4283 
+[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4295 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4324 
+[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 6542 
+[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 6296
+[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 6877
+[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 6981
+[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 6997
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 7059 
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 7059 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4487 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4487 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 7248 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 7266 
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 7365 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 7248 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 7266 
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 7365 
+[INFO] TsUninitialize() -> vkDeviceWaitIdle() is done
+[INFO] TsUninitialize() -> vkDestroyFence() is successfully done for 0 index
+[INFO] TsUninitialize() -> vkDestroyFence() is successfully done for 1 index
+[INFO] TsUninitialize() -> vkFence_array released successfully
+[INFO] TsUninitialize() -> vkSemaphore_rendercomplete released successfully
+[INFO] TsUninitialize() -> vkSemaphore_backbuffer released successfully
+[INFO] TsUninitialize() -> vkDestroyFramebuffer() is successfully done for 0 index
+[INFO] TsUninitialize() -> vkDestroyFramebuffer() is successfully done for 1 index
+[INFO] TsUninitialize() -> vkFrameBuffer_array released successfully
+[INFO] TsUninitialize() -> vkDestroyPipelineLayout() vkPipelineLayout is successfully released
+[INFO] TsUninitialize() -> vkDestroyDescriptorSetLayout() vkDescriptorSetLayout is successfully released
+[INFO] TsUninitialize() -> vkDestroyShaderModule() vkShaderModule_fragment_shader is successfully done
+[INFO] TsUninitialize() -> vkDestroyShaderModule() vkShaderModule_vertex_shader is successfully done
+[INFO] TsUninitialize() -> vkDestroyBuffer() is successfully done for uniformData.vkBuffer
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for uniformData.vkDeviceMemory
+[INFO] TsUninitialize() -> vkFreeMemory() vertexData_normal is successfully done
+[INFO] TsUninitialize() -> vkDestroyBuffer() vertexData_normal is successfully done
+[INFO] TsUninitialize() -> vkDestroySampler() is successfully done for vkSampler_texture
+[INFO] TsUninitialize() -> vkDestroyImageView() is successfully done for vkSampler_texture
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for vkDeviceMemory_texture
+[INFO] TsUninitialize() -> vkDestroyImage() is successfully done for vkImage_texture
+[INFO] TsUninitialize() -> vkFreeMemory() vertexData_texcoord is successfully done
+[INFO] TsUninitialize() -> vkDestroyBuffer() vertexData_texcoord is successfully done
+[INFO] TsUninitialize() -> vkFreeMemory() vertexData_index is successfully done
+[INFO] TsUninitialize() -> vkDestroyBuffer() vertexData_index is successfully done
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done
+[INFO] TsUninitialize() -> vkDestroyBuffer() is successfully done
+[INFO] TsUninitialize() -> vkDestroyPipeline() is successfully done
+[INFO] TsUninitialize() -> vkDestroyDescriptorPool() is successfully done & Descriptor Set is destroyed successfully
+[INFO] TsUninitialize() -> vkDestroyRenderPass() is successfully done
+[INFO] TsUninitialize() -> vkFreeCommandBuffers() is successfully done for iteration: 0
+[INFO] TsUninitialize() -> vkFreeCommandBuffers() is successfully done for iteration: 1
+[INFO] TsUninitialize() -> vkCommandBuffer_array is successfully freed
+[INFO] TsUninitialize() -> vkDestroyCommandPool() is successfully done
+[INFO] TsUninitialize() -> vkDestroyImageView() is successfully done for vkImageView_depth
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for vkDeviceMemory_depth
+[INFO] TsUninitialize() -> vkDestroyImage() is successfully done for vkImage_depth
+[INFO] TsUninitialize() -> vkDestroyImageView() is successfully done for iteration: 0
+[INFO] TsUninitialize() -> vkDestroyImageView() is successfully done for iteration: 1
+[INFO] TsUninitialize() -> swapchainImageView_array is successfully destroyed
+[INFO] TsUninitialize() -> swapchainImage_array is successfully destroyed
+[INFO] TsUninitialize() -> vkDestroySwapchainKHR() is successfully done
+[INFO] TsUninitialize() -> vkDestroyDevice() is successfully done
+[INFO] TsUninitialize() -> vkDestroySurfaceKHR() successfully done
+[INFO] TsUninitialize() -> vkDestroyInstance() successfully done
+[INFO] TsUninitialize() -> Log file closed successfully and program closed successfully
