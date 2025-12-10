@@ -1,0 +1,620 @@
+WinMain() -> Log file created successfully
+[ERROR] TsResize_fbo() -> Initialization yet not completed or failed at 6544 
+[ERROR] TsResize() -> Initialization yet not completed or failed at 1163 
+[INFO] TsFillInstanceExtensionNames() -> First call to vkEnumerateInstanceExtensionProperties() succeeded at 2603
+[INFO] TsFillInstanceExtensionNames() -> Second call to vkEnumerateInstanceExtensionProperties() succeeded at 2647
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_surface
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_win32_surface
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_external_memory_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_external_semaphore_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_external_fence_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_get_physical_device_properties2
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_get_surface_capabilities2
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_device_group_creation
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_swapchain_colorspace
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_surface_protected_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_debug_report
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_debug_utils
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_NV_external_memory_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_portability_enumeration
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_LUNARG_direct_driver_loading
+[INFO] TsFillInstanceExtensionNames() -> VK_KHR_SURFACE_EXTENSION_NAME found at 2817
+[INFO] TsFillInstanceExtensionNames() -> VK_KHR_WIN32_SURFACE_EXTENSION_NAME found at 2839
+[INFO] TsFillInstanceExtensionNames() -> Validation is ON and required VK_EXT_DEBUG_REPORT_EXTENSION_NAME is supported at 2879
+[INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_KHR_surface
+[INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_KHR_win32_surface
+[INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_EXT_debug_report
+[INFO] TsCreateVulkanInstance() -> TsFillInstanceExtensionNames() succeeded at 2381
+[INFO] TsFillValidationLayerNames() -> First call to vkEnumerateInstanceLayerProperties() succeeded with validationLayerCount 10 at 2947
+[INFO] TsFillValidationLayerNames() -> Second call to vkEnumerateInstanceLayerProperties() succeeded at 2987
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_NV_optimus
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_api_dump
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_gfxreconstruct
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_synchronization2
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_validation
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_monitor
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_screenshot
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_profiles
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_shader_object
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_crash_diagnostic
+[INFO] TsFillValidationLayerNames() -> VK_LAYER_KHRONOS_validation is supported at 3121
+[INFO] TsFillValidationLayerNames() -> Enabled Vulkan Validation Layer Name VK_LAYER_KHRONOS_validation
+[INFO] TsCreateVulkanInstance() -> TsFillValidationLayerNames() succeeded at 2409
+[INFO] TsCreateInstanceInf() -> vkCreateInstance() succeeded at 2523
+[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkCreateDebugReportCallbackEXT() at 3189
+[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkDestroyDebugReportCallbackEXT() at 3213
+[ERROR] TsCreateValidationCallbackFunction() -> vkCreateDebugReportCallbackEXT_fnptr() failed with 0 at 3247
+[INFO] TsCreateVulkanInstance() -> TsCreateValidationCallbackFunction() succeeded at 2551
+[INFO] TsInitialize() -> TsCreateVulkanInstance() succeeded at 627 
+[INFO] TsGetSupportedSurface() -> vkCreateWin32SurfaceKHR() succeeded at 2335
+[INFO] TsInitialize() -> TsGetSupportedSurface() succeeded at 639 
+[INFO] TsGetPhysicalDevice() -> First call to vkEnumeratePhysicalDevices() succeeded at 2171
+[INFO] TsGetPhysicalDevice() -> Second call to vkEnumeratePhysicalDevices() succeeded at 2186
+[INFO] TsGetPhysicalDevice() -> Succeeded to free isQueueSurfaceSupported_array at 2238
+[INFO] TsGetPhysicalDevice() -> Succeeded to free vkQueueFamilyProperties_array at 2245
+[INFO] TsGetPhysicalDevice() -> vkGetPhysicalDeviceProperties() GeForce MX110 physical device with graphics enabled is selected at 2259
+[INFO] TsGetPhysicalDevice() -> is succeeded to select required physical device with graphics enabled at 2260
+[INFO] TsGetPhysicalDevice() -> Selected physical device supports tessellation shader
+[INFO] TsGetPhysicalDevice() -> Selected physical device supports geometry shader
+[INFO] TsInitialize() -> TsGetPhysicalDevice() succeeded at 651 
+[INFO] ********** Print Vulkan Info **********
+[INFO] API Version = 1.2.142
+[INFO] Device Name = GeForce MX110
+[INFO] Device Type = Discrete GPU (dGPU)
+[INFO] Vendor ID = 0x10de
+[INFO] Device ID = 0x174e
+[INFO] TsPrintVKInfo() -> Succeeded to free global vkPhysicalDevice_array at 2140
+[INFO] TsInitialize() -> TsPrintVkInfo() succeeded at 663 
+[INFO] TsFillDeviceExtensionNames() -> First call to vkEnumerateDeviceExtensionProperties() succeeded at 3306
+[INFO] TsFillDeviceExtensionNames() -> Device Count = 91
+[INFO] TsFillDeviceExtensionNames() -> Second call to vkEnumerateDeviceExtensionProperties() succeeded at 3354
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_16bit_storage
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_8bit_storage
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_bind_memory2
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_buffer_device_address
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_create_renderpass2
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_dedicated_allocation
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_depth_stencil_resolve
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_descriptor_update_template
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_device_group
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_draw_indirect_count
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_driver_properties
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_fence
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_fence_win32
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_memory
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_memory_win32
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_semaphore
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_external_semaphore_win32
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_get_memory_requirements2
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_image_format_list
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_imageless_framebuffer
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_maintenance1
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_maintenance2
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_maintenance3
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_multiview
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_pipeline_executable_properties
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_push_descriptor
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_relaxed_block_layout
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_sampler_mirror_clamp_to_edge
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_sampler_ycbcr_conversion
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_separate_depth_stencil_layouts
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_atomic_int64
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_clock
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_draw_parameters
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_float16_int8
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_float_controls
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_non_semantic_info
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_shader_subgroup_extended_types
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_spirv_1_4
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_storage_buffer_storage_class
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_swapchain
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_swapchain_mutable_format
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_timeline_semaphore
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_uniform_buffer_standard_layout
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_variable_pointers
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_vulkan_memory_model
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_KHR_win32_keyed_mutex
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_blend_operation_advanced
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_buffer_device_address
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_calibrated_timestamps
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_conditional_rendering
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_custom_border_color
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_depth_clip_enable
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_depth_range_unrestricted
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_descriptor_indexing
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_discard_rectangles
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_external_memory_host
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_full_screen_exclusive
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_hdr_metadata
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_host_query_reset
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_index_type_uint8
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_inline_uniform_block
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_line_rasterization
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_memory_budget
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_memory_priority
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_pci_bus_info
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_pipeline_creation_cache_control
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_pipeline_creation_feedback
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_private_data
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_robustness2
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_scalar_block_layout
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_separate_stencil_usage
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_shader_demote_to_helper_invocation
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_shader_subgroup_ballot
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_shader_subgroup_vote
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_subgroup_size_control
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_texel_buffer_alignment
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_tooling_info
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_transform_feedback
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_vertex_attribute_divisor
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_EXT_ycbcr_image_arrays
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_dedicated_allocation
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_dedicated_allocation_image_aliasing
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_device_diagnostic_checkpoints
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_device_diagnostics_config
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_device_generated_commands
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_external_memory
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_external_memory_win32
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_shader_sm_builtins
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_shader_subgroup_partitioned
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NV_win32_keyed_mutex
+[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = VK_NVX_multiview_per_view_attributes
+[INFO] TsFillDeviceExtensionNames() -> VK_KHR_SWAPCHAIN_EXTENSION_NAME found at 3482
+[INFO] TsFillDeviceExtensionNames() -> Enabled Vulkan Device Extension Name = VK_KHR_swapchain
+[INFO] TsCreateVulkanDevice() -> TsFillDeviceExtensionNames() succeeded at 3547
+[INFO] TsCreateVulkanDevice() -> vkCreateDevice() succeeded at 3635
+[INFO] TsInitialize() -> TsCreateVulkanDevice() succeeded at 675 
+[INFO] TsGetDeviceQueue() -> vkGetDeviceQueue() succeeded
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3728
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3760
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> vkSurfaceFormatKHR_array freed successfully vkFormat_color: 44 and vkColorSpaceKHR: 0
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 3998 
+[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 4028 
+[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 784 x 561 maxImageCount = 8 and minImageCount = 2 at 4072
+[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3860
+[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3892
+[INFO] TsGetPhysicalDevicePresentMode() -> vkPresentModeKHR_array freed successfully vkPresentModeKHR: 1 
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 4137 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateSwapchainKHR(): pCreateInfo->imageUsage has VkImageUsageFlagBits values (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR) that requires the extensions VK_KHR_fragment_shading_rate or VK_NV_shading_rate_image.
+The Vulkan spec states: imageUsage must be a valid combination of VkImageUsageFlagBits values (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkSwapchainCreateInfoKHR-imageUsage-parameter)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateSwapchainKHR(): pCreateInfo->imageUsage (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR) are not in supportedUsageFlags (VK_IMAGE_USAGE_TRANSFER_SRC_BIT|VK_IMAGE_USAGE_TRANSFER_DST_BIT|VK_IMAGE_USAGE_SAMPLED_BIT|VK_IMAGE_USAGE_STORAGE_BIT|VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT|VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT).
+The Vulkan spec states: If presentMode is VK_PRESENT_MODE_FIFO_LATEST_READY_EXT, VK_PRESENT_MODE_IMMEDIATE_KHR, VK_PRESENT_MODE_MAILBOX_KHR, VK_PRESENT_MODE_FIFO_KHR or VK_PRESENT_MODE_FIFO_RELAXED_KHR, imageUsage must be a subset of the supported usage flags present in the supportedUsageFlags member of the VkSurfaceCapabilitiesKHR structure returned by vkGetPhysicalDeviceSurfaceCapabilitiesKHR for surface (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkSwapchainCreateInfoKHR-presentMode-01427)
+[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 4201 
+[INFO] TsInitialize() -> TsCreateSwapchain() succeeded at 692 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 4239 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 4255 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 4329 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 4329 
+[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 4499
+[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 4345 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 4376 
+[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 4424 
+[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4436 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4465 
+[INFO] TsInitialize() -> TsCreateImagesAndImageViews() succeeded gives swapchain image count: 2 at 704 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImage() succeeded at 6996 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkAllocateMemory() succeeded for vkDeviceMemory_fbo at 7036 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkBindImageMemory() succeeded at 7047 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImageView() for buffer copy image succeeded at 7077 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateSampler() succeeded at 7107 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImage() for depth image succeeded at 7138 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkAllocateMemory() succeeded at 7186 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkBindImageMemory() succeeded at 7198 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImageView() for depth image succeeded at 7227 
+[INFO] TsInitialize() -> TsCreateImagesAndImageViews_fbo() succeeded gives swapchain image count: 2 at 715 
+[INFO] TsCreateCommandPool() -> vkCreateCommandPool() second call succeeded at 4542 
+[INFO] TsInitialize() -> TsCreateCommandPool() succeeded at 727 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4628 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4628 
+[INFO] TsInitialize() -> TsCreateCommandBuffers() succeeded at 739 
+[INFO] TsCreateCommandBuffer_fbo() -> vkAllocateCommandBuffers() succeeded at 7264 
+[INFO] TsInitialize() -> TsCreateCommandBuffer_fbo() succeeded at 750 
+[INFO] TsCreateTexture() -> vkCreateBuffer() for vkBufferCreateInfo_staging_buffer succeeded at 7856 
+[INFO] TsCreateTexture() -> vkAllocateMemory() for vkDeviceMemory_staging_buffer succeeded at 7895 
+[INFO] TsCreateTexture() -> vkBindBufferMemory() for vkDeviceMemory_staging_buffer succeeded at 7907 
+[INFO] TsCreateTexture() -> vkMapMemory() for vkDeviceMemory_staging_buffer succeeded at 7920 
+[INFO] TsCreateTexture() -> stbi_image_free() free of image is succeeded at 7930 
+[INFO] TsCreateTexture() -> vkCreateImage() succeeded at 7961 
+[INFO] TsCreateTexture() -> vkAllocateMemory() succeeded for vkDeviceMemory_texture_fbo at 8001 
+[INFO] TsCreateTexture() -> vkBindImageMemory() succeeded at 8012 
+[INFO] TsCreateTexture() -> vkAllocateCommandBuffers() succeeded to 'Command Copy' at 8035 
+[INFO] TsCreateTexture() -> vkBeginCommandBuffer() succeeded at 8053 
+[INFO] TsCreateTexture() -> vkEndCommandBuffer() succeeded at 8110 
+[INFO] TsCreateTexture() -> vkQueueSubmit() succeeded at 8129 
+[INFO] TsCreateTexture() -> vkQueueWaitIdle() succeeded at 8140 
+[INFO] TsCreateTexture() -> vkFreeCommandBuffers() succeeded for vkCommandBuffer_transition_image_layout at 8147 
+[INFO] TsCreateTexture() -> vkAllocateCommandBuffers() succeeded to 'buffer to image Copy' at 8170 
+[INFO] TsCreateTexture() -> vkBeginCommandBuffer() succeeded for buffer to image copy at 8188 
+[INFO] TsCreateTexture() -> vkEndCommandBuffer() succeeded for vkCommandBuffer_buffer_to_image_copy at 8219 
+[INFO] TsCreateTexture() -> vkQueueSubmit() succeeded for vkCommandBuffer_buffer_to_image_copy at 8238 
+[INFO] TsCreateTexture() -> vkQueueWaitIdle() succeeded for vkCommandBuffer_buffer_to_image_copy at 8249 
+[INFO] TsCreateTexture() -> vkFreeCommandBuffers() succeeded for vkCommandBuffer_buffer_to_image_copy at 8256 
+[INFO] TsCreateTexture() -> vkAllocateCommandBuffers() succeeded to 'Command Copy' at 8277 
+[INFO] TsCreateTexture() -> vkBeginCommandBuffer() succeeded at 8295 
+[INFO] TsCreateTexture() -> vkEndCommandBuffer() succeeded at 8355 
+[INFO] TsCreateTexture() -> vkQueueSubmit() succeeded at 8373 
+[INFO] TsCreateTexture() -> vkQueueWaitIdle() succeeded at 8384 
+[INFO] TsCreateTexture() -> vkFreeCommandBuffers() succeeded for vkCommandBuffer_transition_image_layout at 8391 
+[INFO] TsCreateTexture() -> [Buffer Copy] vkFreeMemory() vkDeviceMemory_staging_buffer succeeded at 8399 
+[INFO] TsCreateTexture() -> [Buffer Copy] vkDestroyBuffer() vkBuffer_staging_buffer succeeded at 8406 
+[INFO] TsCreateTexture() -> vkCreateImageView() for buffer copy image succeeded at 8436 
+[INFO] TsCreateTexture() -> vkCreateSampler() for buffer copy image succeeded at 8467 
+[INFO] TsInitialize() -> TsCreateTexture() succeeded for marble.png at 762 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() succeeded at 4818 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() succeeded at 4864 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() succeeded at 4876 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() succeeded at 4898 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() for vertexData_texcord succeeded at 4935 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() for vertexData_texcord succeeded at 4980 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() for vertexData_texcord succeeded at 4996 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() for vertexData_texcord succeeded at 5020 
+[INFO] TsInitialize() -> TsCreateVertexBuffer() succeeded at 774 
+[INFO] TsCreateVertexBuffer_fbo() -> vkCreateBuffer() succeeded at 7305 
+[INFO] TsCreateVertexBuffer_fbo() -> vkAllocateMemory() succeeded at 7379 
+[INFO] TsCreateVertexBuffer_fbo() -> vkBindBufferMemory() succeeded at 7399 
+[INFO] TsCreateVertexBuffer_fbo() -> vkMapMemory() gTsSphereVertices succeeded at 7422 
+[INFO] TsCreateVertexBuffer_fbo() -> vkCreateBuffer() vertexData_normal_fbo succeeded at 7459 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() vertexData_normal_fbo succeeded at 7503 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() vertexData_normal_fbo succeeded at 7515 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() vertexData_normal_fbo succeeded at 7538 
+[INFO] TsCreateVertexBuffer_fbo() -> vkCreateBuffer() gTsSphereTexcoords succeeded at 7577 
+[INFO] TsCreateVertexBuffer_fbo() -> vkAllocateMemory() gTsSphereTexcoords succeeded at 7621 
+[INFO] TsCreateVertexBuffer_fbo() -> vkBindBufferMemory() gTsSphereTexcoords succeeded at 7634 
+[INFO] TsCreateVertexBuffer_fbo() -> vkMapMemory() gTsSphereTexcoords succeeded at 7657 
+[INFO] TsInitialize() -> TsCreateVertexBuffer_fbo() succeeded at 822 
+[INFO] TsCreateIndexBuffer_fbo() -> vkCreateBuffer() for vertexData_index_fbo buffer succeeded at 7703 
+[INFO] TsCreateIndexBuffer_fbo() -> vkAllocateMemory() for vertexData_index_fbo succeeded at 7750 
+[INFO] TsCreateIndexBuffer_fbo() -> vkBindBufferMemory() for vertexData_index_fbo succeeded at 7762 
+[INFO] TsCreateIndexBuffer_fbo() -> vkMapMemory() for vertexData_index_fbo succeeded at 7785 
+[INFO] TsInitialize() -> TsCreateIndexBuffer_fbo() succeeded at 833 
+[INFO] TsCreateUniformBuffer() -> vkCreateBuffer() succeeded at 5067 
+[INFO] TsCreateUniformBuffer() -> vkAllocateMemory() succeeded at 5115 
+[INFO] TsCreateUniformBuffer() -> vkBindBufferMemory() succeeded at 5127 
+[INFO] TsCreateUniformBuffer() -> TsUpdateUnifomBuffer() succeeded at 5139 
+[INFO] TsInitialize() -> TsCreateUniformBuffer() succeeded at 845 
+[INFO] TsCreateUniformBuffer_fbo() -> vkCreateBuffer() succeeded at 8507 
+[INFO] TsCreateUniformBuffer_fbo() -> vkAllocateMemory() succeeded at 8555 
+[INFO] TsCreateUniformBuffer_fbo() -> vkBindBufferMemory() succeeded at 8567 
+[INFO] TsCreateUniformBuffer_fbo() -> TsUpdateUnifomBuffer_fbo() succeeded at 8579 
+[INFO] TsInitialize() -> TsCreateUniformBuffer_fbo() succeeded at 856 
+[INFO] TsCreateShaders() -> Succeeded to open Shader.vert.spv at 5261
+[INFO] TsCreateShaders() -> Succeeded to read Shader.vert.spv at 5285
+[INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded at 5325
+[INFO] TsCreateShaders() -> Vertex Shader Module is successfully created!!!
+[INFO] TsCreateShaders() -> Succeeded to open Shader.frag.spv at 5375
+[INFO] TsCreateShaders() -> Succeeded to read Shader.frag.spv at 5423
+[INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded in fragment shader at 5469
+[INFO] TsCreateShaders() -> Fragment Shader Module is successfully created!!!
+[INFO] TsInitialize() -> TsCreateShaders() succeeded at 868 
+[INFO] TsCreateShaders_fbo() -> Succeeded to open Shader_Teapot.vert.spv at 9057
+[INFO] TsCreateShaders_fbo() -> Succeeded to read Shader_Teapot.vert.spv at 9081
+[INFO] TsCreateShaders_fbo() -> vkCreateShaderModule() Succeeded at 9104
+[INFO] TsCreateShaders_fbo() -> Vertex Shader Module is successfully created!!!
+[INFO] TsCreateShaders_fbo() -> Succeeded to open Shader_Teapot.frag.spv at 9129
+[INFO] TsCreateShaders_fbo() -> Succeeded to read Shader_Teapot.frag.spv at 9154
+[INFO] TsCreateShaders_fbo() -> vkCreateShaderModule() Succeeded in fragment shader at 9177
+[INFO] TsCreateShaders_fbo() -> Fragment Shader Module is successfully created!!!
+[INFO] TsInitialize() -> TsCreateShaders_fbo() succeeded at 879 
+[INFO] TsCreateDescriptorSetLayout() -> vkCreateDescriptorSetLayout() Succeeded at 5545
+[INFO] TsInitialize() -> TsCreateDescriptorSetLayout() succeeded at 891 
+[INFO] TsCreateDescriptorSetLayout_fbo() -> vkCreateDescriptorSetLayout() Succeeded at 8631
+[INFO] TsInitialize() -> TsCreateDescriptorSetLayout_fbo() succeeded at 902 
+[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 5601
+[INFO] TsInitialize() -> TsCreatePipelineLayout() succeeded at 914 
+[INFO] TsCreatePipelineLayout_fbo() -> vkCreatePipelineLayoutg() Succeeded at 8665
+[INFO] TsInitialize() -> TsCreatePipelineLayout_fbo() succeeded at 925 
+[INFO] TsCreateDescriptorPool() -> vkCreateDescriptorPool() succeeded at 5649 
+[INFO] TsInitialize() -> TsCreateDescriptorPool() succeeded at 937 
+[INFO] TsCreateDescriptorPool_fbo() -> vkCreateDescriptorPool() succeeded at 8709 
+[INFO] TsInitialize() -> TsCreateDescriptorPool() succeeded at 948 
+[INFO] TsCreateDescriptorSet() -> vkAllocateDescriptorSets() succeeded at 5681 
+[INFO] vkUpdateDescriptorSets() is run successfully!!! at 5736
+[INFO] TsInitialize() -> TsCreateDescriptorSet() succeeded at 960 
+[INFO] TsCreateDescriptorSet_fbo() -> vkAllocateDescriptorSets() succeeded at 8741 
+[INFO] vkUpdateDescriptorSets() is run successfully!!! at 8795
+[INFO] TsInitialize() -> TsCreateDescriptorSet_fbo() succeeded at 971 
+[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 5851 
+[INFO] TsInitialize() -> TsCreateRenderPass() succeeded at 983 
+[INFO] TsCreateRenderPass_fbo() -> vkCreateRenderPass() succeeded at 8898 
+[INFO] TsInitialize() -> TsCreateRenderPass_fbo() succeeded at 994 
+[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 6065
+[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 6117
+[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 6125
+[INFO] TsInitialize() -> TsCreatePipeline() succeeded at 1006 
+[INFO] TsCreatePipeline_fbo() -> vkCreatePipelineCache() Succeeded at 9436
+[INFO] TsCreatePipeline_fbo() -> vkCreateGraphicsPipelines() Succeeded at 9488
+[INFO] TsCreatePipeline_fbo() -> vkDestroyPipelineCache() Succeeded at 9496
+[INFO] TsInitialize() -> TsCreatePipeline_fbo() succeeded at 1017 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateFramebuffer(): pCreateInfo->pAttachments[0] expected usage (VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) conflicts with the image's flags (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR).
+The Vulkan spec states: If flags does not include VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT, each element of pAttachments that is used as a color attachment or resolve attachment by renderPass must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-VkFramebufferCreateInfo-pAttachments-00877)
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 6175 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateFramebuffer(): pCreateInfo->pAttachments[0] expected usage (VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) conflicts with the image's flags (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR).
+The Vulkan spec states: If flags does not include VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT, each element of pAttachments that is used as a color attachment or resolve attachment by renderPass must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-VkFramebufferCreateInfo-pAttachments-00877)
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 6175 
+[INFO] TsInitialize() -> TsCreateFrameBuffers() succeeded at 1029 
+[INFO] TsCreateFrameBuffers_fbo() -> vkCreateFramebuffer() succeeded  for 9538 
+[INFO] TsInitialize() -> TsCreateFrameBuffer_fbo() succeeded at 1040 
+[INFO] TsCreateSemaphores() -> vkCreateSemaphore() succeeded for vkSemaphore_backbuffer at 6234 
+[INFO] TsCreateSemaphores() -> vkCreateSemaphore() succeeded for vkSemaphore_rendercomplete at 6258 
+[INFO] TsInitialize() -> TsCreateSemaphores() succeeded at 1052 
+[INFO] TsCreateSemaphore_fbo() -> vkCreateSemaphore() succeeded for vkSemaphore_fbo at 8927 
+[INFO] TsInitialize() -> TsCreateSemaphore_fbo() succeeded at 1063 
+[INFO] TsCreateFences() -> vkCreateFence() succeeded for 0 index at 6330 
+[INFO] TsCreateFences() -> vkCreateFence() succeeded for 1 index at 6330 
+[INFO] TsInitialize() -> TsCreateFences() succeeded at 1075 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 6364 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 6382 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x350000000035) was created with pCreateInfo->pAttachments[0].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, but VkFramebuffer 0x3b000000003b pAttachments[0] (VkImageView 0x60000000006) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_SAMPLED_BIT or VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00897)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x350000000035) was created with pCreateInfo->pSubpasses[0].pColorAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, but VkFramebuffer 0x3b000000003b pAttachments[0] (VkImageView 0x60000000006) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00895)
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 6475 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 6364 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 6382 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x350000000035) was created with pCreateInfo->pAttachments[0].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, but VkFramebuffer 0x3c000000003c pAttachments[0] (VkImageView 0x70000000007) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_SAMPLED_BIT or VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00897)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x350000000035) was created with pCreateInfo->pSubpasses[0].pColorAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, but VkFramebuffer 0x3c000000003c pAttachments[0] (VkImageView 0x70000000007) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00895)
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 6475 
+[INFO] TsInitialize() -> TsBuildCommandBuffers() succeeded at 1100 
+[INFO] TsBuildCommandBuffer_fbo() -> vkResetCommandBuffer() succeeded at 9561 
+[INFO] TsBuildCommandBuffer_fbo() -> vkBeginCommandBuffer() succeeded at 9579 
+[INFO] TsBuildCommandBuffer_fbo() -> vkEndCommandBuffer() succeeded at 9674 
+[INFO] TsInitialize() -> TsBuildCommandBuffer_fbo() succeeded at 1126 
+[INFO] TsInitialize() -> Initialization completed successfully at 1132 
+[INFO] Winmain() TsInitialize() succeeded
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkQueuePresentKHR(): pPresentInfo->pSwapchains[0] images passed to present must be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR but is in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
+The Vulkan spec states: Each element of pImageIndices must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the pSwapchains array, and the presented image subresource must be in the VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR layout at the time the operation is executed on a VkDevice (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkPresentInfoKHR-pImageIndices-01430)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkQueuePresentKHR(): pPresentInfo->pSwapchains[0] images passed to present must be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR but is in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
+The Vulkan spec states: Each element of pImageIndices must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the pSwapchains array, and the presented image subresource must be in the VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR layout at the time the operation is executed on a VkDevice (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkPresentInfoKHR-pImageIndices-01430)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkQueuePresentKHR(): pPresentInfo->pSwapchains[0] images passed to present must be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR but is in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
+The Vulkan spec states: Each element of pImageIndices must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the pSwapchains array, and the presented image subresource must be in the VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR layout at the time the operation is executed on a VkDevice (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkPresentInfoKHR-pImageIndices-01430)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkQueuePresentKHR(): pPresentInfo->pSwapchains[0] images passed to present must be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR but is in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
+The Vulkan spec states: Each element of pImageIndices must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the pSwapchains array, and the presented image subresource must be in the VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR layout at the time the operation is executed on a VkDevice (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkPresentInfoKHR-pImageIndices-01430)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkQueuePresentKHR(): pPresentInfo->pSwapchains[0] images passed to present must be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR but is in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
+The Vulkan spec states: Each element of pImageIndices must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the pSwapchains array, and the presented image subresource must be in the VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR layout at the time the operation is executed on a VkDevice (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkPresentInfoKHR-pImageIndices-01430)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkQueuePresentKHR(): pPresentInfo->pSwapchains[0] images passed to present must be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR but is in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
+The Vulkan spec states: Each element of pImageIndices must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the pSwapchains array, and the presented image subresource must be in the VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR layout at the time the operation is executed on a VkDevice (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkPresentInfoKHR-pImageIndices-01430)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkQueuePresentKHR(): pPresentInfo->pSwapchains[0] images passed to present must be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR but is in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
+The Vulkan spec states: Each element of pImageIndices must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the pSwapchains array, and the presented image subresource must be in the VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR layout at the time the operation is executed on a VkDevice (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkPresentInfoKHR-pImageIndices-01430)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkQueuePresentKHR(): pPresentInfo->pSwapchains[0] images passed to present must be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR but is in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
+The Vulkan spec states: Each element of pImageIndices must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the pSwapchains array, and the presented image subresource must be in the VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR layout at the time the operation is executed on a VkDevice (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkPresentInfoKHR-pImageIndices-01430)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkQueuePresentKHR(): pPresentInfo->pSwapchains[0] images passed to present must be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR but is in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
+The Vulkan spec states: Each element of pImageIndices must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the pSwapchains array, and the presented image subresource must be in the VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR layout at the time the operation is executed on a VkDevice (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkPresentInfoKHR-pImageIndices-01430)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = (Warning - This VUID has now been reported 10 times, which is the duplicated_message_limit value, this will be the last time reporting it).
+vkQueuePresentKHR(): pPresentInfo->pSwapchains[0] images passed to present must be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR but is in VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
+The Vulkan spec states: Each element of pImageIndices must be the index of a presentable image acquired from the swapchain specified by the corresponding element of the pSwapchains array, and the presented image subresource must be in the VK_IMAGE_LAYOUT_PRESENT_SRC_KHR or VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR layout at the time the operation is executed on a VkDevice (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkPresentInfoKHR-pImageIndices-01430)
+[INFO] TsResize_fbo() -> vkDestroyFramebuffer() is successfully done at 6576 
+[INFO] TsResize_fbo() -> vkFreeCommandBuffers() is successfully done at 6583
+[INFO] TsResize_fbo() -> vkDestroyPipeline() is successfully done
+[INFO] TsResize_fbo() -> vkDestroySampler() is successfully done for vkSampler_fbo
+[INFO] TsResize_fbo() -> vkDestroyImageView() is successfully done for vkImageView_fbo
+[INFO] TsResize_fbo() -> vkFreeMemory() is successfully done for vkDeviceMemory_fbo
+[INFO] TsResize_fbo() -> vkDestroyImage() is successfully done for vkImage_fbo
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImage() succeeded at 6996 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkAllocateMemory() succeeded for vkDeviceMemory_fbo at 7036 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkBindImageMemory() succeeded at 7047 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImageView() for buffer copy image succeeded at 7077 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateSampler() succeeded at 7107 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImage() for depth image succeeded at 7138 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkAllocateMemory() succeeded at 7186 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkBindImageMemory() succeeded at 7198 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImageView() for depth image succeeded at 7227 
+[INFO] TsCreateRenderPass_fbo() -> vkCreateRenderPass() succeeded at 8898 
+[INFO] TsCreatePipelineLayout_fbo() -> vkCreatePipelineLayoutg() Succeeded at 8665
+[INFO] TsCreatePipeline_fbo() -> vkCreatePipelineCache() Succeeded at 9436
+[INFO] TsCreatePipeline_fbo() -> vkCreateGraphicsPipelines() Succeeded at 9488
+[INFO] TsCreatePipeline_fbo() -> vkDestroyPipelineCache() Succeeded at 9496
+[INFO] TsCreateFrameBuffers_fbo() -> vkCreateFramebuffer() succeeded  for 9538 
+[INFO] TsCreateCommandBuffer_fbo() -> vkAllocateCommandBuffers() succeeded at 7264 
+[INFO] TsBuildCommandBuffer_fbo() -> vkResetCommandBuffer() succeeded at 9561 
+[INFO] TsBuildCommandBuffer_fbo() -> vkBeginCommandBuffer() succeeded at 9579 
+[INFO] TsBuildCommandBuffer_fbo() -> vkEndCommandBuffer() succeeded at 9674 
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3728
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3760
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> vkSurfaceFormatKHR_array freed successfully vkFormat_color: 44 and vkColorSpaceKHR: 0
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 3998 
+[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 4028 
+[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 1536 x 864 maxImageCount = 8 and minImageCount = 2 at 4072
+[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3860
+[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3892
+[INFO] TsGetPhysicalDevicePresentMode() -> vkPresentModeKHR_array freed successfully vkPresentModeKHR: 1 
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 4137 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateSwapchainKHR(): pCreateInfo->imageUsage has VkImageUsageFlagBits values (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR) that requires the extensions VK_KHR_fragment_shading_rate or VK_NV_shading_rate_image.
+The Vulkan spec states: imageUsage must be a valid combination of VkImageUsageFlagBits values (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkSwapchainCreateInfoKHR-imageUsage-parameter)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateSwapchainKHR(): pCreateInfo->imageUsage (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR) are not in supportedUsageFlags (VK_IMAGE_USAGE_TRANSFER_SRC_BIT|VK_IMAGE_USAGE_TRANSFER_DST_BIT|VK_IMAGE_USAGE_SAMPLED_BIT|VK_IMAGE_USAGE_STORAGE_BIT|VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT|VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT).
+The Vulkan spec states: If presentMode is VK_PRESENT_MODE_FIFO_LATEST_READY_EXT, VK_PRESENT_MODE_IMMEDIATE_KHR, VK_PRESENT_MODE_MAILBOX_KHR, VK_PRESENT_MODE_FIFO_KHR or VK_PRESENT_MODE_FIFO_RELAXED_KHR, imageUsage must be a subset of the supported usage flags present in the supportedUsageFlags member of the VkSurfaceCapabilitiesKHR structure returned by vkGetPhysicalDeviceSurfaceCapabilitiesKHR for surface (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkSwapchainCreateInfoKHR-presentMode-01427)
+[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 4201 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 4239 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 4255 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 4329 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 4329 
+[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 4499
+[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 4345 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 4376 
+[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 4424 
+[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4436 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4465 
+[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 5851 
+[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 5601
+[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 6065
+[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 6117
+[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 6125
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateFramebuffer(): pCreateInfo->pAttachments[0] expected usage (VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) conflicts with the image's flags (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR).
+The Vulkan spec states: If flags does not include VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT, each element of pAttachments that is used as a color attachment or resolve attachment by renderPass must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-VkFramebufferCreateInfo-pAttachments-00877)
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 6175 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateFramebuffer(): pCreateInfo->pAttachments[0] expected usage (VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) conflicts with the image's flags (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR).
+The Vulkan spec states: If flags does not include VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT, each element of pAttachments that is used as a color attachment or resolve attachment by renderPass must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-VkFramebufferCreateInfo-pAttachments-00877)
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 6175 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4628 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4628 
+[INFO] TsCreateDescriptorSet() -> vkAllocateDescriptorSets() succeeded at 5681 
+[INFO] vkUpdateDescriptorSets() is run successfully!!! at 5736
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 6364 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 6382 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x570000000057) was created with pCreateInfo->pAttachments[0].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, but VkFramebuffer 0x5b000000005b pAttachments[0] (VkImageView 0x520000000052) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_SAMPLED_BIT or VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00897)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x570000000057) was created with pCreateInfo->pSubpasses[0].pColorAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, but VkFramebuffer 0x5b000000005b pAttachments[0] (VkImageView 0x520000000052) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00895)
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 6475 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 6364 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 6382 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x570000000057) was created with pCreateInfo->pAttachments[0].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, but VkFramebuffer 0x5c000000005c pAttachments[0] (VkImageView 0x530000000053) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_SAMPLED_BIT or VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00897)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x570000000057) was created with pCreateInfo->pSubpasses[0].pColorAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, but VkFramebuffer 0x5c000000005c pAttachments[0] (VkImageView 0x530000000053) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00895)
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 6475 
+[INFO] TsResize_fbo() -> vkDestroyFramebuffer() is successfully done at 6576 
+[INFO] TsResize_fbo() -> vkFreeCommandBuffers() is successfully done at 6583
+[INFO] TsResize_fbo() -> vkDestroyPipeline() is successfully done
+[INFO] TsResize_fbo() -> vkDestroySampler() is successfully done for vkSampler_fbo
+[INFO] TsResize_fbo() -> vkDestroyImageView() is successfully done for vkImageView_fbo
+[INFO] TsResize_fbo() -> vkFreeMemory() is successfully done for vkDeviceMemory_fbo
+[INFO] TsResize_fbo() -> vkDestroyImage() is successfully done for vkImage_fbo
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImage() succeeded at 6996 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkAllocateMemory() succeeded for vkDeviceMemory_fbo at 7036 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkBindImageMemory() succeeded at 7047 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImageView() for buffer copy image succeeded at 7077 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateSampler() succeeded at 7107 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImage() for depth image succeeded at 7138 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkAllocateMemory() succeeded at 7186 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkBindImageMemory() succeeded at 7198 
+[INFO] TsCreateImagesAndImageViews_fbo() -> vkCreateImageView() for depth image succeeded at 7227 
+[INFO] TsCreateRenderPass_fbo() -> vkCreateRenderPass() succeeded at 8898 
+[INFO] TsCreatePipelineLayout_fbo() -> vkCreatePipelineLayoutg() Succeeded at 8665
+[INFO] TsCreatePipeline_fbo() -> vkCreatePipelineCache() Succeeded at 9436
+[INFO] TsCreatePipeline_fbo() -> vkCreateGraphicsPipelines() Succeeded at 9488
+[INFO] TsCreatePipeline_fbo() -> vkDestroyPipelineCache() Succeeded at 9496
+[INFO] TsCreateFrameBuffers_fbo() -> vkCreateFramebuffer() succeeded  for 9538 
+[INFO] TsCreateCommandBuffer_fbo() -> vkAllocateCommandBuffers() succeeded at 7264 
+[INFO] TsBuildCommandBuffer_fbo() -> vkResetCommandBuffer() succeeded at 9561 
+[INFO] TsBuildCommandBuffer_fbo() -> vkBeginCommandBuffer() succeeded at 9579 
+[INFO] TsBuildCommandBuffer_fbo() -> vkEndCommandBuffer() succeeded at 9674 
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3728
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3760
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> vkSurfaceFormatKHR_array freed successfully vkFormat_color: 44 and vkColorSpaceKHR: 0
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 3998 
+[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 4028 
+[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 784 x 561 maxImageCount = 8 and minImageCount = 2 at 4072
+[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3860
+[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3892
+[INFO] TsGetPhysicalDevicePresentMode() -> vkPresentModeKHR_array freed successfully vkPresentModeKHR: 1 
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 4137 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateSwapchainKHR(): pCreateInfo->imageUsage has VkImageUsageFlagBits values (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR) that requires the extensions VK_KHR_fragment_shading_rate or VK_NV_shading_rate_image.
+The Vulkan spec states: imageUsage must be a valid combination of VkImageUsageFlagBits values (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkSwapchainCreateInfoKHR-imageUsage-parameter)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateSwapchainKHR(): pCreateInfo->imageUsage (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR) are not in supportedUsageFlags (VK_IMAGE_USAGE_TRANSFER_SRC_BIT|VK_IMAGE_USAGE_TRANSFER_DST_BIT|VK_IMAGE_USAGE_SAMPLED_BIT|VK_IMAGE_USAGE_STORAGE_BIT|VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT|VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT).
+The Vulkan spec states: If presentMode is VK_PRESENT_MODE_FIFO_LATEST_READY_EXT, VK_PRESENT_MODE_IMMEDIATE_KHR, VK_PRESENT_MODE_MAILBOX_KHR, VK_PRESENT_MODE_FIFO_KHR or VK_PRESENT_MODE_FIFO_RELAXED_KHR, imageUsage must be a subset of the supported usage flags present in the supportedUsageFlags member of the VkSurfaceCapabilitiesKHR structure returned by vkGetPhysicalDeviceSurfaceCapabilitiesKHR for surface (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/VK_KHR_surface/wsi.html#VUID-VkSwapchainCreateInfoKHR-presentMode-01427)
+[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 4201 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 4239 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 4255 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 4329 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 4329 
+[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 4499
+[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 4345 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 4376 
+[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 4424 
+[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4436 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4465 
+[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 5851 
+[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 5601
+[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 6065
+[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 6117
+[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 6125
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateFramebuffer(): pCreateInfo->pAttachments[0] expected usage (VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) conflicts with the image's flags (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR).
+The Vulkan spec states: If flags does not include VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT, each element of pAttachments that is used as a color attachment or resolve attachment by renderPass must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-VkFramebufferCreateInfo-pAttachments-00877)
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 6175 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCreateFramebuffer(): pCreateInfo->pAttachments[0] expected usage (VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) conflicts with the image's flags (VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR).
+The Vulkan spec states: If flags does not include VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT, each element of pAttachments that is used as a color attachment or resolve attachment by renderPass must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-VkFramebufferCreateInfo-pAttachments-00877)
+[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 6175 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4628 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4628 
+[INFO] TsCreateDescriptorSet() -> vkAllocateDescriptorSets() succeeded at 5681 
+[INFO] vkUpdateDescriptorSets() is run successfully!!! at 5736
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 6364 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 6382 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x720000000072) was created with pCreateInfo->pAttachments[0].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, but VkFramebuffer 0x760000000076 pAttachments[0] (VkImageView 0x6d000000006d) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_SAMPLED_BIT or VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00897)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x720000000072) was created with pCreateInfo->pSubpasses[0].pColorAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, but VkFramebuffer 0x760000000076 pAttachments[0] (VkImageView 0x6d000000006d) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00895)
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 6475 
+[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 6364 
+[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 6382 
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x720000000072) was created with pCreateInfo->pAttachments[0].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, but VkFramebuffer 0x770000000077 pAttachments[0] (VkImageView 0x6e000000006e) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_SAMPLED_BIT or VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00897)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkCmdBeginRenderPass(): pRenderPassBegin->renderPass (VkRenderPass 0x720000000072) was created with pCreateInfo->pSubpasses[0].pColorAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, but VkFramebuffer 0x770000000077 pAttachments[0] (VkImageView 0x6e000000006e) usage is VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR.
+The Vulkan spec states: If any of the initialLayout or finalLayout member of the VkAttachmentDescription structures or the layout member of the VkAttachmentReference structures specified when creating the render pass specified in the renderPass member of pRenderPassBegin is VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL then the corresponding attachment image view of the framebuffer specified in the framebuffer member of pRenderPassBegin must have been created with a usage value including VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/renderpass.html#VUID-vkCmdBeginRenderPass-initialLayout-00895)
+[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 6475 
+[INFO] TsUninitialize() -> vkDeviceWaitIdle() is done
+[INFO] TsUninitialize() -> vkDestroyFence() is successfully done for 0 index
+[INFO] TsUninitialize() -> vkDestroyFence() is successfully done for 1 index
+[INFO] TsUninitialize_fbo() -> vkSemaphore_fbo released successfully
+[INFO] TsUninitialize_fbo() -> vkDestroyFramebuffer() is successfully done
+[INFO] TsUninitialize_fbo() -> vkDestroyPipelineLayout() vkPipelineLayout_fbo is successfully released
+[INFO] TsUninitialize_fbo() -> vkDescriptorSetLayout_fbo() vkDescriptorSetLayout is successfully released
+[INFO] TsUninitialize_fbo() -> vkDestroyShaderModule() vkShaderModule_fragment_shader_fbo is successfully done
+[INFO] TsUninitialize_fbo() -> vkDestroyShaderModule() vkShaderModule_vertex_shader_fbo is successfully done
+[INFO] TsUninitialize_fbo() -> vkDestroySampler() is successfully done for vkSampler_texture_fbo
+[INFO] TsUninitialize_fbo() -> vkDestroyImageView() is successfully done for vkImageView_texture_fbo
+[INFO] TsUninitialize_fbo() -> vkFreeMemory() is successfully done for vkDeviceMemory_texture_fbo
+[INFO] TsUninitialize_fbo() -> vkDestroyImage() is successfully done for vkImage_texture_fbo
+[INFO] TsUninitialize_fbo() -> vkFreeMemory() is successfully done
+[INFO] TsUninitialize_fbo() -> vkDestroyBuffer() is successfully done
+[INFO] TsUninitialize_fbo() -> vkFreeMemory() is successfully done
+[INFO] TsUninitialize_fbo() -> vkDestroyBuffer() is successfully done
+[INFO] TsUninitialize_fbo() -> vkFreeMemory() is successfully done
+[INFO] TsUninitialize_fbo() -> vkDestroyBuffer() is successfully done
+[INFO] TsUninitialize_fbo() -> vkFreeMemory() is successfully done
+[INFO] TsUninitialize_fbo() -> vkDestroyBuffer() is successfully done
+[INFO] TsUninitialize_fbo() -> vkDestroyPipeline() is successfully done
+[INFO] TsUninitialize_fbo() -> vkDestroyRenderPass() is successfully done
+[INFO] TsUninitialize_fbo() -> vkFreeCommandBuffers() is successfully done
+[INFO] TsUninitialize_fbo() -> vkDestroyImageView() is successfully done for vkImageView_depth_fbo
+[INFO] TsUninitialize_fbo() -> vkFreeMemory() is successfully done for vkDeviceMemory_depth_fbo
+[INFO] TsUninitialize_fbo() -> vkDestroyImage() is successfully done for vkImage_depth_fbo
+[INFO] TsUninitialize_fbo() -> vkDestroySampler() is successfully done for vkSampler_fbo
+[INFO] TsUninitialize_fbo() -> vkDestroyImageView() is successfully done for vkImageView_fbo
+[INFO] TsUninitialize_fbo() -> vkFreeMemory() is successfully done for vkDeviceMemory_fbo
+[INFO] TsUninitialize_fbo() -> vkDestroyImage() is successfully done for vkImage_fbo
+[INFO] TsUninitialize() -> vkFence_array released successfully
+[INFO] TsUninitialize() -> vkSemaphore_rendercomplete released successfully
+[INFO] TsUninitialize() -> vkSemaphore_backbuffer released successfully
+[INFO] TsUninitialize() -> vkDestroyFramebuffer() is successfully done for 0 index
+[INFO] TsUninitialize() -> vkDestroyFramebuffer() is successfully done for 1 index
+[INFO] TsUninitialize() -> vkFrameBuffer_array released successfully
+[INFO] TsUninitialize() -> vkDestroyPipelineLayout() vkPipelineLayout is successfully released
+[INFO] TsUninitialize() -> vkDestroyDescriptorSetLayout() vkDescriptorSetLayout is successfully released
+[INFO] TsUninitialize() -> vkDestroyShaderModule() vkShaderModule_fragment_shader is successfully done
+[INFO] TsUninitialize() -> vkDestroyShaderModule() vkShaderModule_vertex_shader is successfully done
+[INFO] TsUninitialize() -> vkDestroyBuffer() is successfully done for uniformData.vkBuffer
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for uniformData.vkDeviceMemory
+[INFO] TsUninitialize() -> vkFreeMemory() for vertexData_texcord is successfully done
+[INFO] TsUninitialize() -> vkDestroyBuffer() for vertexData_texcord is successfully done
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done
+[INFO] TsUninitialize() -> vkDestroyBuffer() is successfully done
+[INFO] TsUninitialize() -> vkDestroyPipeline() is successfully done
+[INFO] TsUninitialize() -> vkDestroyDescriptorPool() is successfully done & Descriptor Set is destroyed successfully
+[INFO] TsUninitialize() -> vkDestroyRenderPass() is successfully done
+[INFO] TsUninitialize() -> vkFreeCommandBuffers() is successfully done for iteration: 0
+[INFO] TsUninitialize() -> vkFreeCommandBuffers() is successfully done for iteration: 1
+[INFO] TsUninitialize() -> vkCommandBuffer_array is successfully freed
+[INFO] TsUninitialize() -> vkDestroyCommandPool() is successfully done
+[INFO] TsUninitialize() -> vkDestroyImageView() is successfully done for vkImageView_depth
+[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for vkDeviceMemory_depth
+[INFO] TsUninitialize() -> vkDestroyImage() is successfully done for vkImage_depth
+[INFO] TsUninitialize() -> vkDestroyImageView() is successfully done for iteration: 0
+[INFO] TsUninitialize() -> vkDestroyImageView() is successfully done for iteration: 1
+[INFO] TsUninitialize() -> swapchainImageView_array is successfully destroyed
+[INFO] TsUninitialize() -> swapchainImage_array is successfully destroyed
+[INFO] TsUninitialize() -> vkDestroySwapchainKHR() is successfully done
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkDestroyDevice(): Object Tracking - For VkDevice 0x1d57ccae3d8, VkBuffer 0x270000000027 has not been destroyed.
+The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkDestroyDevice(): Object Tracking - For VkDevice 0x1d57ccae3d8, VkDeviceMemory 0x280000000028 has not been destroyed.
+The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkDestroyDevice(): Object Tracking - For VkDevice 0x1d57ccae3d8, VkDescriptorSet 0x340000000034 has not been destroyed.
+The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkDestroyDevice(): Object Tracking - For VkDevice 0x1d57ccae3d8, VkDescriptorPool 0x320000000032 has not been destroyed.
+The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
+[INFO] TsUninitialize() -> vkDestroyDevice() is successfully done
+[INFO] TsUninitialize() -> vkDestroySurfaceKHR() successfully done
+[INFO] TsUninitialize() -> vkDestroyInstance() successfully done
+[INFO] TsUninitialize() -> Log file closed successfully and program closed successfully
