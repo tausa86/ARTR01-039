@@ -1,0 +1,253 @@
+WinMain() -> Log file created successfully
+[ERROR] TsResize() -> Initialization yet not completed or failed at 1654 
+[INFO] TsFillInstanceExtensionNames() -> First call to vkEnumerateInstanceExtensionProperties() succeeded at 3431
+[INFO] TsFillInstanceExtensionNames() -> Second call to vkEnumerateInstanceExtensionProperties() succeeded at 3475
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_surface
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_win32_surface
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_external_memory_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_external_semaphore_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_external_fence_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_get_physical_device_properties2
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_get_surface_capabilities2
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_device_group_creation
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_swapchain_colorspace
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_debug_utils
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_display
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_get_display_properties2
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_surface_maintenance1
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_surface_protected_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_debug_report
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_direct_mode_display
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_EXT_surface_maintenance1
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_NV_external_memory_capabilities
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_KHR_portability_enumeration
+[INFO] TsFillInstanceExtensionNames() -> Vulkan Extension Name = VK_LUNARG_direct_driver_loading
+[INFO] TsFillInstanceExtensionNames() -> VK_KHR_SURFACE_EXTENSION_NAME found at 3645
+[INFO] TsFillInstanceExtensionNames() -> VK_KHR_WIN32_SURFACE_EXTENSION_NAME found at 3667
+[INFO] TsFillInstanceExtensionNames() -> Validation is ON and required VK_EXT_DEBUG_REPORT_EXTENSION_NAME is supported at 3707
+[INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_KHR_surface
+[INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_KHR_win32_surface
+[INFO] TsFillInstanceExtensionNames() -> Enabled Vulkan Instance Extension Name = VK_EXT_debug_report
+[INFO] TsCreateVulkanInstance() -> TsFillInstanceExtensionNames() succeeded at 3209
+[INFO] TsFillValidationLayerNames() -> First call to vkEnumerateInstanceLayerProperties() succeeded with validationLayerCount 11 at 3775
+[INFO] TsFillValidationLayerNames() -> Second call to vkEnumerateInstanceLayerProperties() succeeded at 3815
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_NV_optimus
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_NV_present
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_api_dump
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_gfxreconstruct
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_synchronization2
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_validation
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_monitor
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_screenshot
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_profiles
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_KHRONOS_shader_object
+[INFO] TsFillValidationLayerNames() -> Vulkan Instance Layer Name = VK_LAYER_LUNARG_crash_diagnostic
+[INFO] TsFillValidationLayerNames() -> VK_LAYER_KHRONOS_validation is supported at 3949
+[INFO] TsFillValidationLayerNames() -> Enabled Vulkan Validation Layer Name VK_LAYER_KHRONOS_validation
+[INFO] TsCreateVulkanInstance() -> TsFillValidationLayerNames() succeeded at 3237
+[INFO] TsCreateInstanceInf() -> vkCreateInstance() succeeded at 3351
+[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkCreateDebugReportCallbackEXT() at 4002
+[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkDestroyDebugReportCallbackEXT() at 4014
+[INFO] TsCreateValidationCallbackFunction() -> vkCreateDebugReportCallbackEXT_fnptr() succeeded at 4036
+[INFO] TsCreateVulkanInstance() -> TsCreateValidationCallbackFunction() succeeded at 3379
+[INFO] TsInitialize() -> TsCreateVulkanInstance() succeeded at 582 
+[INFO] TsGetSupportedSurface() -> vkCreateWin32SurfaceKHR() succeeded at 3163
+[INFO] TsInitialize() -> TsGetSupportedSurface() succeeded at 594 
+[INFO] TsGetPhysicalDevice() -> First call to vkEnumeratePhysicalDevices() succeeded at 2999
+[INFO] TsGetPhysicalDevice() -> Second call to vkEnumeratePhysicalDevices() succeeded at 3014
+[INFO] TsGetPhysicalDevice() -> Succeeded to free isQueueSurfaceSupported_array at 3066
+[INFO] TsGetPhysicalDevice() -> Succeeded to free vkQueueFamilyProperties_array at 3073
+[INFO] TsGetPhysicalDevice() -> vkGetPhysicalDeviceProperties() NVIDIA GeForce RTX 3050 6GB Laptop GPU physical device with graphics enabled is selected at 3087
+[INFO] TsGetPhysicalDevice() -> is succeeded to select required physical device with graphics enabled at 3088
+[INFO] TsGetPhysicalDevice() -> Selected physical device supports tessellation shader
+[INFO] TsGetPhysicalDevice() -> Selected physical device supports geometry shader
+[INFO] TsInitialize() -> TsGetPhysicalDevice() succeeded at 606 
+[INFO] ********** Print Vulkan Info **********
+[INFO] API Version = 1.4.325
+[INFO] Device Name = NVIDIA GeForce RTX 3050 6GB Laptop GPU
+[INFO] Device Type = Discrete GPU (dGPU)
+[INFO] Vendor ID = 0x10de
+[INFO] Device ID = 0x25ec
+[INFO] API Version = 1.4.309
+[INFO] Device Name = Intel(R) RaptorLake-S Mobile Graphics Controller
+[INFO] Device Type = Integrated GPU (iGPU)
+[INFO] Vendor ID = 0x8086
+[INFO] Device ID = 0xa78b
+[INFO] TsPrintVKInfo() -> Succeeded to free global vkPhysicalDevice_array at 2968
+[INFO] TsInitialize() -> TsPrintVkInfo() succeeded at 618 
+[INFO] TsFillDeviceExtensionNames() -> First call to vkEnumerateDeviceExtensionProperties() succeeded at 4064
+[INFO] TsFillDeviceExtensionNames() -> Device Count = 261
+[INFO] TsFillDeviceExtensionNames() -> Second call to vkEnumerateDeviceExtensionProperties() succeeded at 4088
+[INFO] TsFillDeviceExtensionNames() -> VK_KHR_SWAPCHAIN_EXTENSION_NAME found at 4163
+[INFO] TsFillDeviceExtensionNames() -> VK_KHR_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME found at 4174
+[INFO] TsFillDeviceExtensionNames() -> Enabled Vulkan Device Extension Name = VK_KHR_external_memory_win32
+[INFO] TsFillDeviceExtensionNames() -> Enabled Vulkan Device Extension Name = VK_KHR_swapchain
+[INFO] TsCreateVulkanDevice() -> TsFillDeviceExtensionNames() succeeded at 4209
+[INFO] TsCreateVulkanDevice() -> vkCreateDevice() succeeded at 4253
+[INFO] TsInitialize() -> TsCreateVulkanDevice() succeeded at 630 
+[INFO] TsGetDeviceQueue() -> vkGetDeviceQueue() succeeded
+[INFO] initialize_opencl() -> clGetPlatformIDs() succeeded at 1097 
+[INFO] doesOpenCLSupportRequiredExtensions() -> Number of OpenCL platform extensions supported: 26
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[0]: cl_khr_global_int32_base_atomics
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[1]: cl_khr_global_int32_extended_atomics
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[2]: cl_khr_local_int32_base_atomics
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[3]: cl_khr_local_int32_extended_atomics
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[4]: cl_khr_fp64
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[5]: cl_khr_3d_image_writes
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[6]: cl_khr_byte_addressable_store
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[7]: cl_khr_icd
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[8]: cl_khr_gl_sharing
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[9]: cl_nv_compiler_options
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[10]: cl_nv_device_attribute_query
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[11]: cl_nv_pragma_unroll
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[12]: cl_nv_d3d10_sharing
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[13]: cl_khr_d3d10_sharing
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[14]: cl_nv_d3d11_sharing
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[15]: cl_nv_copy_opts
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[16]: cl_nv_create_buffer
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[17]: cl_khr_int64_base_atomics
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[18]: cl_khr_int64_extended_atomics
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[19]: cl_khr_device_uuid
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[20]: cl_khr_pci_bus_info
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[21]: cl_khr_external_semaphore
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[22]: cl_khr_external_memory
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[23]: cl_khr_external_semaphore_win32
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[24]: cl_khr_external_memory_win32
+[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[25]: cl_khr_semaphore
+[INFO] initialize_opencl() -> OCL PLATFORM INFO:
+NVIDIA CUDA
+[INFO] initialize_opencl() -> Device Count:1
+vkGetPhysicalDeviceProperties2() Device Name: NVIDIA GeForce RTX 3050 6GB Laptop GPU
+[INFO] Device 0 extensions = cl_khr_global_int32_base_atomics cl_khr_global_int32_extended_atomics cl_khr_local_int32_base_atomics cl_khr_local_int32_extended_atomics cl_khr_fp64 cl_khr_3d_image_writes cl_khr_byte_addressable_store cl_khr_icd cl_khr_gl_sharing cl_nv_compiler_options cl_nv_device_attribute_query cl_nv_pragma_unroll cl_nv_d3d10_sharing cl_khr_d3d10_sharing cl_nv_d3d11_sharing cl_nv_copy_opts cl_nv_create_buffer cl_khr_int64_base_atomics cl_khr_int64_extended_atomics cl_khr_device_uuid cl_khr_pci_bus_info cl_khr_external_semaphore cl_khr_external_memory cl_khr_external_semaphore_win32 cl_khr_external_memory_win32 cl_khr_semaphore
+[INFO] Vulkan UUID: AAD5C7B87A0EF9B3D574431BB53721D4
+[INFO] OpenCL Device UUID: AAD5C7B87A0EF9B3D574431BB53721D4
+[INFO] initialize_opencl() -> Vulkan OpenCL Interop device INFO:
+NVIDIA GeForce RTX 3050 6GB Laptop GPU
+[INFO] initialize_opencl() -> clCreateContext() suceeded at 1328
+[INFO] initialize_opencl() -> clCreateCommandQueueWithProperties() suceeded at 1346
+[INFO] initialize_opencl() -> clCreateProgramWithSource() suceeded at 1367
+[INFO] TsInitialize() -> initialize_opencl() succeeded at 647 
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 4321
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 4337
+[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> vkSurfaceFormatKHR_array freed successfully vkFormat_color: 44 and vkColorSpaceKHR: 0
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 4457 
+[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 4472 
+[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 784 x 561 maxImageCount = 8 and minImageCount = 2 at 4507
+[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 4389
+[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 4404
+[INFO] TsGetPhysicalDevicePresentMode() -> vkPresentModeKHR_array freed successfully vkPresentModeKHR: 1 
+[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 4572 
+[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 4636 
+[INFO] TsInitialize() -> TsCreateSwapchain() succeeded at 661 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 4673 
+[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 4689 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 4763 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 4763 
+[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 4933
+[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 4779 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 4810 
+[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 4858 
+[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4870 
+[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4899 
+[INFO] TsInitialize() -> TsCreateImagesAndImageViews() succeeded gives swapchain image count: 2 at 673 
+[INFO] TsCreateCommandPool() -> vkCreateCommandPool() second call succeeded at 4969 
+[INFO] TsInitialize() -> TsCreateCommandPool() succeeded at 685 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 5018 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 5018 
+[INFO] TsInitialize() -> 64x64 TsCreateCommandBuffers() succeeded at 698 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() succeeded at 5067 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() succeeded at 5113 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() succeeded at 5126 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() succeeded at 5148 
+[INFO] TsInitialize() -> 64x64 TsCreateVertexBuffer() succeeded at 714 
+[INFO] TsCreateExternalVertexBuffer() -> vkCreateBuffer() succeeded at 7046 
+[INFO] TsCreateExternalVertexBuffer() -> vkAllocateMemory() succeeded at 7101 
+[INFO] TsCreateExternalVertexBuffer() -> vkBindBufferMemory() succeeded at 7114 
+[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() pointer found
+[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() succeeded at 7151 
+[INFO] TsCreateExternalVertexBuffer() -> clCreateBufferWithProperties() succeeded at 7181 
+[INFO] TsInitialize() -> 64x64 TsCreateExternalVertexBuffer() succeeded at 728 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 5018 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 5018 
+[INFO] TsInitialize() -> 128x128 TsCreateCommandBuffers() succeeded at 741 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() succeeded at 5067 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() succeeded at 5113 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() succeeded at 5126 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() succeeded at 5148 
+[INFO] TsInitialize() -> 128x128 TsCreateVertexBuffer() succeeded at 757 
+[INFO] TsCreateExternalVertexBuffer() -> vkCreateBuffer() succeeded at 7046 
+[INFO] TsCreateExternalVertexBuffer() -> vkAllocateMemory() succeeded at 7101 
+[INFO] TsCreateExternalVertexBuffer() -> vkBindBufferMemory() succeeded at 7114 
+[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() pointer found
+[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() succeeded at 7151 
+[INFO] TsCreateExternalVertexBuffer() -> clCreateBufferWithProperties() succeeded at 7181 
+[INFO] TsInitialize() -> 128 TsCreateExternalVertexBuffer() succeeded at 771 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 5018 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 5018 
+[INFO] TsInitialize() -> 256x256 TsCreateCommandBuffers() succeeded at 784 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() succeeded at 5067 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() succeeded at 5113 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() succeeded at 5126 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() succeeded at 5148 
+[INFO] TsInitialize() -> 256x256 TsCreateVertexBuffer() succeeded at 800 
+[INFO] TsCreateExternalVertexBuffer() -> vkCreateBuffer() succeeded at 7046 
+[INFO] TsCreateExternalVertexBuffer() -> vkAllocateMemory() succeeded at 7101 
+[INFO] TsCreateExternalVertexBuffer() -> vkBindBufferMemory() succeeded at 7114 
+[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() pointer found
+[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() succeeded at 7151 
+[INFO] TsCreateExternalVertexBuffer() -> clCreateBufferWithProperties() succeeded at 7181 
+[INFO] TsInitialize() -> 256 TsCreateExternalVertexBuffer() succeeded at 814 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 5018 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 5018 
+[INFO] TsInitialize() -> 512x512 TsCreateCommandBuffers() succeeded at 827 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() succeeded at 5067 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() succeeded at 5113 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() succeeded at 5126 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() succeeded at 5148 
+[INFO] TsInitialize() -> 512x512 TsCreateVertexBuffer() succeeded at 843 
+[INFO] TsCreateExternalVertexBuffer() -> vkCreateBuffer() succeeded at 7046 
+[INFO] TsCreateExternalVertexBuffer() -> vkAllocateMemory() succeeded at 7101 
+[INFO] TsCreateExternalVertexBuffer() -> vkBindBufferMemory() succeeded at 7114 
+[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() pointer found
+[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() succeeded at 7151 
+[INFO] TsCreateExternalVertexBuffer() -> clCreateBufferWithProperties() succeeded at 7181 
+[INFO] TsInitialize() -> 512 TsCreateExternalVertexBuffer() succeeded at 857 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 5018 
+[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 5018 
+[INFO] TsInitialize() -> 1024x1024 TsCreateCommandBuffers() succeeded at 869 
+[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() succeeded at 5067 
+[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() succeeded at 5113 
+[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() succeeded at 5126 
+[INFO] TsCreateVertexBuffer() -> vkMapMemory() succeeded at 5148 
+[INFO] TsInitialize() -> 1024x1024 TsCreateVertexBuffer() succeeded at 885 
+[INFO] TsCreateExternalVertexBuffer() -> vkCreateBuffer() succeeded at 7046 
+[INFO] TsCreateExternalVertexBuffer() -> vkAllocateMemory() succeeded at 7101 
+[INFO] TsCreateExternalVertexBuffer() -> vkBindBufferMemory() succeeded at 7114 
+[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() pointer found
+[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() succeeded at 7151 
+[INFO] TsCreateExternalVertexBuffer() -> clCreateBufferWithProperties() succeeded at 7181 
+[INFO] TsInitialize() -> 1024 TsCreateExternalVertexBuffer() succeeded at 899 
+[INFO] TsCreateUniformBuffer() -> vkCreateBuffer() succeeded at 5242 
+[INFO] TsCreateUniformBuffer() -> vkAllocateMemory() succeeded at 5290 
+[INFO] TsCreateUniformBuffer() -> vkBindBufferMemory() succeeded at 5302 
+[INFO] TsCreateUniformBuffer() -> TsUpdateUnifomBuffer() succeeded at 5314 
+[INFO] TsInitialize() -> TsCreateUniformBuffer() succeeded at 911 
+[INFO] TsCreateShaders() -> Succeeded to open Shader.vert.spv at 5447
+[INFO] TsCreateShaders() -> Succeeded to read Shader.vert.spv at 5471
+[INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded at 5511
+[INFO] TsCreateShaders() -> Vertex Shader Module is successfully created!!!
+[INFO] TsCreateShaders() -> Succeeded to open Shader.frag.spv at 5561
+[INFO] TsCreateShaders() -> Succeeded to read Shader.frag.spv at 5609
+[INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded in fragment shader at 5655
+[INFO] TsCreateShaders() -> Fragment Shader Module is successfully created!!!
+[INFO] TsInitialize() -> TsCreateShaders() succeeded at 923 
+[INFO] TsCreateDescriptorSetLayout() -> vkCreateDescriptorSetLayout() Succeeded at 5722
+[INFO] TsInitialize() -> TsCreateDescriptorSetLayout() succeeded at 935 
+[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 5757
+[INFO] TsInitialize() -> TsCreatePipelineLayout() succeeded at 947 
+[INFO] TsCreateDescriptorPool() -> vkCreateDescriptorPool() succeeded at 5798 
+[INFO] TsInitialize() -> TsCreateDescriptorPool() succeeded at 959 
+[INFO] TsCreateDescriptorSet() -> vkAllocateDescriptorSets() succeeded at 5830 
+[INFO] vkUpdateDescriptorSets() is run successfully!!! at 5861
+[INFO] TsInitialize() -> TsCreateDescriptorSet() succeeded at 971 
+[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 5958 
