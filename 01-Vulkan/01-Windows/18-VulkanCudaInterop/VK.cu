@@ -203,6 +203,20 @@ BOOL bOnGpu = FALSE;
 LRESULT CALLBACK TsWndProc(HWND, UINT, WPARAM, LPARAM);
 const char* gpszTsAppName = "ARTR";
 
+// Sinewave Kernel
+__global__ void sinewave_kernel(float4 *pos, int width, int height, float time) {
+    int x = blockIdx.x * blockDim.x + threadIdx.x;
+    int y = blockIdx.y * blockDim.y + threadIdx.y;
+
+    if (x < width && y < height) {
+        float u = x / (float)width;
+        float v = y / (float)height;
+        float w = sinf(u * 10.0f + time) * cosf(v * 10.0f + time);
+
+        pos[y * width + x] = make_float4(u, w, v, 1.0f);
+    }
+}
+
 // Entry point function
 int WINAPI WinMain(HINSTANCE hTsInstance, HINSTANCE hTsPrevInstance, LPSTR lpszTsCmdLine, int iTsCmdShow)
 {
@@ -616,7 +630,7 @@ VkResult TsInitialize(void)
                else
                {
                               fprintf(gpTsFile, "[INFO] TsInitialize() -> TsCreateVulkanDevice() succeeded at %d \n", __LINE__);
-               }
+               }               
 
                // [STEP-9] Get Device Queue
                TsGetDeviceQueue();
@@ -634,7 +648,7 @@ VkResult TsInitialize(void)
                else
                {
                     fprintf(gpTsFile, "[INFO] TsInitialize() -> initialize_cuda() succeeded at %d \n", __LINE__);
-               }
+               }              
 
                // Create Swapchain
                vkTsResult = TsCreateSwapchain(VK_FALSE);
@@ -1001,7 +1015,7 @@ VkResult TsInitialize(void)
 }
 
 // Cuda initialization
-cudaError initailize_cuda(void)
+cudaError initialize_cuda(void)
 {
     // Local variable decalartion
 
@@ -1010,17 +1024,19 @@ cudaError initailize_cuda(void)
     cudaResult = cudaGetDeviceCount(&dev_count);
     if(cudaResult != cudaSuccess)
     {
-        fprintf(gpTsFile, "[ERROR] initailize_cuda() -> cudaGetDeviceCount() failed with %d at %d\n", cudaResult, __LINE__);
+        fprintf(gpTsFile, "[ERROR] initialize_cuda() -> cudaGetDeviceCount() device_count=%d failed with %d at %d\n", dev_count, cudaResult, __LINE__);
+        fflush(gpTsFile);
+        //exit(0);
         return(cudaResult);
     }
     else if(dev_count == 0)
     {
-        fprintf(gpTsFile, "[ERROR] initailize_cuda() -> cudaGetDeviceCount() failed no cuda device found at %d\n", __LINE__);
+        fprintf(gpTsFile, "[ERROR] initialize_cuda() -> cudaGetDeviceCount() failed no cuda device found at %d\n", __LINE__);
     }
     else
     {
-        fprintf(gpTsFile, "[INFO] initailize_cuda() -> cudaGetDeviceCount() succeeded at %d \n", __LINE__);
-    }
+        fprintf(gpTsFile, "[INFO] initialize_cuda() -> cudaGetDeviceCount() succeeded at %d \n", __LINE__);
+    }    
 
     // Check equality of uuid between Vulkan and CUDA
     // Get Vulkan UUID of device
@@ -1063,7 +1079,7 @@ cudaError initailize_cuda(void)
             continue;
         
         //now compare both UUIDs
-        int iResult = memcmp((void *)devProp.uuid, (void *)vulkanDeviceUUID, VK_UUID_SIZE);
+        int iResult = memcmp((void *)devProp.uuid.bytes, (void *)vulkanDeviceUUID, VK_UUID_SIZE);
         if(iResult != 0)
             continue;
         
@@ -1399,36 +1415,36 @@ VkResult TsDisplay(void)
         if(bMesh1024Choosen)
         {
             // Run CDA kernel
-            dim3 block[8][8][1];
-            dim3 grid[(1024/block.x)][(1024/block.y)][1];
+            dim3 block(8, 8, 1);
+            dim3 grid(1024/block.x, 1024/block.y, 1);
             sinewave_kernel<<<grid,block>>>((float4 *)pos_cuda, 1024,1024,animationTime);
         }
         else if(bMesh512Choosen)
         {
             // Run CDA kernel
-            dim3 block[8][8][1];
-            dim3 grid[(512/block.x)][(512/block.y)][1];
+            dim3 block(8, 8, 1);
+            dim3 grid(512/block.x, 512/block.y, 1);
             sinewave_kernel<<<grid,block>>>((float4 *)pos_cuda, 512,512,animationTime);
         }
         else if(bMesh256Choosen)
         {
             // Run CDA kernel
-            dim3 block[8][8][1];
-            dim3 grid[(256/block.x)][(256/block.y)][1];
+            dim3 block(8, 8, 1);
+            dim3 grid(256/block.x, 256/block.y, 1);
             sinewave_kernel<<<grid,block>>>((float4 *)pos_cuda, 256,256,animationTime);
         }
         else if(bMesh128Choosen)
         {
             // Run CDA kernel
-            dim3 block[8][8][1];
-            dim3 grid[(128/block.x)][(128/block.y)][1];
+            dim3 block(8, 8, 1);
+            dim3 grid(128/block.x, 128/block.y, 1);
             sinewave_kernel<<<grid,block>>>((float4 *)pos_cuda, 128,128,animationTime);
         }
         else // if(bMesh64Choosen)
         {
             // Run CDA kernel
-            dim3 block[8][8][1];
-            dim3 grid[(64/block.x)][(64/block.y)][1];
+            dim3 block(8, 8, 1);
+            dim3 grid(64/block.x, 64/block.y, 1);
             sinewave_kernel<<<grid,block>>>((float4 *)pos_cuda, 64,64,animationTime);
         }
 
@@ -1436,7 +1452,7 @@ VkResult TsDisplay(void)
         cudaResult = cudaGetLastError();
         if(cudaResult != cudaSuccess)
         {
-            fprintf(gpTsFile, "[ERROR] TsDisplay() -> cudaGetLastError() %s at %d \n", cudaResult, __LINE__);
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> cudaGetLastError() %d at %d \n", cudaResult, __LINE__);
             return(VK_ERROR_INITIALIZATION_FAILED);
         }
 
@@ -1444,7 +1460,7 @@ VkResult TsDisplay(void)
         cudaResult = cudaDeviceSynchronize();
         if(cudaResult != cudaSuccess)
         {
-            fprintf(gpTsFile, "[ERROR] TsDisplay() -> cudaDeviceSynchronize() %s at %d \n", cudaResult, __LINE__);
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> cudaDeviceSynchronize() %d at %d \n", cudaResult, __LINE__);
             return(VK_ERROR_INITIALIZATION_FAILED);
         }
     }
@@ -3519,137 +3535,71 @@ VkResult TsFillDeviceExtensionNames(void)
 // [STEP-8]
 VkResult TsCreateVulkanDevice(void)
 {
-
                // Function declaration
-
                VkResult TsFillDeviceExtensionNames(void);
-
  
-
                // Local variable declaration
-
                VkResult vkTsResult = VK_SUCCESS;
-
  
-
                // Code
-
                // Fill Device Extensions
-
                // Step 1: Initialize required extension name and count global variables
-
                vkTsResult = TsFillDeviceExtensionNames();
-
                if (VK_SUCCESS != vkTsResult)
-
                {
-
                               fprintf(gpTsFile, "[ERROR] TsCreateVulkanDevice() -> TsFillDeviceExtensionNames() failed at %d\n", __LINE__);
-
                               return(vkTsResult);
-
                }
-
                else
-
                {
-
                               fprintf(gpTsFile, "[INFO] TsCreateVulkanDevice() -> TsFillDeviceExtensionNames() succeeded at %d\n", __LINE__);
-
                }
-
  
-
                // Newly Added Code
-
                float queuePriority[1];
-
                queuePriority[0] = 1.0f;
-
                VkDeviceQueueCreateInfo vkDeviceQueueCreateInfo;
-
                memset((void*)&vkDeviceQueueCreateInfo, 0, sizeof(VkDeviceQueueCreateInfo));
-
                vkDeviceQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-
                vkDeviceQueueCreateInfo.pNext = NULL;
-
                vkDeviceQueueCreateInfo.flags = 0;
-
                vkDeviceQueueCreateInfo.queueFamilyIndex = graphicsQueueFamilyIndex_selected;
-
                vkDeviceQueueCreateInfo.queueCount = 1;
-
                //vkDeviceQueueCreateInfo.pQueuePriorities = NULL;
-
                vkDeviceQueueCreateInfo.pQueuePriorities = queuePriority;
-
  
-
                // Intialize VkDeviceCreateInfo Structure
-
                VkDeviceCreateInfo vkDeviceCreateInfo;
-
                memset((void*)&vkDeviceCreateInfo, 0, sizeof(VkDeviceCreateInfo));
-
  
-
                vkDeviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-
                vkDeviceCreateInfo.pNext = NULL;
-
                vkDeviceCreateInfo.flags = 0;
-
                vkDeviceCreateInfo.enabledExtensionCount = enabledDeviceExtentionCount;
-
                vkDeviceCreateInfo.ppEnabledExtensionNames = enabledDeviceExtensionNames_array;
-
  
-
                // Deprecated in latest version
-
                vkDeviceCreateInfo.enabledLayerCount = 0; // Very important member and will be used as life-line
-
                vkDeviceCreateInfo.ppEnabledLayerNames = NULL; // Very Important member and will be used as life-line
-
  
-
                vkDeviceCreateInfo.pEnabledFeatures = NULL;
-
  
-
                vkDeviceCreateInfo.queueCreateInfoCount = 1;
-
                vkDeviceCreateInfo.pQueueCreateInfos = &vkDeviceQueueCreateInfo;
-
  
-
                //                          Kontya Physical Device Sathi    warcha structure
-
                vkTsResult = vkCreateDevice(vkTsPhysicalDevice_selected, &vkDeviceCreateInfo, NULL, &vkDevice);
-
                if (VK_SUCCESS != vkTsResult)
-
                {
-
                               fprintf(gpTsFile, "[ERROR] TsCreateVulkanDevice() -> vkCreateDevice() failed with %d at %d\n", vkTsResult, __LINE__);
-
                               return(vkTsResult);
-
                }
-
                else
-
                {
-
                               fprintf(gpTsFile, "[INFO] TsCreateVulkanDevice() -> vkCreateDevice() succeeded at %d\n", __LINE__);
-
                }
-
  
-
                return(vkTsResult);
-
 }
 
  
