@@ -1,0 +1,3 @@
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\03-Android\Triangle\app\src\main\assets>C:\Users\HI\AppData\Local\Android\Sdk\ndk\28.2.13676358\shader-tools\windows-x86_64\glslc.exe -fshader-stage=vertex --target-env=vulkan1.3 -o Shader.vert.spv Shader.vert
+
+C:\ARTR\Assignments\ARTR01-039\01-Vulkan\03-Android\Triangle\app\src\main\assets>C:\Users\HI\AppData\Local\Android\Sdk\ndk\28.2.13676358\shader-tools\windows-x86_64\glslc.exe -fshader-stage=fragment --target-env=vulkan1.3 -o Shader.frag.spv Shader.frag
