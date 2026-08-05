@@ -12,7 +12,7 @@
 #include <vulkan\vulkan.h> // First vulkan code line for all platforms
 
 // GLM related macros and header files
-#define GLM_FORCE_RADIANCE // GLM la force karatay ki angles sagde rediance madhye ghe
+#define GLM_FORCE_RADIANS // GLM la force karatay ki angles sagde redians madhye ghe
 #define GLM_FORCE_DEPTH_0_TO_1 // Depth la consider kartana values 0 to 1 ch karaych GL_LEQUAL i.e. Depth Clamping
 #include "glm\glm.hpp"  // glm madhli glm.hpp hi header file include ker hpp => specific to C++ sathich aahe
 #include "glm\gtc\matrix_transform.hpp" // GTC Texture Compression chi kame karat aahet mhanoon TC GLM librarichi [GTC <=> GLM Texture Compression]
@@ -20,8 +20,13 @@
 // Vulkan related libraray
 #pragma comment(lib, "vulkan-1.lib") // To include vulkan library
 
-// CUDA related header
-#include <cuda_runtime.h>
+// OpenCL header
+#define CL_TARGET_OPENCL_VERSION 300
+#include <CL\opencl.h>
+#include <CL\cl_ext.h>  // Extension sathi cl_mem_device_handle_list_khr, cl_mem_device_handle_list_END_khr
+
+// OpenCL import library
+#pragma comment(lib, "opencl.lib")
 
 // Global declarations
 #define TS_WIN_WIDTH 800
@@ -168,6 +173,8 @@ VkRect2D vkRect2D_scissor;  // To enable Scissor test => to remove unwanted canv
 VkPipeline vkPipeline = VK_NULL_HANDLE;
 
 // Sinewave related variables
+unsigned int meshWidth = 1024;
+unsigned int meshHeight = 1024;
 float pos_1024_graphics[1024][1024][4];
 float pos_512_graphics[512][512][4];
 float pos_256_graphics[256][256][4];
@@ -191,31 +198,22 @@ BOOL bMesh64Choosen = TRUE;
 char colorFromKey = 'O';
 float animationTime = 0.0f;
 
-// CUDA related global variables
-cudaError_t cudaResult;
+// OpenCL related variables
+cl_int oclResult;
+cl_platform_id oclPlatformID;
+cl_device_id oclDeviceID;
+cl_context oclContext;
+cl_command_queue oclCommandQueue;
+cl_program oclProgram;
+cl_kernel oclKernel;
+cl_mem pos_opencl = NULL;
 VkExternalMemoryHandleTypeFlagBits vkExternalMemoryHandleTypeFlagBits;
-cudaExternalMemory_t cuExternalMemory;
-void * pos_cuda = NULL;
 VertexData vertexData_external;
 BOOL bOnGpu = FALSE;
 
 // Global functions declarations
 LRESULT CALLBACK TsWndProc(HWND, UINT, WPARAM, LPARAM);
 const char* gpszTsAppName = "ARTR";
-
-// Sinewave Kernel
-__global__ void sinewave_kernel(float4 *pos, int width, int height, float time) {
-    int x = blockIdx.x * blockDim.x + threadIdx.x;
-    int y = blockIdx.y * blockDim.y + threadIdx.y;
-
-    if (x < width && y < height) {
-        float u = x / (float)width;
-        float v = y / (float)height;
-        float w = sinf(u * 10.0f + time) * cosf(v * 10.0f + time);
-
-        pos[y * width + x] = make_float4(u, w, v, 1.0f);
-    }
-}
 
 // Entry point function
 int WINAPI WinMain(HINSTANCE hTsInstance, HINSTANCE hTsPrevInstance, LPSTR lpszTsCmdLine, int iTsCmdShow)
@@ -565,9 +563,9 @@ VkResult TsInitialize(void)
                VkResult TsCreateFences(void);
                VkResult TsBuildCommandBuffers(void);
 
-               // Cuda related function declarations
-               cudaError initialize_cuda(void);
-               VkResult TsCreateExternalVertexBuffer(int, int, VertexData *); // [STEP-22]
+               // OpenCL related function prototypes
+               cl_int initialize_opencl(void);
+               VkResult TsCreateExternalVertexBuffer(int, int, VertexData *);
 
                // Local variable declaration
                VkResult vkTsResult;
@@ -630,25 +628,24 @@ VkResult TsInitialize(void)
                else
                {
                               fprintf(gpTsFile, "[INFO] TsInitialize() -> TsCreateVulkanDevice() succeeded at %d \n", __LINE__);
-               }               
+               }
 
                // [STEP-9] Get Device Queue
                TsGetDeviceQueue();
 
-               // Atleast device must be created. So intialize CUDA here after TsGetDeviceQueue()
-               cudaResult = initialize_cuda();
-
-               if(cudaResult != cudaSuccess)
+               // OpenCL initialization
+               oclResult = initialize_opencl();
+               if(CL_SUCCESS != oclResult)
                {
                     // Print actual returned VkResult value and hardcoded return value
-                    fprintf(gpTsFile, "[ERROR] TsInitialize() -> initialize_cuda() failed with %d at %d\n", vkTsResult, __LINE__);
-                    vkTsResult = VK_ERROR_INITIALIZATION_FAILED;
+                    fprintf(gpTsFile, "[ERROR] TsInitialize() -> initialize_opencl() failed with %d at %d\n", vkTsResult, __LINE__);
+                    vkTsResult = VK_ERROR_INITIALIZATION_FAILED; 
                     return(vkTsResult);
                }
                else
                {
-                    fprintf(gpTsFile, "[INFO] TsInitialize() -> initialize_cuda() succeeded at %d \n", __LINE__);
-               }              
+                    fprintf(gpTsFile, "[INFO] TsInitialize() -> initialize_opencl() succeeded at %d \n", __LINE__);
+               }
 
                // Create Swapchain
                vkTsResult = TsCreateSwapchain(VK_FALSE);
@@ -760,6 +757,20 @@ VkResult TsInitialize(void)
                               fprintf(gpTsFile, "[INFO] TsInitialize() -> 128x128 TsCreateVertexBuffer() succeeded at %d \n", __LINE__);
                }
 
+               // Create external vertex buffer
+               memset((void *)&vertexData_external, 0, sizeof(VertexData));
+               vkTsResult = TsCreateExternalVertexBuffer(128, 128, &vertexData_external);
+
+               if (VK_SUCCESS != vkTsResult)
+               {
+                              fprintf(gpTsFile, "[ERROR] TsInitialize() -> 128 TsCreateExternalVertexBuffer() failed with %d at %d\n", vkTsResult, __LINE__);
+                              return(vkTsResult);
+               }
+               else
+               {
+                              fprintf(gpTsFile, "[INFO] TsInitialize() -> 128 TsCreateExternalVertexBuffer() succeeded at %d \n", __LINE__);
+               }
+
                // 256
                // Create command buffers
                vkTsResult = TsCreateCommandBuffers(&vkCommandBuffer_pos_256x256_graphics_array);
@@ -787,6 +798,20 @@ VkResult TsInitialize(void)
                else
                {
                               fprintf(gpTsFile, "[INFO] TsInitialize() -> 256x256 TsCreateVertexBuffer() succeeded at %d \n", __LINE__);
+               }
+
+               // Create external vertex buffer
+               memset((void *)&vertexData_external, 0, sizeof(VertexData));
+               vkTsResult = TsCreateExternalVertexBuffer(256, 256, &vertexData_external);
+
+               if (VK_SUCCESS != vkTsResult)
+               {
+                              fprintf(gpTsFile, "[ERROR] TsInitialize() -> 256 TsCreateExternalVertexBuffer() failed with %d at %d\n", vkTsResult, __LINE__);
+                              return(vkTsResult);
+               }
+               else
+               {
+                              fprintf(gpTsFile, "[INFO] TsInitialize() -> 256 TsCreateExternalVertexBuffer() succeeded at %d \n", __LINE__);
                }
 
                // 512
@@ -817,6 +842,20 @@ VkResult TsInitialize(void)
                {
                               fprintf(gpTsFile, "[INFO] TsInitialize() -> 512x512 TsCreateVertexBuffer() succeeded at %d \n", __LINE__);
                }
+
+               // Create external vertex buffer
+               memset((void *)&vertexData_external, 0, sizeof(VertexData));
+               vkTsResult = TsCreateExternalVertexBuffer(512, 512, &vertexData_external);
+
+               if (VK_SUCCESS != vkTsResult)
+               {
+                              fprintf(gpTsFile, "[ERROR] TsInitialize() -> 512 TsCreateExternalVertexBuffer() failed with %d at %d\n", vkTsResult, __LINE__);
+                              return(vkTsResult);
+               }
+               else
+               {
+                              fprintf(gpTsFile, "[INFO] TsInitialize() -> 512 TsCreateExternalVertexBuffer() succeeded at %d \n", __LINE__);
+               }
  
                // Create command buffers 1024
                vkTsResult = TsCreateCommandBuffers(&vkCommandBuffer_pos_1024x1024_graphics_array);
@@ -844,6 +883,20 @@ VkResult TsInitialize(void)
                else
                {
                               fprintf(gpTsFile, "[INFO] TsInitialize() -> 1024x1024 TsCreateVertexBuffer() succeeded at %d \n", __LINE__);
+               }
+
+               // Create external vertex buffer
+               memset((void *)&vertexData_external, 0, sizeof(VertexData));
+               vkTsResult = TsCreateExternalVertexBuffer(1024, 1024, &vertexData_external);
+
+               if (VK_SUCCESS != vkTsResult)
+               {
+                              fprintf(gpTsFile, "[ERROR] TsInitialize() -> 1024 TsCreateExternalVertexBuffer() failed with %d at %d\n", vkTsResult, __LINE__);
+                              return(vkTsResult);
+               }
+               else
+               {
+                              fprintf(gpTsFile, "[INFO] TsInitialize() -> 1024 TsCreateExternalVertexBuffer() succeeded at %d \n", __LINE__);
                }
 
                // [STEP-31] Create Uniform Buffer
@@ -928,7 +981,7 @@ VkResult TsInitialize(void)
                else
                {
                               fprintf(gpTsFile, "[INFO] TsInitialize() -> TsCreateRenderPass() succeeded at %d \n", __LINE__);
-               }
+               }               
 
                // [STEP-26] Create Pipeline
                vkTsResult = TsCreatePipeline();
@@ -1014,32 +1067,131 @@ VkResult TsInitialize(void)
                return(vkTsResult);
 }
 
-// Cuda initialization
-cudaError initialize_cuda(void)
+cl_int initialize_opencl(void)
 {
-    // Local variable decalartion
+    // Function declaration
+    BOOL doesOpenCLSupportRequiredExtensions(cl_platform_id);
 
-    // Code
-    int dev_count;
-    cudaResult = cudaGetDeviceCount(&dev_count);
-    if(cudaResult != cudaSuccess)
-    {
-        fprintf(gpTsFile, "[ERROR] initialize_cuda() -> cudaGetDeviceCount() device_count=%d failed with %d at %d\n", dev_count, cudaResult, __LINE__);
-        fflush(gpTsFile);
-        //exit(0);
-        return(cudaResult);
-    }
-    else if(dev_count == 0)
-    {
-        fprintf(gpTsFile, "[ERROR] initialize_cuda() -> cudaGetDeviceCount() failed no cuda device found at %d\n", __LINE__);
-    }
-    else
-    {
-        fprintf(gpTsFile, "[INFO] initialize_cuda() -> cudaGetDeviceCount() succeeded at %d \n", __LINE__);
-    }    
+    // Local variable decalration
+    cl_uint platform_count;
+    cl_platform_id * oclPlatformIDs = NULL;
+    cl_uint device_count;
+    cl_device_id * oclDeviceIDs = NULL; // Global device ID set kara
 
-    // Check equality of uuid between Vulkan and CUDA
-    // Get Vulkan UUID of device
+    // code
+    // Check presence of opencl device, if absent no point to go ahead
+    // Get number of opnecl supported platforms
+    oclResult = clGetPlatformIDs(0, NULL, &platform_count);
+    if(CL_SUCCESS != oclResult)
+    {
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clGetPlatformIDs() failed at %d\n", __LINE__);
+        return(oclResult);
+    } 
+    else if(0 == platform_count)
+    {
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clGetPlatformIDs() failed due to platform_count == 0 at %d\n", __LINE__);
+        return(-1);
+    }
+    
+    // We have one or more platform, get them in array
+    fprintf(gpTsFile, "[INFO] initialize_opencl() -> clGetPlatformIDs() succeeded at %d \n", __LINE__);
+    oclPlatformIDs = (cl_platform_id *)malloc(platform_count * sizeof(cl_platform_id));
+    // Add error checking here
+
+    // Now get platform IDs into our allocated array
+    oclResult = clGetPlatformIDs(platform_count, oclPlatformIDs, NULL);
+    if(CL_SUCCESS != oclResult)
+    {
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clGetPlatformIDs() failed at %d\n", __LINE__);
+        return(oclResult);
+    }
+
+    int opencl_platform_with_gpu_device_found = -1;
+
+    // loop through opencl array to found that opencl platform which supports gpu with required opencl extensions
+    for(unsigned int i =0; i<platform_count; i++)
+    {
+        // Get number of devices for found platform
+        oclResult = clGetDeviceIDs(oclPlatformIDs[i], CL_DEVICE_TYPE_GPU, 0, NULL, &device_count);
+        if(CL_SUCCESS != oclResult)
+        {
+            fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clGetDeviceIDs() failed at %d\n", __LINE__);
+            continue;
+        } 
+        else if(0 == device_count)
+        {
+            fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clGetDeviceIDs() failed due to device_count == 0 at %d\n", __LINE__);
+            continue;
+        }
+
+        // Now we have i-th platform which has GPU 
+        // Now see whether this GPU supports required extensions
+        // REQUIRED CL_KHR_EXTERNAL_MEMORY, cl_khr_device_uuid, cl_khr_external_seamaphore
+        if(doesOpenCLSupportRequiredExtensions(oclPlatformIDs[i]) == FALSE)
+        {
+            continue;
+        }
+
+        // Now we have correct opencl platform supporting required opencl extensions and has GPU/GPU devices too
+        oclPlatformID = oclPlatformIDs[i];
+
+        // Print selected platforms proiperties
+        size_t infoSize;
+        char * oclPlatformInfo = NULL;
+        clGetPlatformInfo(oclPlatformID, CL_PLATFORM_NAME, 0, NULL, &infoSize);
+        oclPlatformInfo = (char *)malloc(infoSize * sizeof(char));
+        if(NULL == oclPlatformInfo)
+        {
+            fprintf(gpTsFile, "[ERROR] initialize_opencl() -> Failed to allocate memory to oclPlatformInfo at %d\n", __LINE__);
+            return(oclResult);
+        }
+
+        clGetPlatformInfo(oclPlatformID, CL_PLATFORM_NAME, infoSize, oclPlatformInfo, NULL);
+        fprintf(gpTsFile, "[INFO] initialize_opencl() -> OCL PLATFORM INFO:\n%s\n", oclPlatformInfo);
+        free(oclPlatformInfo);
+        oclPlatformInfo = NULL;
+
+        opencl_platform_with_gpu_device_found = 1;
+        break;
+    }
+
+    free(oclPlatformIDs);
+    oclPlatformIDs = NULL;
+
+    if(-1 == opencl_platform_with_gpu_device_found)
+    {
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> No OpenCL with GPU device found at %d\n", __LINE__);
+        return(-32);    // Value for invalid OpenCL platform.
+    }
+
+    fprintf(gpTsFile, "[INFO] initialize_opencl() -> Device Count:%d\n", device_count);
+
+    // Now allocate memory to hold one or more GPU devices in found platform
+    device_count = 0;
+    oclResult = clGetDeviceIDs(oclPlatformID, CL_DEVICE_TYPE_GPU, 0, NULL, &device_count);
+    if (oclResult != CL_SUCCESS || device_count == 0) 
+    {
+        fprintf(gpTsFile, "[ERROR] No GPU devices found.\n");
+        return oclResult;
+    } 
+
+    oclDeviceIDs = (cl_device_id *)malloc(device_count * sizeof(cl_device_id));
+    if(NULL == oclDeviceIDs)
+    {
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> Memory allocation for oclDeviceIDs failed at %d and device_count=%d\n", __LINE__, device_count);
+        return(CL_OUT_OF_HOST_MEMORY);
+    }  
+
+    // Now get one or more GPU device IDs in this allocated array
+    oclResult = clGetDeviceIDs(oclPlatformID, CL_DEVICE_TYPE_GPU, device_count, oclDeviceIDs, NULL);
+    if(CL_SUCCESS != oclResult)
+    {
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clGetDeviceIDs() failed at %d\n", __LINE__);
+        free(oclDeviceIDs);
+        return(oclResult);
+    }
+
+    // Get Vulkan compatible UUID of device
     VkPhysicalDeviceIDProperties vkPhysicalDeviceIDProperties;
     memset((void *)&vkPhysicalDeviceIDProperties, 0, sizeof(VkPhysicalDeviceIDProperties));
     
@@ -1053,59 +1205,434 @@ cudaError initialize_cuda(void)
     vkPhysicalDeviceProperties2.pNext = &vkPhysicalDeviceIDProperties;  // First time chaining using pNext
 
     vkGetPhysicalDeviceProperties2(vkTsPhysicalDevice_selected, &vkPhysicalDeviceProperties2);
+    fprintf(gpTsFile, "vkGetPhysicalDeviceProperties2() Device Name: %s\n", vkPhysicalDeviceProperties2.properties.deviceName);
+    //fprintf(gpTsFile, "vkGetPhysicalDeviceProperties2() Device UUID: %\n", vkPhysicalDeviceIDProperties.deviceUUID);
 
-    uint8_t vulkanDeviceUUID[VK_UUID_SIZE];
-    memcpy(vulkanDeviceUUID, vkPhysicalDeviceIDProperties.deviceUUID, VK_UUID_SIZE);
+    //uint8_t vulkanDeviceUUID[VK_UUID_SIZE];
+    //memcpy(vulkanDeviceUUID, vkPhysicalDeviceIDProperties.deviceUUID, VK_UUID_SIZE);
 
-    // As we have atleast one CUDA enabled device, so find out CUDA equivalent UUID and compare with above Vulkan UUID for equality
-    int iVulkanCudaInteropDeviceFound = -1;
-    
-    for(int i = 0; i < dev_count; i++)
+    cl_uchar cl_uuid[CL_UUID_SIZE_KHR];
+    int vulkanOpenclInteropDeviceFound = -1;
+    for(unsigned int i = 0; i<device_count; i++)
     {
-        // First select first that device whose compute mode is not prohibited
-        int computeMode;
-        cudaResult = cudaDeviceGetAttribute(&computeMode, cudaDevAttrComputeMode, i);
-        if(cudaResult != cudaSuccess)
-            continue;
-        if(computeMode == cudaComputeModeProhibited)
-            continue;
+        // Query device extension strings
+        size_t devExtSize = 0;
+        oclResult = clGetDeviceInfo(oclDeviceIDs[i], CL_DEVICE_EXTENSIONS, 0, NULL, &devExtSize);
 
-        // Get CUDA device properties
-        cudaDeviceProp devProp;
-        memset((void *)&devProp, 0, sizeof(cudaDeviceProp));
+        char * devExtention = (char *)malloc(devExtSize);
+        if(NULL == devExtention)
+        {
+            fprintf(gpTsFile, "[ERROR] initialize_opencl() -> malloc() for OCL device extention failed\n");
+            continue;
+        }
 
-        cudaResult = cudaGetDeviceProperties(&devProp, i);
-        if(cudaResult != cudaSuccess)
-            continue;
-        
-        //now compare both UUIDs
-        int iResult = memcmp((void *)devProp.uuid.bytes, (void *)vulkanDeviceUUID, VK_UUID_SIZE);
-        if(iResult != 0)
-            continue;
-        
-        // Otherwise the required device is found, now set it
-        cudaResult = cudaSetDevice(i);
+        oclResult = clGetDeviceInfo(oclDeviceIDs[i], CL_DEVICE_EXTENSIONS, devExtSize, devExtention, NULL);
 
-        if(cudaResult != cudaSuccess)
-            continue;
-        
-        fprintf(gpTsFile, "[INFO] intialize_cuda() selected device is %s", devProp.name);
-        iVulkanCudaInteropDeviceFound = 1;
-        break;
+        // Require these device level extensions
+        BOOL has_uuid = (strstr(devExtention, "cl_khr_device_uuid") != NULL);
+        BOOL has_xmem = (strstr(devExtention, "cl_khr_external_memory") != NULL);
+        BOOL has_xmem_win32 = (strstr(devExtention, "cl_khr_external_memory_win32") != NULL);
+
+        fprintf(gpTsFile, "[INFO] Device %u extensions = %s\n", i, devExtention);
+
+        if(has_uuid && has_xmem && has_xmem_win32)
+        {
+            for(unsigned int i = 0; i<device_count; i++)
+            {
+                // Get OpenCL capabale device's UUID from opencl itself
+                oclResult = clGetDeviceInfo(oclDeviceIDs[i], CL_DEVICE_UUID_KHR, sizeof(CL_UUID_SIZE_KHR), &cl_uuid, NULL);
+                if(CL_SUCCESS != oclResult)
+                    continue;
+                        
+                // Now compare OpenCL device UUID with Vulkan device UUID
+                BOOL uuidMatched = TRUE;
+                for(uint32_t j = 0; j < CL_UUID_SIZE_KHR; j++)
+                {
+                    if(cl_uuid[j] != vkPhysicalDeviceIDProperties.deviceUUID[j])
+                    {
+                        uuidMatched = FALSE;
+                        break;
+                    }
+                }
+
+                fprintf(gpTsFile, "[INFO] Vulkan UUID: ");
+                for(int k = 0; k < CL_UUID_SIZE_KHR; k++)
+                {
+                    fprintf(gpTsFile, "%02X", vkPhysicalDeviceIDProperties.deviceUUID[k]);
+                }
+                fprintf(gpTsFile, "\n[INFO] OpenCL Device UUID: ");
+                for(int k = 0; k < CL_UUID_SIZE_KHR; k++)
+                {
+                    fprintf(gpTsFile, "%02X", cl_uuid[k]);
+                }
+                fprintf(gpTsFile, "\n");
+
+                // Go for next device if available
+                if(FALSE == uuidMatched)
+                    continue;
+                
+                // Otherwise device is found
+                oclDeviceID = oclDeviceIDs[i];
+                //fprintf(gpTsFile, "[INFO] initialize_opencl() -> oclDeviceID: %u\n", (unsigned int)oclDeviceID);
+                
+                size_t infoSize;
+                char * oclDeviceInfo = NULL;
+                clGetDeviceInfo(oclDeviceID, CL_DEVICE_NAME, 0, NULL, &infoSize);
+                oclDeviceInfo = (char *)malloc(infoSize * sizeof(char));
+                if(NULL == oclDeviceInfo)
+                {
+                    fprintf(gpTsFile, "[ERROR] initialize_opencl() -> Memory allocation for oclDeviceInfo failed at %d\n", __LINE__);
+                    return(-1);
+                }
+
+                clGetDeviceInfo(oclDeviceID, CL_DEVICE_NAME, infoSize, oclDeviceInfo, NULL);
+                fprintf(gpTsFile, "[INFO] initialize_opencl() -> Vulkan OpenCL Interop device INFO:\n%s\n", oclDeviceInfo);
+                free(oclDeviceInfo);
+                oclDeviceInfo = NULL;
+
+                vulkanOpenclInteropDeviceFound = 1;                
+                break;
+            }
+        }
+
+        free(devExtention);
+        if(vulkanOpenclInteropDeviceFound == 1)
+            break;
+    }    
+
+    free(oclDeviceIDs);
+    oclDeviceIDs = NULL;
+
+    // If no such capable interop device found
+    if(-1 == vulkanOpenclInteropDeviceFound)
+    {
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> No Vulkan-OpenCL InterOp device found at %d\n", __LINE__);
+        return(-2);    // Value for invalid OpenCL device not available.
     }
 
-    // if no such device is found return with error
-    if(iVulkanCudaInteropDeviceFound == -1)
+    //
+    // Create OpenCL context
+    //
+    oclContext = clCreateContext(NULL, // Shared memory between vulkan and opencl
+        1,  // Kiti divecs pahijet
+        &oclDeviceID, // Device IDs
+        NULL, // pfn_notify
+        NULL, // user_data
+        &oclResult
+    );
+
+    if(CL_SUCCESS != oclResult)
     {
-        fprintf(gpTsFile, "[ERROR] intialize_cuda() no CUDA device found");
-        return(cudaErrorUnknown);   // This is hardcoded failure
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clCreateContext() failed with %d at %d\n", oclResult, __LINE__);
+        return(oclResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] initialize_opencl() -> clCreateContext() suceeded at %d\n", __LINE__);
+    }    
+
+    // Create OpenCL command queue
+    oclCommandQueue = clCreateCommandQueueWithProperties(
+        oclContext, // kontya context sathi
+        oclDeviceID,   // kotya device sathi                    
+        0, // properties
+        &oclResult
+    );
+
+    if(CL_SUCCESS != oclResult)
+    {
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clCreateCommandQueueWithProperties() failed with %d at %d\n", oclResult, __LINE__);
+        return(oclResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] initialize_opencl() -> clCreateCommandQueueWithProperties() suceeded at %d\n", __LINE__);
+    }
+
+    // Create opencl program from opencl kernel source code
+    //oclKernelSourceCode = readKernelSourceCode("VK.cl");
+    char * oclKernelSourceCode = "__kernel void sineWaveKernel(__global float4* pos, const int width, const int height, const float time) { int gid_x = get_global_id(0); int gid_y = get_global_id(1); int index = gid_y * width + gid_x; float u = gid_x / (float)(width - 1); float v = gid_y / (float)(height - 1); float freq = 4.0f; float w = sin(u * freq + time) * cos(v * freq + time) * 0.5f; pos[index] = (float4)(u * 2.0f - 1.0f, w, v * 2.0f - 1.0f, 1.0f); }";
+    oclProgram = clCreateProgramWithSource(
+        oclContext, // kontya context sathi
+        1, // number of strings
+        (const char **)&oclKernelSourceCode,    // krenel code strings
+        NULL, // lengths
+        &oclResult
+    );
+
+    if(CL_SUCCESS != oclResult)
+    {
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clCreateProgramWithSource() failed with %d at %d\n", oclResult, __LINE__);
+        return(oclResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] initialize_opencl() -> clCreateProgramWithSource() suceeded at %d\n", __LINE__);
+    }
+
+    // Build opencl program
+    oclResult = clBuildProgram(
+        oclProgram, // kontya program sathi
+        0, //1,  // number of devices
+        NULL, //&oclDeviceID, // device IDs
+        "-cl-fast-relaxed-math", // extra compiler command line options
+        NULL, // call back function pfn_notify
+        NULL  // user_data
+    );
+
+    if(CL_SUCCESS != oclResult)
+    {
+        // Get build log size
+        size_t log_size;
+        clGetProgramBuildInfo(
+            oclProgram,
+            oclDeviceID,
+            CL_PROGRAM_BUILD_LOG,
+            0,
+            NULL,
+            &log_size
+        );
+
+        // Allocate memory for build log
+        char *build_log = (char *)malloc(log_size);
+
+        // Get build log
+        clGetProgramBuildInfo(
+            oclProgram,
+            oclDeviceID,
+            CL_PROGRAM_BUILD_LOG,
+            log_size,
+            build_log,
+            NULL
+        );
+
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clBuildProgram() failed with %d at %d\nBuild Log:\n%s\n", oclResult, __LINE__, build_log);
+
+        // Free allocated memory
+        free(build_log);
+
+        return(oclResult);
+    }
+
+    // Create opencl kernel
+    oclKernel = clCreateKernel(
+        oclProgram, // kontya program sathi
+        "sineWaveKernel",   // kernel name
+        &oclResult  // return code
+    );
+
+    if(CL_SUCCESS != oclResult)
+    {
+        fprintf(gpTsFile, "[ERROR] initialize_opencl() -> clCreateKernel() failed with %d at %d\n", oclResult, __LINE__);
+        return(oclResult);
     }
 
     // Assuming we are already using Windows OS greater than 8.1
     // but with win32 application (with win32 UWP application)
     vkExternalMemoryHandleTypeFlagBits = VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT;
 
-    return(cudaSuccess);
+    return(CL_SUCCESS);
+}
+
+BOOL doesOpenCLSupportRequiredExtensions(cl_platform_id ocl_platform_id)
+{
+    // Local variable declaration
+    size_t extensionSize;
+    char * ocl_platform_extensions = NULL;
+    BOOL bResult = FALSE;
+
+    // Code
+    // Get/List number of platform extensions supported by device
+    oclResult = clGetPlatformInfo(
+        ocl_platform_id,    // kontya platform sathi
+        CL_PLATFORM_EXTENSIONS, // what info
+        0,  // param_value_size kiti pahijet
+        NULL,   // param_value
+        &extensionSize  // param_value_size_return
+    );
+
+    if(CL_SUCCESS != oclResult)
+    {
+        fprintf(gpTsFile, "[ERROR] doesOpenCLSupportRequiredExtensions() -> clGetPlatformInfo() failed with %d at %d\n", oclResult, __LINE__);
+        return(FALSE);
+    }
+
+    // Allocate memory to hold extensions string
+    ocl_platform_extensions = (char *)malloc(extensionSize * sizeof(char));
+    
+    if(NULL == ocl_platform_extensions)
+    {
+        fprintf(gpTsFile, "[ERROR] doesOpenCLSupportRequiredExtensions() -> Memory allocation for extensions string failed at %d\n", __LINE__);
+        return(FALSE);
+    }
+
+    // Get extensions string
+    oclResult = clGetPlatformInfo(        
+        ocl_platform_id,    // kontya platform sathi
+        CL_PLATFORM_EXTENSIONS, // what info
+        extensionSize,  // param_value_size kiti pahijet
+        ocl_platform_extensions,   // param_value
+        NULL  // param_value_size_return
+    );
+
+    if(CL_SUCCESS != oclResult)
+    {
+        fprintf(gpTsFile, "[ERROR] doesOpenCLSupportRequiredExtensions() -> clGetPlatformInfo() failed with %d at %d\n", oclResult, __LINE__);
+        //free(extensions);
+        return(FALSE);
+    }
+
+    char * ocl_platforn_extensions_copy_for_strtok = NULL;
+    ocl_platforn_extensions_copy_for_strtok = (char *)malloc(extensionSize * sizeof(char));
+    if(NULL == ocl_platforn_extensions_copy_for_strtok) 
+    {
+        fprintf(gpTsFile, "[ERROR] doesOpenCLSupportRequiredExtensions() -> Memory allocation for extensions string copy failed at %d\n", __LINE__);
+        free(ocl_platform_extensions);
+        return(FALSE);
+    }
+
+    strcpy(ocl_platforn_extensions_copy_for_strtok, ocl_platform_extensions);
+
+    // findout how many extension are found
+    char *token = strtok(ocl_platforn_extensions_copy_for_strtok, " ");
+    int i = 0;
+    while(token != NULL)
+    {
+        i++;
+        token = strtok(NULL, " ");
+    }
+
+    int extension_count = i;
+    fprintf(gpTsFile, "[INFO] doesOpenCLSupportRequiredExtensions() -> Number of OpenCL platform extensions supported: %d\n", extension_count);
+
+    // Create array of length of names of each found extension
+    int *extension_length_array = (int *)malloc(extension_count * sizeof(int));
+    if(NULL == extension_length_array)
+    {
+        fprintf(gpTsFile, "[ERROR] doesOpenCLSupportRequiredExtensions() -> Memory allocation for extension_length_array failed at %d\n", __LINE__);
+        free(ocl_platform_extensions);
+        free(ocl_platforn_extensions_copy_for_strtok);
+        return(FALSE);
+    }
+
+    strcpy(ocl_platforn_extensions_copy_for_strtok, ocl_platform_extensions);
+
+    token = strtok(ocl_platforn_extensions_copy_for_strtok, " ");
+    i = 0;
+    while(token != NULL)
+    {
+        extension_length_array[i] = strlen(token) + 1; // +1 for null character
+        
+        token = strtok(NULL, " ");
+        i++;
+    }
+
+    // Accordingly allocate array of pointers to hold each extension name and each string of required length taken from extension_length_array
+    char ** cl_extensions_array = NULL;
+    cl_extensions_array = (char **)malloc(extension_count * sizeof(char *));
+    if(NULL == cl_extensions_array)
+    {
+        fprintf(gpTsFile, "[ERROR] doesOpenCLSupportRequiredExtensions() -> Memory allocation for cl_extensions_array failed at %d\n", __LINE__);
+        free(ocl_platform_extensions);
+        free(ocl_platforn_extensions_copy_for_strtok);
+        free(extension_length_array);
+        return(FALSE);
+    }
+
+    for(int i =0; i < extension_count; i++)
+    {
+        cl_extensions_array[i] = (char *)malloc(extension_length_array[i] * sizeof(char));
+        if(NULL == cl_extensions_array[i])
+        {
+            fprintf(gpTsFile, "[ERROR] doesOpenCLSupportRequiredExtensions() -> Memory allocation for cl_extensions_array[%d] failed at %d\n", i, __LINE__);
+            // Free previously allocated memory
+            for(int j = 0; j < i; j++)
+            {
+                free(cl_extensions_array[j]);
+            }
+            free(cl_extensions_array);
+            free(ocl_platform_extensions);
+            free(ocl_platforn_extensions_copy_for_strtok);
+            free(extension_length_array);
+            return(FALSE);
+        }
+    }
+
+    // Now copy each extension name to respective allocated memory
+    strcpy(ocl_platforn_extensions_copy_for_strtok, ocl_platform_extensions);
+    token = strtok(ocl_platforn_extensions_copy_for_strtok, " ");
+    i = 0;
+    while(token != NULL)
+    {
+        memcpy(cl_extensions_array[i], token, extension_length_array[i]);        
+        token = strtok(NULL, " ");
+        i++;
+    }
+
+    if(ocl_platforn_extensions_copy_for_strtok)
+    {
+        free(ocl_platforn_extensions_copy_for_strtok);
+        ocl_platforn_extensions_copy_for_strtok = NULL;
+    }
+    if(extension_length_array)
+    {
+        free(extension_length_array);
+        extension_length_array = NULL;
+    }
+
+    // Print all supported extensions
+    for(int i = 0; i < extension_count; i++)
+    {
+        fprintf(gpTsFile, "[INFO] doesOpenCLSupportRequiredExtensions() -> Supported OpenCL Platform Extension[%d]: %s\n", i, cl_extensions_array[i]);
+    }
+
+    // Now compare extension array to see whether this array contains our required OpenCL extensions for interop with Vulkan
+    int cl_khr_device_uuid_Found = 0;
+    int cl_khr_external_memory_extension_Found = 0;
+
+    for(int i = 0; i < extension_count; i++)
+    {
+        // For "cl_khr_device_uuid"
+        if(0 == strcmp(cl_extensions_array[i], "cl_khr_device_uuid"))
+        {
+            cl_khr_device_uuid_Found = 1;
+        }
+        // For "cl_khr_external_memory"
+        else if(0 == strcmp(cl_extensions_array[i], "cl_khr_external_memory"))
+        {
+            cl_khr_external_memory_extension_Found = 1;
+        }
+    }
+
+    // Free the memory
+    for(int i = 0; i < extension_count; i++)
+    {
+        if(cl_extensions_array[i])
+        {
+            free(cl_extensions_array[i]);
+            cl_extensions_array[i] = NULL;
+        }
+    }
+
+    if(cl_extensions_array)
+    {
+        free(cl_extensions_array);
+        cl_extensions_array = NULL;
+    }
+
+    if(ocl_platform_extensions)
+    {
+        free(ocl_platform_extensions);
+        ocl_platform_extensions = NULL;
+    }
+
+    // Check for required extensions
+    if ((1 == cl_khr_device_uuid_Found) && (1 == cl_khr_external_memory_extension_Found))
+    {
+        bResult = TRUE;
+    }
+
+    return(bResult);
 }
  
 VkResult TsResize(int iTsWidth, int iTsHeight)
@@ -1324,7 +1851,7 @@ VkResult TsResize(int iTsWidth, int iTsHeight)
                                return(vkTsResult);
                 }
 
-// [STEP-26] Create Pipeline
+                // [STEP-26] Create Pipeline
                vkTsResult = TsCreatePipeline();
                if (VK_SUCCESS != vkTsResult)
                {
@@ -1332,7 +1859,7 @@ VkResult TsResize(int iTsWidth, int iTsHeight)
                               return(vkTsResult);
                }
 
-        // Create Frame Buffer
+                // Create Frame Buffer
                vkTsResult = TsCreateFrameBuffers();
                if (VK_SUCCESS != vkTsResult)
                {
@@ -1396,7 +1923,7 @@ VkResult TsDisplay(void)
     VkResult TsResize(int, int);
     VkResult TsUpdateUnifomBuffer(void);
     VkResult TsBuildCommandBuffers(void);
-    VkResult prepareSinewaveForCPU(unsigned int, unsigned int, float);    
+    VkResult prepareSinewaveForCPU(unsigned int, unsigned int, float); 
 
     // Local variable decalration
     VkResult vkTsResult = VK_SUCCESS;
@@ -1410,86 +1937,187 @@ VkResult TsDisplay(void)
         return((VkResult)VK_FALSE);
     } 
 
+    if(TRUE == bMesh1024Choosen)
+    {
+        vkCommandBuffer_array = vkCommandBuffer_pos_1024x1024_graphics_array;
+    }
+    else if(TRUE == bMesh512Choosen)
+    {
+        vkCommandBuffer_array = vkCommandBuffer_pos_512x512_graphics_array;
+    }
+    else if(TRUE == bMesh256Choosen)
+    {
+        vkCommandBuffer_array = vkCommandBuffer_pos_256x256_graphics_array;
+    }
+    else if(TRUE == bMesh128Choosen)
+    {
+        vkCommandBuffer_array = vkCommandBuffer_pos_128x128_graphics_array;
+    }
+    else // if(TRUE == bMesh64Choosen)
+    {
+        vkCommandBuffer_array = vkCommandBuffer_pos_64x64_graphics_array;
+    }
+
+    // CPU or GPU computation of sinewave
     if(bOnGpu)
     {
-        if(bMesh1024Choosen)
+        // set open cl kernel first arguments i.e. 0th
+        oclResult = clSetKernelArg(
+            oclKernel, // kontya kernel sathi
+            0,  // argument index 0th
+            sizeof(cl_mem), // argument size 
+            (void *)&pos_opencl // argument value pos_opencl
+        );
+        if(CL_SUCCESS != oclResult)
         {
-            // Run CDA kernel
-            dim3 block(8, 8, 1);
-            dim3 grid(1024/block.x, 1024/block.y, 1);
-            sinewave_kernel<<<grid,block>>>((float4 *)pos_cuda, 1024,1024,animationTime);
-        }
-        else if(bMesh512Choosen)
-        {
-            // Run CDA kernel
-            dim3 block(8, 8, 1);
-            dim3 grid(512/block.x, 512/block.y, 1);
-            sinewave_kernel<<<grid,block>>>((float4 *)pos_cuda, 512,512,animationTime);
-        }
-        else if(bMesh256Choosen)
-        {
-            // Run CDA kernel
-            dim3 block(8, 8, 1);
-            dim3 grid(256/block.x, 256/block.y, 1);
-            sinewave_kernel<<<grid,block>>>((float4 *)pos_cuda, 256,256,animationTime);
-        }
-        else if(bMesh128Choosen)
-        {
-            // Run CDA kernel
-            dim3 block(8, 8, 1);
-            dim3 grid(128/block.x, 128/block.y, 1);
-            sinewave_kernel<<<grid,block>>>((float4 *)pos_cuda, 128,128,animationTime);
-        }
-        else // if(bMesh64Choosen)
-        {
-            // Run CDA kernel
-            dim3 block(8, 8, 1);
-            dim3 grid(64/block.x, 64/block.y, 1);
-            sinewave_kernel<<<grid,block>>>((float4 *)pos_cuda, 64,64,animationTime);
-        }
-
-        // Common to all above mesh if blocks
-        cudaResult = cudaGetLastError();
-        if(cudaResult != cudaSuccess)
-        {
-            fprintf(gpTsFile, "[ERROR] TsDisplay() -> cudaGetLastError() %d at %d \n", cudaResult, __LINE__);
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> 0th argument clSetKernelArg() failed with %d at %d\n", oclResult, __LINE__);
             return(VK_ERROR_INITIALIZATION_FAILED);
         }
 
-        // Synchronization
-        cudaResult = cudaDeviceSynchronize();
-        if(cudaResult != cudaSuccess)
+        // set open cl kernel second arguments i.e. 1st
+        oclResult = clSetKernelArg(
+            oclKernel, // kontya kernel sathi
+            1,  // argument index 1st
+            sizeof(cl_uint), // argument size 
+            (void *)&meshWidth // argument value meshWidth
+        );
+        if(CL_SUCCESS != oclResult)
         {
-            fprintf(gpTsFile, "[ERROR] TsDisplay() -> cudaDeviceSynchronize() %d at %d \n", cudaResult, __LINE__);
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> 1st argument clSetKernelArg() failed with %d at %d\n", oclResult, __LINE__);
             return(VK_ERROR_INITIALIZATION_FAILED);
         }
+
+        // set open cl kernel 3rd arguments i.e. 2nd 
+        oclResult = clSetKernelArg(
+            oclKernel, // kontya kernel sathi
+            2,  // argument index 0th
+            sizeof(cl_uint), // argument size 
+            (void *)&meshHeight // argument value meshHeight
+        );
+        if(CL_SUCCESS != oclResult)
+        {
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> 2nd clSetKernelArg() failed with %d at %d\n", oclResult, __LINE__);
+            return(VK_ERROR_INITIALIZATION_FAILED);
+        }
+
+        // set open cl kernel 4th arguments i.e. 3rd
+        oclResult = clSetKernelArg(
+            oclKernel, // kontya kernel sathi
+            3,  // argument index 0th
+            sizeof(cl_float), // argument size 
+            (void *)&animationTime // argument value animationTime
+        );
+        if(CL_SUCCESS != oclResult)
+        {
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> 3rd clSetKernelArg() failed with %d at %d\n", oclResult, __LINE__);
+            return(VK_ERROR_INITIALIZATION_FAILED);
+        }
+
+        // Map Vulkan Buffer for writing by OpenCL 
+        clEnqueueAcquireExternalMemObjectsKHR_fn clEnqueueAcquireExternalMemObjectsKHR = NULL;
+        clEnqueueAcquireExternalMemObjectsKHR = (clEnqueueAcquireExternalMemObjectsKHR_fn)clGetExtensionFunctionAddressForPlatform(
+            oclPlatformID, // kontya platform sathi
+            "clEnqueueAcquireExternalMemObjectsKHR" // function name
+        );
+
+        if(NULL == clEnqueueAcquireExternalMemObjectsKHR)
+        {
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> clGetExtensionFunctionAddressForPlatform() for clEnqueueAcquireExternalMemObjectsKHR failed at %d\n", __LINE__);
+            return(VK_ERROR_INITIALIZATION_FAILED);
+        }
+        oclResult = clEnqueueAcquireExternalMemObjectsKHR(
+            oclCommandQueue, // kontya command queue sathi
+            1,  // number of mem objects
+            &pos_opencl, // mem objects array
+            0,  // num_events_in_wait_list
+            NULL,   // event_wait_list
+            NULL    // event
+        );
+
+        if(CL_SUCCESS != oclResult)
+        {
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> clEnqueueAcquireExternalMemObjectsKHR() failed with %d at %d\n", oclResult, __LINE__);
+            return(VK_ERROR_INITIALIZATION_FAILED);
+        }
+
+        // Execute OpenCL kernel
+        size_t globalWorkSize[2];   // 2D NDRange
+        globalWorkSize[0] = meshWidth;
+        globalWorkSize[1] = meshHeight;
+
+        size_t localWorkSize[2];    // 2D work group size
+        localWorkSize[0] = 8; // 8 work items in X axis   
+        localWorkSize[1] = 8; // 8 work items in Y axis
+
+        oclResult = clEnqueueNDRangeKernel(
+            oclCommandQueue, // kontya command queue sathi
+            oclKernel,  // kontya kernel sathi
+            2,  // work_dim from globalWorkSize[2]
+            NULL,   // global_work_offset
+            globalWorkSize,    // global_work_size
+            NULL,   // local_work_size
+            0,  // num_events_in_wait_list
+            NULL,   // event_wait_list
+            NULL    // event
+        );
+
+        if(CL_SUCCESS != oclResult)
+        {
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> clEnqueueNDRangeKernel() failed with %d at %d\n", oclResult, __LINE__);
+            return(VK_ERROR_INITIALIZATION_FAILED);
+        }
+
+        // release queued vulkan buffer from opencl to get back to vulkan for rendering
+        clEnqueueReleaseExternalMemObjectsKHR_fn clEnqueueReleaseExternalMemObjectsKHR = NULL;
+        clEnqueueReleaseExternalMemObjectsKHR = (clEnqueueReleaseExternalMemObjectsKHR_fn)clGetExtensionFunctionAddressForPlatform(
+            oclPlatformID, // kontya platform sathi
+            "clEnqueueReleaseExternalMemObjectsKHR" // function name
+        );
+        if(NULL == clEnqueueReleaseExternalMemObjectsKHR)
+        {
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> clGetExtensionFunctionAddressForPlatform() for clEnqueueReleaseExternalMemObjectsKHR failed at %d\n", __LINE__);
+            return(VK_ERROR_INITIALIZATION_FAILED);
+        }
+
+        oclResult = clEnqueueReleaseExternalMemObjectsKHR(
+            oclCommandQueue, // kontya command queue sathi
+            1,  // number of mem objects
+            &pos_opencl, // mem objects array
+            0,  // num_events_in_wait_list
+            NULL,   // event_wait_list
+            NULL    // event
+        );
+
+        if(CL_SUCCESS != oclResult)
+        {
+            fprintf(gpTsFile, "[ERROR] TsDisplay() -> clEnqueueReleaseExternalMemObjectsKHR() failed with %d at %d\n", oclResult, __LINE__);
+            return(VK_ERROR_INITIALIZATION_FAILED);
+        }
+
+        // Finish opencl command queue to complete all operations
+        oclResult = clFinish(oclCommandQueue);
     }
     else
     {
         if(TRUE == bMesh1024Choosen)
         {
-            prepareSinewaveForCPU(1024, 1024, animationTime);
-            vkCommandBuffer_array = vkCommandBuffer_pos_1024x1024_graphics_array;
+            prepareSinewaveForCPU(1024, 1024, animationTime);            
         }
         else if(TRUE == bMesh512Choosen)
         {
-            prepareSinewaveForCPU(512, 512, animationTime);
-            vkCommandBuffer_array = vkCommandBuffer_pos_512x512_graphics_array;
+            prepareSinewaveForCPU(512, 512, animationTime);            
         }
         else if(TRUE == bMesh256Choosen)
         {
-            prepareSinewaveForCPU(256, 256, animationTime);
-            vkCommandBuffer_array = vkCommandBuffer_pos_256x256_graphics_array;
+            prepareSinewaveForCPU(256, 256, animationTime);            
         }
         else if(TRUE == bMesh128Choosen)
         {
-            prepareSinewaveForCPU(128, 128, animationTime);
-            vkCommandBuffer_array = vkCommandBuffer_pos_128x128_graphics_array;
+            prepareSinewaveForCPU(128, 128, animationTime);            
         }
         else // if(TRUE == bMesh64Choosen)
         {
-            prepareSinewaveForCPU(64, 64, animationTime);
-            vkCommandBuffer_array = vkCommandBuffer_pos_64x64_graphics_array;
+            prepareSinewaveForCPU(64, 64, animationTime);            
         }
     }    
 
@@ -1524,6 +2152,24 @@ VkResult TsDisplay(void)
         fprintf(gpTsFile, "[INFO] TsDisplay() -> vkAcquireNextImageKHR() failed with %d at %d \n", vkTsResult, __LINE__);
         return(vkTsResult);
         }
+    }
+
+    if(currentImageIndex >= swapchainImageCount)
+    {
+        fprintf(gpTsFile, "[ERROR] TsDisplay() -> currentImageIndex=%u >= swapchainImageCount=%u\n", currentImageIndex, swapchainImageCount);
+        return VK_ERROR_INITIALIZATION_FAILED;
+    }
+
+    if(NULL == vkCommandBuffer_array)
+    {
+        fprintf(gpTsFile, "[ERROR] TsDisplay() -> vkCommandBuffer_array is NULL\n");
+        return VK_ERROR_INITIALIZATION_FAILED;
+    }
+
+    if(NULL == vkFence_array)
+    {
+        fprintf(gpTsFile, "[ERROR] TsDisplay() -> vkFence_array is NULL\n");
+        return VK_ERROR_INITIALIZATION_FAILED;
     }
 
     // Use Fence to allow host to wait for completion of execution previous command buffer
@@ -1663,12 +2309,12 @@ void TsUpdate(void)
 
 void TsUninitialize(void)
 {
-               // Local function decalarations
-              void TsToggleFullScreen(void);
-              
-                // Cuda related function declarations
-                cudaError unitialize_cuda(void);
+    // Function declaration
+    cl_int uninitialize_opencl(void);
 
+               // Local function decalarations
+               void TsToggleFullScreen(void);
+ 
                // Code
                if (TRUE == gbTsFullScreen)
                {
@@ -1682,64 +2328,123 @@ void TsUninitialize(void)
                               DestroyWindow(ghTsWnd);
                               ghTsWnd = NULL;
                }             
+
  
+
                // No need to Destroy/uninitialize Vulkan Device Queue
+
  
+
                // Destroy Vulkan Device
+
                if (vkDevice)
+
                {
+
                               vkDeviceWaitIdle(vkDevice); // First synchronization function
+
                               fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkDeviceWaitIdle() is done\n");
+
  
+
                               // Destroy Fence
+
                               for(uint32_t i = 0; i < swapchainImageCount; i++)
+
                               {
+
                                              vkDestroyFence(vkDevice, vkFence_array[i], NULL);                                       
+
                                              fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkDestroyFence() is successfully done for %d index\n", i);
+
                               }
+
  
+
                               if(vkFence_array)
+
                               {
+
                                              free(vkFence_array);
+
                                              vkFence_array = NULL;
+
                                              fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkFence_array released successfully\n");
+
                               }
+
  
+
                               // Destroy Semaphore
+
                               // Use case 3 commenting semaphore/fence object, validation will provide error message that you have forget to destroy vulkan object
+
                               if(vkSemaphore_rendercomplete)
+
                               {
+
                                              vkDestroySemaphore(vkDevice, vkSemaphore_rendercomplete, NULL);
+
                                              vkSemaphore_rendercomplete = VK_NULL_HANDLE;
+
                                              fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkSemaphore_rendercomplete released successfully\n");
+
                               }
+
  
+
                               if(vkSemaphore_backbuffer)
+
                               {
+
                                              vkDestroySemaphore(vkDevice, vkSemaphore_backbuffer, NULL);
+
                                              vkSemaphore_backbuffer = VK_NULL_HANDLE;
+
                                              fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkSemaphore_backbuffer released successfully\n");
+
                               }
+
  
+
                               // Destroy Framebuffer
+
                               for(uint32_t i = 0; i < swapchainImageCount; i++)
+
                               {
+
                                              vkDestroyFramebuffer(vkDevice, vkFrameBuffer_array[i], NULL);
+
                                              fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkDestroyFramebuffer() is successfully done for %d index\n", i);
+
                               }
+
                               if(vkFrameBuffer_array)
+
                               {
+
                                              free(vkFrameBuffer_array);
+
                                              vkFrameBuffer_array = NULL;
+
                                              fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkFrameBuffer_array released successfully\n");
+
                               } 
+
                               
+
                               // [STEP-25]
+
                               if(vkPipelineLayout)
+
                               {
+
                                 vkDestroyPipelineLayout(vkDevice, vkPipelineLayout, NULL);
+
                                 vkPipelineLayout = VK_NULL_HANDLE;
+
                                 fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkDestroyPipelineLayout() vkPipelineLayout is successfully released\n");
+
                               }
 
  
@@ -1802,15 +2507,15 @@ void TsUninitialize(void)
                                 fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkFreeMemory() is successfully done for uniformData.vkDeviceMemory\n");
                               }
 
-                              // Unitialize CUDA
-                              cudaResult = unitialize_cuda();
-                              if(cudaResult != cudaSuccess)
+                              // Uninitialize opencl
+                              oclResult = uninitialize_opencl();
+                              if(CL_SUCCESS != oclResult)
                               {
-                                fprintf(gpTsFile, "[INFO] TsUninitialize() -> unitialize_cuda() is failed\n");
+                                fprintf(gpTsFile, "[ERROR] TsUninitialize() -> uninitialize_opencl() is failed\n");
                               }
                               else
                               {
-                                fprintf(gpTsFile, "[INFO] TsUninitialize() -> unitialize_cuda() is successfully done\n");
+                                fprintf(gpTsFile, "[INFO] TsUninitialize() -> uninitialize_opencl() is successfully done\n"); 
                               }
 
                               if(vertexData_external.vkDeviceMemory)
@@ -1825,7 +2530,7 @@ void TsUninitialize(void)
                                 vkDestroyBuffer(vkDevice, vertexData_external.vkBuffer, NULL);
                                 vertexData_external.vkBuffer = VK_NULL_HANDLE;
                                 fprintf(gpTsFile, "[INFO] TsUninitialize() -> vertexData_external vkDestroyBuffer() is successfully done\n");
-                              }  
+                              }
 
                               // [STEP-22]
                               if(vertex_position_512x512_graphics.vkDeviceMemory)
@@ -2106,43 +2811,44 @@ void TsUninitialize(void)
  
 
                gpTsFile = NULL;
+
 }
 
-cudaError unitialize_cuda(void)
+cl_int uninitialize_opencl(void)
 {
     // Code
-    if(pos_cuda)
+    if(pos_opencl)
     {
-        cudaResult = cudaFree(pos_cuda);
-        if(cudaResult != cudaSuccess)
-        {
-            fprintf(gpTsFile, "[ERROR] unitialize_cuda() -> cudaFree() failed!!!");
-            return(cudaResult);
-        }
-        else
-        {
-            fprintf(gpTsFile, "[INFO] unitialize_cuda() -> cudaFree() succeeded!!!");
-        }
-        pos_cuda = NULL;        
+        clReleaseMemObject(pos_opencl);
+        pos_opencl = NULL;
     }
 
-    if(cuExternalMemory)
+    if(oclKernel)
     {
-        cudaResult = cudaDestroyExternalMemory(cuExternalMemory);
-        if(cudaResult != cudaSuccess)
-        {
-            fprintf(gpTsFile, "[ERROR] unitialize_cuda() -> cudaDestroyExternalMemory() failed!!!");
-            return(cudaResult);
-        }
-        else
-        {
-            fprintf(gpTsFile, "[INFO] unitialize_cuda() -> cudaDestroyExternalMemory() succeeded!!!");
-        }
-        cuExternalMemory = NULL;
+        clReleaseKernel(oclKernel);
+        oclKernel = NULL;
     }
 
-    return(cudaResult);
-} 
+    if(oclProgram)
+    {
+        clReleaseProgram(oclProgram);
+        oclProgram = NULL;
+    }
+
+    if(oclCommandQueue)
+    {
+        clReleaseCommandQueue(oclCommandQueue);
+        oclCommandQueue = NULL;
+    }
+
+    if(oclContext)
+    {
+        clReleaseContext(oclContext);
+        oclContext = NULL;
+    }
+
+    return(CL_SUCCESS);
+}
 
 ///////////////////////////////////////// Defination Vulkan Related Functions ////////////////////////////////////////////////////////
 
@@ -3282,111 +3988,59 @@ VkResult TsCreateValidationCallbackFunction(void)
  
 
     // Local variable declarations
-
     VkResult vkTsResult = VK_SUCCESS;
-
     PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT_fnptr = NULL;
-
  
-
     // Code
-
     // Get required function pointers
-
     vkCreateDebugReportCallbackEXT_fnptr = (PFN_vkCreateDebugReportCallbackEXT)vkGetInstanceProcAddr(vkTsInstance, "vkCreateDebugReportCallbackEXT");
-
     if(NULL == vkCreateDebugReportCallbackEXT_fnptr)
-
     {
-
         vkTsResult = VK_ERROR_INITIALIZATION_FAILED;
-
         fprintf(gpTsFile, "[ERROR] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() failed to get function pointer for vkCreateDebugReportCallbackEXT() with %d at %d\n", vkTsResult, __LINE__);
-
         return(vkTsResult);
-
     }
-
     else
-
     {
-
         fprintf(gpTsFile, "[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkCreateDebugReportCallbackEXT() at %d\n", __LINE__);
-
     }
-
  
-
     vkDestroyDebugReportCallbackEXT_fnptr = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(vkTsInstance, "vkDestroyDebugReportCallbackEXT");
-
     if(NULL == vkDestroyDebugReportCallbackEXT_fnptr)
-
     {
-
         vkTsResult = VK_ERROR_INITIALIZATION_FAILED;
-
         fprintf(gpTsFile, "[ERROR] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() failed to get function pointer for vkDestroyDebugReportCallbackEXT() with %d at %d\n", vkTsResult, __LINE__);
-
         return(vkTsResult);
-
     }
-
     else
-
     {
-
         fprintf(gpTsFile, "[INFO] TsCreateValidationCallbackFunction() -> vkGetInstanceProcAddr() succeeded to get function pointer for vkDestroyDebugReportCallbackEXT() at %d\n", __LINE__);
-
     }
-
  
-
     // Declare and initialize structure to get the vulkan debug report callback object
-
     VkDebugReportCallbackCreateInfoEXT vkDebugReportCallbackCreateInfoEXT;
-
     memset((void *)&vkDebugReportCallbackCreateInfoEXT, 0, sizeof(VkDebugReportCallbackCreateInfoEXT));
-
  
-
     vkDebugReportCallbackCreateInfoEXT.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
-
     vkDebugReportCallbackCreateInfoEXT.pNext = NULL;
-
     vkDebugReportCallbackCreateInfoEXT.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT;
-
  
-
     vkDebugReportCallbackCreateInfoEXT.pfnCallback = debugReportCallback;
-
     vkDebugReportCallbackCreateInfoEXT.pUserData = NULL;    // Parameters to callback function
-
  
-
     vkTsResult = vkCreateDebugReportCallbackEXT_fnptr(vkTsInstance, &vkDebugReportCallbackCreateInfoEXT, NULL, &vkDebugReportCallbackEXT);
-
-    if(VK_FALSE == vkTsResult)
-
+    if(VK_SUCCESS != vkTsResult)
     {       
-
         fprintf(gpTsFile, "[ERROR] TsCreateValidationCallbackFunction() -> vkCreateDebugReportCallbackEXT_fnptr() failed with %d at %d\n", vkTsResult, __LINE__);
-
         return(vkTsResult);
-
     }
-
     else
-
     {
-
         fprintf(gpTsFile, "[INFO] TsCreateValidationCallbackFunction() -> vkCreateDebugReportCallbackEXT_fnptr() succeeded at %d\n", __LINE__);
 
     }
-
  
-
     return(vkTsResult);
-
 }
 
  
@@ -3450,7 +4104,7 @@ VkResult TsFillDeviceExtensionNames(void)
                               // Allocate memory assigned as required
                               deviceExtensionNames_array[i] = (char*)malloc(sizeof(char) * (strlen(vkTsExtensionProperties_array[i].extensionName) + 1));
                               memcpy(deviceExtensionNames_array[i], vkTsExtensionProperties_array[i].extensionName, (strlen(vkTsExtensionProperties_array[i].extensionName) + 1));
-                              fprintf(gpTsFile, "[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = %s\n", deviceExtensionNames_array[i]);
+                              //fprintf(gpTsFile, "[INFO] TsFillDeviceExtensionNames() -> Vulkan Device Extension Name = %s\n", deviceExtensionNames_array[i]);
                }
  
                // Step 4: As not required here onwards free vkExtensionProperties_array
@@ -3464,7 +4118,7 @@ VkResult TsFillDeviceExtensionNames(void)
                // Accordingly, set 2 global variables requiredExtensionCount, enabledDeviceExtensionNames_array
                VkBool32 vulkanSwapchainExtensionFound = VK_FALSE;
                VkBool32 vulkanExternalMemoryWin32ExtensionFound = VK_FALSE;
- 
+          
                for (uint32_t i = 0; i < deviceExtensionCount; i++)
                {
                     if (0 == strcmp(deviceExtensionNames_array[i], VK_KHR_SWAPCHAIN_EXTENSION_NAME))
@@ -3476,10 +4130,13 @@ VkResult TsFillDeviceExtensionNames(void)
                     // VK_KHR_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME = "VK_KHR_external_memory_win32"
                     if (0 == strcmp(deviceExtensionNames_array[i], VK_KHR_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME))
                     {
+                        
                                     vulkanExternalMemoryWin32ExtensionFound = VK_TRUE;
                                     enabledDeviceExtensionNames_array[enabledDeviceExtentionCount++] = VK_KHR_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME;
                     }
                }
+
+               //exit(0);
  
                // Step 6: As not needed henceforth free the local string array
                for (uint32_t i = 0; i < deviceExtensionCount; i++)
@@ -3531,7 +4188,7 @@ VkResult TsFillDeviceExtensionNames(void)
  
                return(vkTsResult);
 }
- 
+
 // [STEP-8]
 VkResult TsCreateVulkanDevice(void)
 {
@@ -3568,7 +4225,7 @@ VkResult TsCreateVulkanDevice(void)
                //vkDeviceQueueCreateInfo.pQueuePriorities = NULL;
                vkDeviceQueueCreateInfo.pQueuePriorities = queuePriority;
  
-               // Intialize VkDeviceCreateInfo Structure
+               // Initialize VkDeviceCreateInfo Structure
                VkDeviceCreateInfo vkDeviceCreateInfo;
                memset((void*)&vkDeviceCreateInfo, 0, sizeof(VkDeviceCreateInfo));
  
@@ -4125,7 +4782,7 @@ VkResult TsCreateImagesAndImageViews(void)
                     fprintf(gpTsFile, "[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at %d \n", __LINE__);
     }
 
-    // Step-2 For depth image intialize VkImageCreateInfo structure
+    // Step-2 For depth image initialize VkImageCreateInfo structure
     VkImageCreateInfo vkImageCreateInfo;
     memset((void*)&vkImageCreateInfo, 0, sizeof(VkImageCreateInfo));
 
@@ -4518,233 +5175,6 @@ VkResult TsCreateVertexBuffer(int meshWidth, int meshHeight, VertexData * pVerte
 
     // Step 13
     vkUnmapMemory(vkDevice, vertexData_position.vkDeviceMemory);
-
-    *pVertexData = vertexData_position;
-
-    return(vkTsResult);
-}
-
-VkResult TsCreateExternalVertexBuffer(int meshWidth, int meshHeight, VertexData * pVertexData)
-{
-    // Local variable decalration
-    VkResult vkTsResult = VK_SUCCESS;
-    // [STEP-23] Shaders related variables
-    VertexData vertexData_position;
-    unsigned int size = meshWidth * meshHeight * 4 * sizeof(float);
-
-    // Code
-    // Initialize External Memory Buffer Info
-    VkExternalMemoryBufferCreateInfo  vkExternalMemoryBufferCreateInfo;
-    memset((void *)&vkExternalMemoryBufferCreateInfo, 0, sizeof(VkExternalMemoryBufferCreateInfo));
-
-    vkExternalMemoryBufferCreateInfo.sType = VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO;
-    vkExternalMemoryBufferCreateInfo.pNext = NULL;
-
-    vkExternalMemoryBufferCreateInfo.handleTypes = vkExternalMemoryHandleTypeFlagBits;
-
-    // Step 4
-    memset((void*)&vertexData_position, 0, sizeof(VertexData));
-
-    // Step 5
-    VkBufferCreateInfo vkBufferCreateInfo;
-    memset((void*)&vkBufferCreateInfo, 0, sizeof(VkBufferCreateInfo));
-
-    vkBufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-    vkBufferCreateInfo.pNext = &vkExternalMemoryBufferCreateInfo;   // Second chaining in this program
-    vkBufferCreateInfo.flags = 0;   // Valid flags used in scattered/sparse buffer
-
-    vkBufferCreateInfo.size = size;
-    vkBufferCreateInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT;    // Destination where CUDA write data
-    // sharingMode = 0 due to memset() which means Exclusive
-    // In vulkan memory is not done in Bytes while it is done in Regions
-    // and i.e. minimum it is 4096 & it is deliberatly made as Vulkan demands small number of large size allocations
-    // & use them repeatetively for different resources
-    // sharingMode = 1 then other 2 members need to fill with queue family index and queue family array
-
-    // Step 6
-    vkTsResult = vkCreateBuffer(vkDevice, &vkBufferCreateInfo, NULL, &vertexData_position.vkBuffer);
-    if (VK_SUCCESS != vkTsResult)
-    {
-        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> vkCreateBuffer() failed at %d\n", __LINE__);
-        return(vkTsResult);
-    }
-    else
-    {
-        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> vkCreateBuffer() succeeded at %d \n", __LINE__);
-    }
-
-    // Step 7
-    VkMemoryRequirements vkMemoryRequirements;
-    memset((void*)&vkMemoryRequirements, 0, sizeof(VkMemoryRequirements));
-    vkGetBufferMemoryRequirements(vkDevice, vertexData_position.vkBuffer, &vkMemoryRequirements);
-    // No error checking
-
-    // Prepare for exportable memory allocation
-    VkExportMemoryAllocateInfoKHR vkExportMemoryAllocateInfoKHR;
-    memset((void *)&vkExportMemoryAllocateInfoKHR, 0, sizeof(VkExportMemoryAllocateInfoKHR));
-    vkExportMemoryAllocateInfoKHR.sType = VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_KHR;
-    vkExportMemoryAllocateInfoKHR.pNext = NULL;
-
-    vkExportMemoryAllocateInfoKHR.handleTypes = vkExternalMemoryHandleTypeFlagBits;
-
-    // Step 8
-    VkMemoryAllocateInfo vkMemoryAllocateInfo;
-    memset((void*)&vkMemoryAllocateInfo, 0, sizeof(VkMemoryAllocateInfo));
-
-    vkMemoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-    vkMemoryAllocateInfo.pNext = &vkExportMemoryAllocateInfoKHR;    // Third chaining in this application
-
-    vkMemoryAllocateInfo.allocationSize = vkMemoryRequirements.size;   // This size is converted to Region wise allocation as needed for device memory
-    vkMemoryAllocateInfo.memoryTypeIndex = 0;   // Initial value before entering the loop
-
-    // Step a
-    for(uint32_t i = 0; i < vkPhysicalDeviceMemoryProperties.memoryTypeCount; i++)
-    {
-        // Step b
-        if(1 == (vkMemoryRequirements.memoryTypeBits & 1))
-        {
-            // Step c
-            if(vkPhysicalDeviceMemoryProperties.memoryTypes[i].propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)   // GPU memory selection
-            {
-                // Step d
-                vkMemoryAllocateInfo.memoryTypeIndex = i;
-                break;
-            }
-        }
- 
-        // Step e
-        vkMemoryRequirements.memoryTypeBits >>= 1;
-    }
- 
-    // Step 9
-    vkTsResult = vkAllocateMemory(vkDevice, &vkMemoryAllocateInfo, NULL, &vertexData_position.vkDeviceMemory);
-    if (VK_SUCCESS != vkTsResult)
-    {
-        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> vkAllocateMemory() failed at %d\n", __LINE__);
-        return(vkTsResult);
-    }
-    else
-    {
-        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> vkAllocateMemory() succeeded at %d \n", __LINE__);
-    }
- 
-    // Step 10 it binds vulkan device buffer object handle with vulkan device memory object handle
-    vkTsResult = vkBindBufferMemory(vkDevice, vertexData_position.vkBuffer, vertexData_position.vkDeviceMemory, 0);
-
-    if (VK_SUCCESS != vkTsResult)
-    {
-        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> vkBindBufferMemory() failed at %d\n", __LINE__);
-        return(vkTsResult);
-    }
-    else
-    {
-        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> vkBindBufferMemory() succeeded at %d \n", __LINE__);
-    }
- 
-    // CUDA to Vertex Buffer copy
-    HANDLE hMemoryWin32Handle = NULL;
-
-    VkMemoryGetWin32HandleInfoKHR vkMemoryGetWin32HandleInfoKHR;
-    memset((void *)&vkMemoryGetWin32HandleInfoKHR, 0, sizeof(VkMemoryGetWin32HandleInfoKHR));
-
-    vkMemoryGetWin32HandleInfoKHR.sType = VK_STRUCTURE_TYPE_MEMORY_GET_WIN32_HANDLE_INFO_KHR;
-    vkMemoryGetWin32HandleInfoKHR.pNext = NULL;
-
-    vkMemoryGetWin32HandleInfoKHR.memory = vertexData_position.vkDeviceMemory;
-    vkMemoryGetWin32HandleInfoKHR.handleType = vkExternalMemoryHandleTypeFlagBits;
-
-    // vkGetMemoryWin32HandleKHR() not able to call directly
-    PFN_vkGetMemoryWin32HandleKHR vkGetMemoryWin32HandleKHR = NULL;
-    vkGetMemoryWin32HandleKHR = (PFN_vkGetMemoryWin32HandleKHR) vkGetDeviceProcAddr(vkDevice, "vkGetMemoryWin32HandleKHR");
-    if(vkGetMemoryWin32HandleKHR == NULL)
-    {
-        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() pointer not able find at %d\n", __LINE__);
-        vkTsResult = VK_ERROR_INITIALIZATION_FAILED;
-        return(vkTsResult);
-    }
-    else
-    {
-        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() pointer found");
-    }
-
-    vkTsResult = vkGetMemoryWin32HandleKHR(vkDevice, &vkMemoryGetWin32HandleInfoKHR, &hMemoryWin32Handle);
-    if (VK_SUCCESS != vkTsResult)
-    {
-        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() failed at %d\n", __LINE__);
-        return(vkTsResult);
-    }
-    else
-    {
-        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() succeeded at %d \n", __LINE__);
-    }
-
-    // Import above external buffer's memory into CUDA
-    cudaExternalMemoryHandleDesc cuExternalMemoryHandleDesc;
-    memset((void *)&cuExternalMemoryHandleDesc, 0, sizeof(cudaExternalMemoryHandleDesc));
-
-    cuExternalMemoryHandleDesc.type = cudaExternalMemoryHandleTypeOpaqueWin32;  // This cuda in-built constant for win os 8.1 and greater win os version
-    cuExternalMemoryHandleDesc.size = size; //meshWidth * meshHeight * 4 * sizeof(float);   // 4 for xyzw
-    cuExternalMemoryHandleDesc.handle.win32.handle = hMemoryWin32Handle;
-    cuExternalMemoryHandleDesc.flags = cudaExternalMemoryDedicated;
-
-    cudaResult = cudaImportExternalMemory(&cuExternalMemory, &cuExternalMemoryHandleDesc);
-    if(cudaResult != cudaSuccess)
-    {
-        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> cudaImportExternalMemory() failed at %d\n", __LINE__);
-        vkTsResult = VK_ERROR_INITIALIZATION_FAILED;
-        return(vkTsResult);
-    }
-    else
-    {
-        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> cudaImportExternalMemory() succeeded at %d \n", __LINE__);
-    }
-
-    // Close the handle as its job is done
-    CloseHandle(hMemoryWin32Handle);
-    hMemoryWin32Handle = NULL;
-
-    // Use above external imported memory to get mapped device pointer from CUDA
-    // As we have buffer, we need mapped poiinter to buffer
-    cudaExternalMemoryBufferDesc cuExternalMemoryBufferDesc;
-    memset((void *)&cuExternalMemoryBufferDesc, 0, sizeof(cudaExternalMemoryBufferDesc));
-
-    cuExternalMemoryBufferDesc.offset = 0;    // Kuthun start karaych
-    cuExternalMemoryBufferDesc.size = size;
-    cuExternalMemoryBufferDesc.flags = 0;
-
-    cudaResult = cudaExternalMemoryGetMappedBuffer(&pos_cuda, cuExternalMemory, &cuExternalMemoryBufferDesc);
-    if(cudaResult != cudaSuccess)
-    {
-        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> cudaExternalMemoryGetMappedBuffer() failed at %d\n", __LINE__);
-        vkTsResult = VK_ERROR_INITIALIZATION_FAILED;
-        return(vkTsResult);
-    }
-    else
-    {
-        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> cudaExternalMemoryGetMappedBuffer() succeeded at %d \n", __LINE__);
-    }
-
-    // Step 12
-    /*if(meshWidth == 1024 && meshHeight == 1024)
-    {
-        memcpy(data, pos_1024_graphics, size);
-    }
-    else if(meshWidth == 512 && meshHeight == 512)
-    {
-        memcpy(data, pos_512_graphics, size);
-    }
-    else if(meshWidth == 256 && meshHeight == 256)
-    {
-        memcpy(data, pos_256_graphics, size);
-    }
-    else if(meshWidth == 128 && meshHeight == 128)
-    {
-        memcpy(data, pos_128_graphics, size);
-    }
-    else //if(meshWidth == 64 && meshHeight == 64)
-    {
-        memcpy(data, pos_64_graphics, size);
-    }*/
 
     *pVertexData = vertexData_position;
 
@@ -5299,72 +5729,40 @@ VkResult TsCreateDescriptorSetLayout(void)
 
 }
 
- 
-
 // [STEP-25]
-
 VkResult TsCreatePipelineLayout(void)
-
 {
-
     // Local variable declaration
-
     VkResult vkTsResult = VK_SUCCESS;
-
  
-
     // Code
-
     VkPipelineLayoutCreateInfo vkPipelineLayoutCreateInfo;
-
     memset((void *)&vkPipelineLayoutCreateInfo, 0, sizeof(VkPipelineLayoutCreateInfo));
-
  
-
     vkPipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-
     vkPipelineLayoutCreateInfo.pNext = NULL;
-
     vkPipelineLayoutCreateInfo.flags = 0;   // Reserved for future use
-
  
-
     vkPipelineLayoutCreateInfo.setLayoutCount = 1;  // Even empty we need atleast 1 here
-
     vkPipelineLayoutCreateInfo.pSetLayouts = &vkDescriptorSetLayout;
-
  
-
     vkPipelineLayoutCreateInfo.pushConstantRangeCount = 0;
-
     vkPipelineLayoutCreateInfo.pPushConstantRanges = NULL;
-
  
-
     vkTsResult = vkCreatePipelineLayout(vkDevice, &vkPipelineLayoutCreateInfo, NULL, &vkPipelineLayout);
-
     if(VK_SUCCESS != vkTsResult)
-
     {
-
         fprintf(gpTsFile, "[ERROR] TsCreatePipelineLayout() -> vkCreatePipelineLayout() Failed at %d\n", __LINE__);
-
         return(vkTsResult);
-
     }
-
     else
-
     {
-
         fprintf(gpTsFile, "[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at %d\n", __LINE__);
-
     }
 
+    fflush(gpTsFile);
  
-
     return(vkTsResult);
-
 }
 
  VkResult TsCreateDescriptorPool(void)
@@ -6180,17 +6578,16 @@ VkResult TsCreateFences(void)
  
 
                return(vkTsResult);
-
 }
-
- 
 
 // Build command buffers
 VkResult TsBuildCommandBuffers(void)
 {
-    // Local variable declaration
+   // Local variable declaration
     VkResult vkTsResult = VK_SUCCESS;
-    VkCommandBuffer* vkCommandBuffer_array = NULL;    
+    VkCommandBuffer* vkCommandBuffer_array = NULL;  
+    
+    fprintf(gpTsFile, "[INFO] TsBuildCommandBuffers() at %d \n", __LINE__);               
 
     // Code
     // Loop per swapchain images
@@ -6208,6 +6605,7 @@ VkResult TsBuildCommandBuffers(void)
         {
             fprintf(gpTsFile, "[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for %d index at %d \n", i, __LINE__);
         }
+        fflush(gpTsFile);
 
         VkCommandBufferBeginInfo vkCommandBufferBeginInfo;
         memset((void *)&vkCommandBufferBeginInfo, 0, sizeof(VkCommandBufferBeginInfo));
@@ -6262,9 +6660,7 @@ VkResult TsBuildCommandBuffers(void)
 
         // Begin the render pass
         // INLINE => contents of this render pass are in-line with content of subpass & part of primary command buffer
-        vkCmdBeginRenderPass(vkCommandBuffer_array[i], &vkRenderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-
- 
+        vkCmdBeginRenderPass(vkCommandBuffer_array[i], &vkRenderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE); 
 
         // Bind with the pipeline
         vkCmdBindPipeline(vkCommandBuffer_array[i], VK_PIPELINE_BIND_POINT_GRAPHICS, vkPipeline);
@@ -6274,8 +6670,7 @@ VkResult TsBuildCommandBuffers(void)
 
         // Bind with the vertex buffer
         VkDeviceSize vkDeviceSize_offset_array[1];
-        memset((void*)vkDeviceSize_offset_array, 0, sizeof(VkDeviceSize) * ARRAY_SIZE(vkDeviceSize_offset_array));   
-        
+        memset((void*)vkDeviceSize_offset_array, 0, sizeof(VkDeviceSize) * ARRAY_SIZE(vkDeviceSize_offset_array));       
 
         // Here we should call Vulkan Drawing Functions
         if(TRUE == bMesh1024Choosen)
@@ -6290,11 +6685,11 @@ VkResult TsBuildCommandBuffers(void)
                 vkCmdBindVertexBuffers(vkCommandBuffer_array[i], 0, 1, &vertexData_external.vkBuffer, vkDeviceSize_offset_array);
             }
             vkCmdDraw(vkCommandBuffer_array[i],
-                    1024 * 1024,  // Kiti vertices draw karaychet
-                    1, // Kiti instances aahet 1
-                    0, // Drawing koothoon start karaych
-                    0  // From 1st instance
-                );
+                1024 * 1024,  // Kiti vertices draw karaychet
+                1, // Kiti instances aahet 1
+                0, // Drawing koothoon start karaych
+                0  // From 1st instance
+            );
         }
         else if(TRUE == bMesh512Choosen)
         {
@@ -6602,4 +6997,199 @@ VKAPI_ATTR VkBool32 VKAPI_CALL debugReportCallback(
 
     return(VK_FALSE);
 
+}
+
+// Vulkan-OpenCL Interop related function
+VkResult TsCreateExternalVertexBuffer(int mesh_width, int mesh_height, VertexData * pVertexData)
+{
+    // Local vaariable declaration
+    VkResult vkTsResult = VK_SUCCESS;
+
+    VertexData vertexData_position;
+    unsigned int size = mesh_width * mesh_width * 4 * sizeof(float);
+
+    // Code
+    // Initialize External Memory Buffer Info
+    VkExternalMemoryBufferCreateInfo  vkExternalMemoryBufferCreateInfo;
+    memset((void *)&vkExternalMemoryBufferCreateInfo, 0, sizeof(VkExternalMemoryBufferCreateInfo));
+
+    vkExternalMemoryBufferCreateInfo.sType = VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO;
+    vkExternalMemoryBufferCreateInfo.pNext = NULL;
+
+    vkExternalMemoryBufferCreateInfo.handleTypes = vkExternalMemoryHandleTypeFlagBits;
+
+    // Step 4
+    memset((void*)&vertexData_position, 0, sizeof(VertexData));
+
+    // Step 5
+    VkBufferCreateInfo vkBufferCreateInfo;
+    memset((void*)&vkBufferCreateInfo, 0, sizeof(VkBufferCreateInfo));
+
+    vkBufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+    vkBufferCreateInfo.pNext = &vkExternalMemoryBufferCreateInfo;   // Second chaining in this program
+    vkBufferCreateInfo.flags = 0;   // Valid flags used in scattered/sparse buffer
+
+    vkBufferCreateInfo.size = size;
+    vkBufferCreateInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT;    // Destination where CUDA write data
+    // sharingMode = 0 due to memset() which means Exclusive
+    // In vulkan memory is not done in Bytes while it is done in Regions
+    // and i.e. minimum it is 4096 & it is deliberatly made as Vulkan demands small number of large size allocations
+    // & use them repeatetively for different resources
+    // sharingMode = 1 then other 2 members need to fill with queue family index and queue family array
+
+    // Step 6
+    vkTsResult = vkCreateBuffer(vkDevice, &vkBufferCreateInfo, NULL, &vertexData_position.vkBuffer);
+    if (VK_SUCCESS != vkTsResult)
+    {
+        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> vkCreateBuffer() failed at %d\n", __LINE__);
+        return(vkTsResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> vkCreateBuffer() succeeded at %d \n", __LINE__);
+    }
+
+    // Step 7
+    VkMemoryRequirements vkMemoryRequirements;
+    memset((void*)&vkMemoryRequirements, 0, sizeof(VkMemoryRequirements));
+    vkGetBufferMemoryRequirements(vkDevice, vertexData_position.vkBuffer, &vkMemoryRequirements);
+    // No error checking
+
+    // Prepare for exportable memory allocation
+    VkExportMemoryAllocateInfoKHR vkExportMemoryAllocateInfoKHR;
+    memset((void *)&vkExportMemoryAllocateInfoKHR, 0, sizeof(VkExportMemoryAllocateInfoKHR));
+    vkExportMemoryAllocateInfoKHR.sType = VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_KHR;
+    vkExportMemoryAllocateInfoKHR.pNext = NULL;
+
+    vkExportMemoryAllocateInfoKHR.handleTypes = vkExternalMemoryHandleTypeFlagBits;
+
+    // Step 8
+    VkMemoryAllocateInfo vkMemoryAllocateInfo;
+    memset((void*)&vkMemoryAllocateInfo, 0, sizeof(VkMemoryAllocateInfo));
+
+    vkMemoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+    vkMemoryAllocateInfo.pNext = &vkExportMemoryAllocateInfoKHR;    // Third chaining in this application
+
+    vkMemoryAllocateInfo.allocationSize = vkMemoryRequirements.size;   // This size is converted to Region wise allocation as needed for device memory
+    vkMemoryAllocateInfo.memoryTypeIndex = 0;   // Initial value before entering the loop
+
+    // Step a
+    for(uint32_t i = 0; i < vkPhysicalDeviceMemoryProperties.memoryTypeCount; i++)
+    {
+        // Step b
+        if(1 == (vkMemoryRequirements.memoryTypeBits & 1))
+        {
+            // Step c
+            if(vkPhysicalDeviceMemoryProperties.memoryTypes[i].propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)   // GPU memory selection
+            {
+                // Step d
+                vkMemoryAllocateInfo.memoryTypeIndex = i;
+                break;
+            }
+        }
+ 
+        // Step e
+        vkMemoryRequirements.memoryTypeBits >>= 1;
+    }
+ 
+    // Step 9
+    vkTsResult = vkAllocateMemory(vkDevice, &vkMemoryAllocateInfo, NULL, &vertexData_position.vkDeviceMemory);
+    if (VK_SUCCESS != vkTsResult)
+    {
+        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> vkAllocateMemory() failed at %d\n", __LINE__);
+        return(vkTsResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> vkAllocateMemory() succeeded at %d \n", __LINE__);
+    }
+ 
+    // Step 10 it binds vulkan device buffer object handle with vulkan device memory object handle
+    vkTsResult = vkBindBufferMemory(vkDevice, vertexData_position.vkBuffer, vertexData_position.vkDeviceMemory, 0);
+
+    if (VK_SUCCESS != vkTsResult)
+    {
+        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> vkBindBufferMemory() failed at %d\n", __LINE__);
+        return(vkTsResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> vkBindBufferMemory() succeeded at %d \n", __LINE__);
+    }
+ 
+    // CUDA to Vertex Buffer copy
+    HANDLE hMemoryWin32Handle = NULL;
+
+    VkMemoryGetWin32HandleInfoKHR vkMemoryGetWin32HandleInfoKHR;
+    memset((void *)&vkMemoryGetWin32HandleInfoKHR, 0, sizeof(VkMemoryGetWin32HandleInfoKHR));
+
+    vkMemoryGetWin32HandleInfoKHR.sType = VK_STRUCTURE_TYPE_MEMORY_GET_WIN32_HANDLE_INFO_KHR;
+    vkMemoryGetWin32HandleInfoKHR.pNext = NULL;
+
+    vkMemoryGetWin32HandleInfoKHR.memory = vertexData_position.vkDeviceMemory;
+    vkMemoryGetWin32HandleInfoKHR.handleType = vkExternalMemoryHandleTypeFlagBits;
+
+    // vkGetMemoryWin32HandleKHR() not able to call directly
+    PFN_vkGetMemoryWin32HandleKHR vkGetMemoryWin32HandleKHR = NULL;
+    vkGetMemoryWin32HandleKHR = (PFN_vkGetMemoryWin32HandleKHR) vkGetDeviceProcAddr(vkDevice, "vkGetMemoryWin32HandleKHR");
+    if(vkGetMemoryWin32HandleKHR == NULL)
+    {
+        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() pointer not able find at %d\n", __LINE__);
+        vkTsResult = VK_ERROR_INITIALIZATION_FAILED;
+        return(vkTsResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() pointer found\n");
+    }
+
+    vkTsResult = vkGetMemoryWin32HandleKHR(vkDevice, &vkMemoryGetWin32HandleInfoKHR, &hMemoryWin32Handle);
+    if (VK_SUCCESS != vkTsResult)
+    {
+        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() failed at %d\n", __LINE__);
+        return(vkTsResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> vkGetMemoryWin32HandleKHR() succeeded at %d \n", __LINE__);
+    }
+
+    // Map above external buffer's memory into OpenCL to get the device pointer from OpenCL
+    cl_mem_properties oclMemProperties[] = {
+        CL_EXTERNAL_MEMORY_HANDLE_OPAQUE_WIN32_KHR, (cl_mem_properties)hMemoryWin32Handle,
+        CL_MEM_DEVICE_HANDLE_LIST_KHR, 
+            (cl_mem_properties)oclDeviceID, 
+        CL_MEM_DEVICE_HANDLE_LIST_END_KHR,
+        0
+    };
+    
+    // Create OpenCL compatible external buffer from above Vulkan buffer
+    pos_opencl = clCreateBufferWithProperties(
+        oclContext,
+        oclMemProperties,
+        CL_MEM_READ_WRITE,
+        vkMemoryRequirements.size,
+        NULL,   // As we need device buffer pointer
+        &oclResult
+    );
+
+    if (CL_SUCCESS != oclResult)
+    {
+        fprintf(gpTsFile, "[ERROR] TsCreateExternalVertexBuffer() -> clCreateBufferWithProperties() failed at %d\n", __LINE__);
+        vkTsResult = VK_ERROR_INITIALIZATION_FAILED; 
+        return(vkTsResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] TsCreateExternalVertexBuffer() -> clCreateBufferWithProperties() succeeded at %d \n", __LINE__);
+    }
+
+    // Close win32 memory handle
+    // Close the handle as its job is done
+    CloseHandle(hMemoryWin32Handle);
+    hMemoryWin32Handle = NULL;
+
+    *pVertexData = vertexData_position;
+
+    return(vkTsResult);
 }
