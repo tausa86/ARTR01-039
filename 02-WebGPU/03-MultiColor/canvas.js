@@ -230,7 +230,8 @@ function initialize() {
     "fn main(@location(0) pos : vec4<f32>, @location(1) col : vec4<f32>) -> VertexOutput\n"+
     "{\n"+
     "var output: VertexOutput;\n"+
-     "output.position = mvpUniform.mvpMatrix * pos;\n" + 
+     "output.position = mvpUniform.mvpMatrix * pos;\n" +
+     "output.color = col;\n" +
      "return output;\n" +
     "}\n";
 
@@ -321,9 +322,9 @@ function initialize() {
     };
 
     // Create the GPU buffer for vertex colors GPUBuffer type
-    buffer_color = device.createBuffer(bufferDescriptor_color);
+    buffer_colors = device.createBuffer(bufferDescriptor_color);
 
-    if(buffer_color == null)
+    if(buffer_colors == null)
     {
         console.log("initialize() Creating GPU buffer for vertex colors failed\n");
         throw new Error("initialize() Creating GPU buffer for vertex colors failed\n");
@@ -331,7 +332,7 @@ function initialize() {
     }
 
     // Copy the vertex colors data to the GPU buffer
-    queue.writeBuffer(buffer_color, 0, vertex_color, 0, vertex_color.length);
+    queue.writeBuffer(buffer_colors, 0, vertex_color, 0, vertex_color.length);
     console.log("initialize() Creating GPU buffer for vertex colors successfully done\n");
 
     // Uniform Plumbing
@@ -554,7 +555,7 @@ function draw() {
     render_pass_encoder.setScissorRect(0, 0, canvas.width, canvas.height);
     render_pass_encoder.setBindGroup(0, bindingGroups_mvpUniform);
     render_pass_encoder.setVertexBuffer(0, buffer_position);
-    render_pass_encoder.setVertexBuffer(1, buffer_color);
+    render_pass_encoder.setVertexBuffer(1, buffer_colors);
     render_pass_encoder.draw(3); // 3 vertices, 1 instance, first vertex = 0, first instance = 0
 
     // Step 14 end render pass
