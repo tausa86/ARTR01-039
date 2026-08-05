@@ -132,14 +132,33 @@ typedef struct
 } VertexData;
 
 // Position related variables
-VertexData vertexData_position;
+VertexData vertexData_position; // Positions
+VertexData vertexData_normal;   // Normals for lights
 
 // [STEP-31] Uniform related declaration
 struct MyuniformData
 {
+    // Matrices related uniforms
     glm::mat4 modelMatrix;
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
+
+    // Lighting related uniforms
+    glm::vec4 lightAmbient[2];
+    glm::vec4 lightDiffuse[2];
+    glm::vec4 lightSpecular[2];
+
+    glm::vec4 lightPosition_0;
+    glm::vec4 lightPosition_1;
+
+    // Material related uniform
+    glm::vec4 materialAmbient;
+    glm::vec4 materialDiffuse;  
+    glm::vec4 materialSpecular;
+    float materialShininess;
+
+    // Key pressed related uniforms
+    unsigned int lKeyIsPressed; // To enable and disable lighting
 };
 
 struct UniformData
@@ -171,6 +190,7 @@ VkPipeline vkPipeline = VK_NULL_HANDLE;
 
 // For rotation
 float angle = 0.0f;
+BOOL bLight = FALSE;    // To toggle lighting
 
 // Global functions declarations
 LRESULT CALLBACK TsWndProc(HWND, UINT, WPARAM, LPARAM);
@@ -367,6 +387,22 @@ LRESULT CALLBACK TsWndProc(HWND hTsWnd, UINT uiTsMsg, WPARAM wTsParam, LPARAM lT
                               default:
                                              break;
                               }
+                              break;
+                case WM_CHAR: // WM_CHAR
+                              switch(wTsParam)
+                              {
+                            case 'L': // case 'L'                            
+                            case 'l': // case 'l'
+                              if(FALSE == bLight)
+                              {
+                                  bLight = TRUE;
+                              }
+                              else
+                              {
+                                  bLight = FALSE;
+                              }
+                              break;
+                            }
                               break;
                case WM_DESTROY:
                               TsUninitialize();
@@ -1514,6 +1550,20 @@ void TsUninitialize(void)
                               }
 
                               // [STEP-22]
+                              if(vertexData_normal.vkDeviceMemory)
+                              {
+                                vkFreeMemory(vkDevice, vertexData_normal.vkDeviceMemory, NULL);
+                                vertexData_normal.vkDeviceMemory = VK_NULL_HANDLE;
+                                fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkFreeMemory() vertexData_normal is successfully done\n");
+                              }
+
+                              if(vertexData_normal.vkBuffer)
+                              {
+                                vkDestroyBuffer(vkDevice, vertexData_normal.vkBuffer, NULL);
+                                vertexData_normal.vkBuffer = VK_NULL_HANDLE;
+                                fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkDestroyBuffer() vertexData_normal is successfully done\n");
+                              }
+
                               if(vertexData_position.vkDeviceMemory)
                               {
                                 vkFreeMemory(vkDevice, vertexData_position.vkDeviceMemory, NULL);
@@ -4313,52 +4363,52 @@ VkResult TsCreateVertexBuffer(void)
     // Code
     // Step 3 Declare a structure
     // position
-float pyramidPosition[] = 
-{
-	 // front
-	 0.0f,  1.0f,  0.0f, // front-top
-	-1.0f, -1.0f,  1.0f, // front-left
-	 1.0f, -1.0f,  1.0f, // front-right
-	 
-	 // right
-	 0.0f,  1.0f,  0.0f, // right-top
-	 1.0f, -1.0f,  1.0f, // right-left
-	 1.0f, -1.0f, -1.0f, // right-right
+    float pyramidPosition[] = 
+    {
+        // front
+        0.0f,  1.0f,  0.0f, // front-top
+        -1.0f, -1.0f,  1.0f, // front-left
+        1.0f, -1.0f,  1.0f, // front-right
+        
+        // right
+        0.0f,  1.0f,  0.0f, // right-top
+        1.0f, -1.0f,  1.0f, // right-left
+        1.0f, -1.0f, -1.0f, // right-right
 
-	 // back
-	 0.0f,  1.0f,  0.0f, // back-top
-	 1.0f, -1.0f, -1.0f, // back-left
-	-1.0f, -1.0f, -1.0f, // back-right
+        // back
+        0.0f,  1.0f,  0.0f, // back-top
+        1.0f, -1.0f, -1.0f, // back-left
+        -1.0f, -1.0f, -1.0f, // back-right
 
-	 // left
-	 0.0f,  1.0f,  0.0f, // left-top
-	-1.0f, -1.0f, -1.0f, // left-left
-	-1.0f, -1.0f,  1.0f, // left-right
-};
+        // left
+        0.0f,  1.0f,  0.0f, // left-top
+        -1.0f, -1.0f, -1.0f, // left-left
+        -1.0f, -1.0f,  1.0f, // left-right
+    };
 
-// color
-float pyramidColors[] =
-{
-	// front
-	1.0f, 0.0f, 0.0f, // front-top
-	0.0f, 1.0f, 0.0f, // front-left
-	0.0f, 0.0f, 1.0f, // front-right
-	
-	// right
-	1.0f, 0.0f, 0.0f, // right-top
-	0.0f, 0.0f, 1.0f, // right-left
-	0.0f, 1.0f, 0.0f, // right-right
-	
-	// back
-	1.0f, 0.0f, 0.0f, // back-top
-	0.0f, 1.0f, 0.0f, // back-left
-	0.0f, 0.0f, 1.0f, // back-right
-	
-	// left
-	1.0f, 0.0f, 0.0f, // left-top
-	0.0f, 0.0f, 1.0f, // left-left
-	0.0f, 1.0f, 0.0f, // left-right
-};
+        // normals
+    float pyramidNormals[] =
+    {
+        // front
+        0.000000f, 0.447214f,  0.894427f, // front-top
+        0.000000f, 0.447214f,  0.894427f, // front-left
+        0.000000f, 0.447214f,  0.894427f, // front-right
+                                
+        // right			    
+        0.894427f, 0.447214f,  0.000000f, // right-top
+        0.894427f, 0.447214f,  0.000000f, // right-left
+        0.894427f, 0.447214f,  0.000000f, // right-right
+
+        // back
+        0.000000f, 0.447214f, -0.894427f, // back-top
+        0.000000f, 0.447214f, -0.894427f, // back-left
+        0.000000f, 0.447214f, -0.894427f, // back-right
+
+        // left
+        -0.894427f, 0.447214f,  0.000000f, // left-top
+        -0.894427f, 0.447214f,  0.000000f, // left-left
+        -0.894427f, 0.447214f,  0.000000f, // left-right
+    };
 
     // Vertex Position Buffer
     // Step 4
@@ -4526,11 +4576,8 @@ float pyramidColors[] =
     }
 
     else
-
     {
-
         fprintf(gpTsFile, "[INFO] TsCreateVertexBuffer() -> vkMapMemory() succeeded at %d \n", __LINE__);
-
     }
 
     // Step 12
@@ -4538,6 +4585,121 @@ float pyramidColors[] =
 
     // Step 13
     vkUnmapMemory(vkDevice, vertexData_position.vkDeviceMemory);
+
+    // Vertex Normal Buffer
+    // Step 4
+    memset((void*)&vertexData_normal, 0, sizeof(VertexData));
+
+    // Step 5
+    memset((void*)&vkBufferCreateInfo, 0, sizeof(VkBufferCreateInfo));
+
+    vkBufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+    vkBufferCreateInfo.pNext = NULL;
+    vkBufferCreateInfo.flags = 0;   // Valid flags used in scattered/sparse buffer
+
+    vkBufferCreateInfo.size = sizeof(pyramidNormals);
+    vkBufferCreateInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+    // sharingMode = 0 due to memset() which means Exclusive
+    // In vulkan memory is not done in Bytes while it is done in Regions
+    // and i.e. minimum it is 4096 & it is deliberatly made as Vulkan demands small number of large size allocations
+    // & use them repeatetively for different resources
+    // sharingMode = 1 then other 2 members need to fill with queue family index and queue family array
+
+    // Step 6
+    vkTsResult = vkCreateBuffer(vkDevice, &vkBufferCreateInfo, NULL, &vertexData_normal.vkBuffer);
+    if (VK_SUCCESS != vkTsResult)
+    {
+        fprintf(gpTsFile, "[ERROR] TsCreateVertexBuffer() -> vkCreateBuffer() vertexData_normal failed at %d\n", __LINE__);
+        return(vkTsResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] TsCreateVertexBuffer() -> vkCreateBuffer() vertexData_normal succeeded at %d \n", __LINE__);
+    }
+
+    // Step 7
+    memset((void*)&vkMemoryRequirements, 0, sizeof(VkMemoryRequirements));
+    vkGetBufferMemoryRequirements(vkDevice, vertexData_normal.vkBuffer, &vkMemoryRequirements);
+    // No error checking
+    // Step 8
+    memset((void*)&vkMemoryAllocateInfo, 0, sizeof(VkMemoryAllocateInfo));
+
+    vkMemoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+    vkMemoryAllocateInfo.pNext = NULL;
+
+    vkMemoryAllocateInfo.allocationSize = vkMemoryRequirements.size;   // This size is converted to Region wise allocation as needed for device memory
+    vkMemoryAllocateInfo.memoryTypeIndex = 0;   // Initial value before entering the loop
+
+    // Step a
+    for(uint32_t i = 0; i < vkPhysicalDeviceMemoryProperties.memoryTypeCount; i++)
+    {
+        // Step b
+        if(1 == (vkMemoryRequirements.memoryTypeBits & 1))
+        {
+            // Step c
+            if(vkPhysicalDeviceMemoryProperties.memoryTypes[i].propertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)
+            {
+                // Step d
+                vkMemoryAllocateInfo.memoryTypeIndex = i;
+                break;
+            }
+        }
+ 
+        // Step e
+        vkMemoryRequirements.memoryTypeBits >>= 1;
+    }
+ 
+    // Step 9
+    vkTsResult = vkAllocateMemory(vkDevice, &vkMemoryAllocateInfo, NULL, &vertexData_normal.vkDeviceMemory);
+    if (VK_SUCCESS != vkTsResult)
+    {
+        fprintf(gpTsFile, "[ERROR] TsCreateVertexBuffer() -> vkAllocateMemory() vertexData_normal failed at %d\n", __LINE__);
+        return(vkTsResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] TsCreateVertexBuffer() -> vkAllocateMemory() vertexData_normal succeeded at %d \n", __LINE__);
+    }
+ 
+    // Step 10 it binds vulkan device buffer object handle with vulkan device memory object handle
+    vkTsResult = vkBindBufferMemory(vkDevice, vertexData_normal.vkBuffer, vertexData_normal.vkDeviceMemory, 0);
+    if (VK_SUCCESS != vkTsResult)
+    {
+        fprintf(gpTsFile, "[ERROR] TsCreateVertexBuffer() -> vkBindBufferMemory() vertexData_normal failed at %d\n", __LINE__);
+        return(vkTsResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] TsCreateVertexBuffer() -> vkBindBufferMemory() vertexData_normal succeeded at %d \n", __LINE__);
+    }
+ 
+    // Step 11
+    data = NULL;
+    //                                                                                              
+    vkTsResult = vkMapMemory(
+        vkDevice,
+        vertexData_normal.vkDeviceMemory, //
+        0, // start
+        vkMemoryAllocateInfo.allocationSize, // sizeof
+        0, // Reserved
+        &data
+    );
+
+    if (VK_SUCCESS != vkTsResult)
+    {
+        fprintf(gpTsFile, "[ERROR] TsCreateVertexBuffer() -> vkMapMemory() vertexData_normal failed at %d\n", __LINE__);
+        return(vkTsResult);
+    }
+    else
+    {
+        fprintf(gpTsFile, "[INFO] TsCreateVertexBuffer() -> vkMapMemory() vertexData_normal succeeded at %d \n", __LINE__);
+    }
+
+    // Step 12
+    memcpy(data, pyramidNormals, sizeof(pyramidNormals));
+
+    // Step 13
+    vkUnmapMemory(vkDevice, vertexData_normal.vkDeviceMemory);
 
     return(vkTsResult);
 }
@@ -4699,6 +4861,35 @@ VkResult TsUpdateUnifomBuffer(void)
 
     myuniformData.projectionMatrix = perspectiveProjectionMatrix;
 
+    // Update Lighting related uniforms
+    // First light
+    myuniformData.lightAmbient[0] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);   // Black light ambient
+    myuniformData.lightDiffuse[0] = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);   // Red light diffuse 
+    myuniformData.lightSpecular[0] = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);   // Red light diffuse     
+    myuniformData.lightPosition_0 = glm::vec4(2.0f, 1.0f, 1.0f, 0.0f); // Light Dirctional Red
+
+    // Second light
+    myuniformData.lightAmbient[1] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);   // Black light ambient
+    myuniformData.lightDiffuse[1] = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);   // Blue light diffuse
+    myuniformData.lightSpecular[1] = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);   // Blue light diffuse     
+    myuniformData.lightPosition_1 = glm::vec4(-2.0f, 1.0f, 1.0f, 0.0f); // Light Directional Blue
+
+    // Grey color
+    myuniformData.materialAmbient = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f); // Material ambient
+    myuniformData.materialDiffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f); // Material  diffuse white
+    myuniformData.materialSpecular = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f); // Material specular white
+    myuniformData.materialShininess = 50.0f; // Material shininess
+
+    // Update key press related uniform
+    if(TRUE == bLight)
+    {
+        myuniformData.lKeyIsPressed = 1;
+    }
+    else
+    {
+        myuniformData.lKeyIsPressed = 0;
+    }
+
     // Map uniform buffer
     void * data = NULL;
     vkTsResult = vkMapMemory(
@@ -4720,7 +4911,7 @@ VkResult TsUpdateUnifomBuffer(void)
     memcpy(data, &myuniformData, sizeof(MyuniformData));
 
     // Unmapped memory
-    vkUnmapMemory(vkDevice, uniformData.vkDeviceMemory);
+    vkUnmapMemory(vkDevice, uniformData.vkDeviceMemory);       
 
     return(vkTsResult);
 }
@@ -4996,7 +5187,7 @@ VkResult TsCreateDescriptorSetLayout(void)
     vkDescriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
     vkDescriptorSetLayoutBinding.binding = 0;   // Binding point i.e. 0th index of (binding = 0) in vertex shader
     vkDescriptorSetLayoutBinding.descriptorCount = 1;
-    vkDescriptorSetLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+    vkDescriptorSetLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT; // Used in both vertex and fragment shader
     vkDescriptorSetLayoutBinding.pImmutableSamplers = NULL; 
 
     VkDescriptorSetLayoutCreateInfo vkDescriptorSetLayoutCreateInfo;
@@ -5326,40 +5517,46 @@ VkResult TsCreatePipeline(void)
     // Pipeline State Objects PSO
     // 1. Vertex input state
 
-    VkVertexInputBindingDescription vkVertexInputBindingDescription_array[1];   // 1 means position if 2 then position, color etc.
-
+    VkVertexInputBindingDescription vkVertexInputBindingDescription_array[3];   // 1 means position if 2 then position, normal, texcoord etc.
     memset((void *)vkVertexInputBindingDescription_array, 0, sizeof(VkVertexInputBindingDescription) * ARRAY_SIZE(vkVertexInputBindingDescription_array));
 
- 
-
     // Majha pahila buffer aahe toh 0th index la put ker i.e. in GL_ARRAY_BUFFER in OpenGL
-
     vkVertexInputBindingDescription_array[0].binding = 0;   //
-
-    vkVertexInputBindingDescription_array[0].stride = sizeof(float) * 3;    // take step in 3 or 12 bytes
-
+    vkVertexInputBindingDescription_array[0].stride = sizeof(float) * 3;    // take step in 3 or 12 bytes R32, G32, B32
     vkVertexInputBindingDescription_array[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;   // This is vertices rate i.e. kimmat
 
- 
+    // For normal
+    vkVertexInputBindingDescription_array[1].binding = 1;   //
+    vkVertexInputBindingDescription_array[1].stride = sizeof(float) * 3;    // take step in 3 or 12 bytes R32, G32, B32
+    vkVertexInputBindingDescription_array[1].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;   // This is vertices rate i.e. kimmat
 
+    // For texture
+    vkVertexInputBindingDescription_array[2].binding = 2;   //
+    vkVertexInputBindingDescription_array[2].stride = sizeof(float) * 2;    // take step in 2 or 8 bytes S32, T32
+    vkVertexInputBindingDescription_array[2].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;   // This is vertices rate i.e. kimmat
+ 
     // Shader madhle attributes
-
-    VkVertexInputAttributeDescription vkVertexInputAttributeDescription_array[1];  // 1 means position if 2 then position, color etc.
-
+    VkVertexInputAttributeDescription vkVertexInputAttributeDescription_array[3];  // 1 means position if 2 then position, normal, texcoords etc.
     memset((void *)vkVertexInputAttributeDescription_array, 0, sizeof(VkVertexInputAttributeDescription) * ARRAY_SIZE(vkVertexInputAttributeDescription_array));
-
  
-
+    // For position
     vkVertexInputAttributeDescription_array[0].binding = 0;     // vkVertexInputBindingDescription_array[0].binding = 0 <-> vkVertexInputAttributeDescription_array[0].binding = 0; but this will change in interleave
-
     vkVertexInputAttributeDescription_array[0].location = 0;    // layout(location = 0) in vec4 vPosition; // in Shader.vert
-
     vkVertexInputAttributeDescription_array[0].format = VK_FORMAT_R32G32B32_SFLOAT;     // Majha vertex X Y Z aahe te Signed Float 32-bit R32 = X, G32 = Y, G32 = Z
-
     vkVertexInputAttributeDescription_array[0].offset = 0;      // In interleaved how to jump in attribute layout. For now it is 0
 
- 
+    // For normal
+    vkVertexInputAttributeDescription_array[1].binding = 1;     // vkVertexInputBindingDescription_array[0].binding = 0 <-> vkVertexInputAttributeDescription_array[0].binding = 0; but this will change in interleave
+    vkVertexInputAttributeDescription_array[1].location = 1;    // layout(location = 0) in vec4 vPosition; // in Shader.vert
+    vkVertexInputAttributeDescription_array[1].format = VK_FORMAT_R32G32B32_SFLOAT;     // Majha vertex X Y Z aahe te Signed Float 32-bit R32 = X, G32 = Y, G32 = Z
+    vkVertexInputAttributeDescription_array[1].offset = 0;      // In interleaved how to jump in attribute layout. For now it is 0
 
+    // For texture
+    vkVertexInputAttributeDescription_array[2].binding = 2;     // vkVertexInputBindingDescription_array[0].binding = 0 <-> vkVertexInputAttributeDescription_array[0].binding = 0; but this will change in interleave
+    vkVertexInputAttributeDescription_array[2].location =2;    // layout(location = 0) in vec4 vPosition; // in Shader.vert
+    vkVertexInputAttributeDescription_array[2].format = VK_FORMAT_R32G32_SFLOAT;     // Majha vertex X Y Z aahe te Signed Float 32-bit R32 = S, G32 = T
+    vkVertexInputAttributeDescription_array[2].offset = 0;      // In interleaved how to jump in attribute layout. For now it is 0
+ 
     VkPipelineVertexInputStateCreateInfo vkPipelineVertexInputStateCreateInfo;
 
     memset((void *)&vkPipelineVertexInputStateCreateInfo, 0, sizeof(VkPipelineVertexInputStateCreateInfo));
@@ -5995,10 +6192,7 @@ VkResult TsCreateFences(void)
  
 
                return(vkTsResult);
-
-}
-
- 
+} 
 
 // Build command buffers
 VkResult TsBuildCommandBuffers(void)
@@ -6079,27 +6273,31 @@ VkResult TsBuildCommandBuffers(void)
         // Bind our descriptor tset to the pipeline
         vkCmdBindDescriptorSets(vkCommandBuffer_array[i], VK_PIPELINE_BIND_POINT_GRAPHICS, vkPipelineLayout, 0, 1, &vkDescriptorSet, 0, NULL);
 
+        // For position
         // Bind with the vertex buffer
-        VkDeviceSize vkDeviceSize_offset_array[1];
-        memset((void*)vkDeviceSize_offset_array, 0, sizeof(VkDeviceSize) * ARRAY_SIZE(vkDeviceSize_offset_array));
-        
+        VkDeviceSize vkDeviceSize_offset_position[1];
+        memset((void*)vkDeviceSize_offset_position, 0, sizeof(VkDeviceSize) * ARRAY_SIZE(vkDeviceSize_offset_position)); 
+        vkCmdBindVertexBuffers(vkCommandBuffer_array[i], 0, 1, &vertexData_position.vkBuffer, vkDeviceSize_offset_position);
 
-        vkCmdBindVertexBuffers(vkCommandBuffer_array[i], 0, 1, &vertexData_position.vkBuffer, vkDeviceSize_offset_array);
+        // For normals
+        // Bind with the vertex buffer
+        VkDeviceSize vkDeviceSize_offset_normals[1];
+        memset((void*)vkDeviceSize_offset_normals, 0, sizeof(VkDeviceSize) * ARRAY_SIZE(vkDeviceSize_offset_normals));
+        vkCmdBindVertexBuffers(vkCommandBuffer_array[i], 1, 1, &vertexData_normal.vkBuffer, vkDeviceSize_offset_normals);
+
+        // For Texcoords
+        // Bind with the vertex buffer
+        /*VkDeviceSize vkDeviceSize_offset_texcoords[1];
+        memset((void*)vkDeviceSize_offset_texcoords, 0, sizeof(VkDeviceSize) * ARRAY_SIZE(vkDeviceSize_offset_texcoords));
+        vkCmdBindVertexBuffers(vkCommandBuffer_array[i], 2, 1, &vertexData_texcoord.vkBuffer, vkDeviceSize_offset_texcoords);*/        
 
         // Here we should call Vulkan Drawing Functions
         vkCmdDraw(vkCommandBuffer_array[i],
-
-            12,  // Kiti vertices draw karaychet
-
+           12, // Kiti vertices draw karaychet
             1, // Kiti instances aahet 1
-
             0, // Drawing koothoon start karaych
-
             0  // From 1st instance
-
-        );
-
- 
+        ); 
 
         // End render pass
 

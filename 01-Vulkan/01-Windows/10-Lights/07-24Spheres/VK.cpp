@@ -16,8 +16,8 @@
 #include <vulkan\vulkan.h> // First vulkan code line for all platforms
 
 // GLM related macros and header files
-#define GLM_FORCE_RADIANCE // GLM la force karatay ki angles sagde rediance madhye ghe
-#define GLM_FORCE_DEPTH_0_TO_1 // Depth la consider kartana values 0 to 1 ch karaych GL_LEQUAL i.e. Depth Clamping
+#define GLM_FORCE_RADIANS // GLM la force karatay ki angles sagde redians madhye ghe
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE // Depth la consider kartana values 0 to 1 ch karaych GL_LEQUAL i.e. Depth Clamping
 #include "glm\glm.hpp"  // glm madhli glm.hpp hi header file include ker hpp => specific to C++ sathich aahe
 #include "glm\gtc\matrix_transform.hpp" // GTC Texture Compression chi kame karat aahet mhanoon TC GLM librarichi [GTC <=> GLM Texture Compression]
 
@@ -645,9 +645,9 @@ VkResult TsInitialize(void)
 
                // [STEP-22] Create Vertex Buffer
                // All Position, Normal, Texcoord buffers
-               //getSphereVertexData(gTsSphereVertices, gTsSphereNormals, gTsSphereTexcoords, gTsSphereElements);
-               //gTsNumVertices = getNumberOfSphereVertices();
-               //gTsNumElements = getNumberOfSphereElements();
+               getSphereVertexData(gTsSphereVertices, gTsSphereNormals, gTsSphereTexcoords, gTsSphereElements);
+               gTsNumVertices = getNumberOfSphereVertices();
+               gTsNumElements = getNumberOfSphereElements();
 
                vkTsResult = TsCreateVertexBuffer();
                if (VK_SUCCESS != vkTsResult)
@@ -1532,15 +1532,41 @@ void TsUninitialize(void)
                               // [STEP-24]
 
                               if(vkDescriptorSetLayout)
-
                               {
-
                                 vkDestroyDescriptorSetLayout(vkDevice, vkDescriptorSetLayout, NULL);
-
                                 vkDescriptorSetLayout = VK_NULL_HANDLE;
-
                                 fprintf(gpTsFile, "[INFO] TsUninitialize() -> vkDestroyDescriptorSetLayout() vkDescriptorSetLayout is successfully released\n");
+                              }
 
+                              // Free the arrays
+                              if(gTsSphereElements) 
+                              {
+                                free(gTsSphereElements);
+                                //gTsSphereElements = NULL;
+                              }
+
+                              if(gTsSphereTexcoords) 
+                              {
+                                free(gTsSphereTexcoords);
+                                //gTsSphereTexcoords = NULL;
+                              }
+
+                              if(gTsSphereNormals) 
+                              {
+                                free(gTsSphereNormals);
+                                //gTsSphereNormals = NULL;
+                              }
+
+                              /*if(gTsSphereColors) 
+                              {
+                                free(gTsSphereColors);
+                                gTsSphereColors = NULL;
+                              }*/
+
+                              if(gTsSphereVertices) 
+                              {
+                                free(gTsSphereVertices);
+                                //gTsSphereVertices = NULL;
                               }
 
  
@@ -4790,69 +4816,6 @@ VkResult TsCreateIndexBuffer(void)
     // Local variable decalration
     VkResult vkTsResult = VK_SUCCESS;
 
-    float cubeIndices[] =
-    {
-        // front
-        // position				// color			 // normals				// texcoords
-        1.0f,  1.0f,  1.0f,	
-        -1.0f,  1.0f,  1.0f,
-        1.0f, -1.0f,  1.0f,	
-
-        1.0f, -1.0f,  1.0f,	
-        -1.0f,  1.0f,  1.0f,	
-        -1.0f, -1.0f,  1.0f,	
-                            
-        // right			 
-        // position				// color			 // normals				// texcoords
-        1.0f,  1.0f, -1.0f,	
-        1.0f,  1.0f,  1.0f,	
-        1.0f, -1.0f, -1.0f,	
-
-        1.0f, -1.0f, -1.0f,	
-        1.0f,  1.0f,  1.0f,	
-        1.0f, -1.0f,  1.0f,	
-                            
-        // back				 
-        // position				// color			 // normals				// texcoords
-        1.0f,  1.0f, -1.0f,	
-        -1.0f,  1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,	
-
-        1.0f, -1.0f, -1.0f,	
-        -1.0f,  1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-                            
-        // left				 
-        // position				// color			 // normals				// texcoords
-        -1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-                            
-        // top				 
-        // position				// color			 // normals				// texcoords
-        1.0f,  1.0f, -1.0f,	
-        -1.0f,  1.0f, -1.0f,
-        1.0f,  1.0f,  1.0f,	
-
-        1.0f,  1.0f,  1.0f,	
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f,  1.0f,
-                            
-        // bottom			 
-        // position				// color			 // normals				// texcoords
-        1.0f, -1.0f,  1.0f,	
-        -1.0f, -1.0f,  1.0f,
-        1.0f, -1.0f, -1.0f,	
-
-        1.0f, -1.0f, -1.0f,	
-        -1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f, -1.0f
-    };
-
     // Code
     // Vertex Index Buffer
     memset((void*)&vertexData_index, 0, sizeof(VertexData));
@@ -4865,7 +4828,7 @@ VkResult TsCreateIndexBuffer(void)
     vkBufferCreateInfo.pNext = NULL;
     vkBufferCreateInfo.flags = 0;   // Valid flags used in scattered/sparse buffer
 
-    vkBufferCreateInfo.size = sizeof(cubeIndices);    // Size of index data
+    vkBufferCreateInfo.size = sizeof(unsigned short) * gTsNumElements;    // Size of index data
     vkBufferCreateInfo.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
     // sharingMode = 0 due to memset() which means Exclusive
     // In vulkan memory is not done in Bytes while it is done in Regions
@@ -4968,7 +4931,7 @@ VkResult TsCreateIndexBuffer(void)
     }
 
     // Step 12
-    memcpy(data, cubeIndices, sizeof(cubeIndices));
+    memcpy(data, gTsSphereElements, sizeof(unsigned short) * gTsNumElements);
 
     // Step 13
     vkUnmapMemory(vkDevice, vertexData_index.vkDeviceMemory);
@@ -5106,7 +5069,7 @@ VkResult TsUpdateUnifomBuffer(void)
     glm::mat4 translationMatrix = glm::mat4(1.0);   // Identity Matrix
     translationMatrix = glm::translate(
         glm::mat4(1.0f),    // Identity Matrix Transform matrix
-        glm::vec3(0.0f, 0.0f, -2.0f)    // Translation Vector x, y, z
+        glm::vec3(0.0f, 0.0f, -1.5f)    // Translation Vector x, y, z
     );
 
     myuniformData.modelMatrix = translationMatrix;
@@ -5165,25 +5128,6 @@ VkResult TsUpdateUnifomBuffer(void)
             lightAngle = lightAngle - (float)(M_PI * 2.0f);
         }
     }
-    /*myuniformData.lightAmbient[0] = 0.3f;
-    myuniformData.lightAmbient[1] = 0.3f;
-    myuniformData.lightAmbient[2] = 0.3f;
-    myuniformData.lightAmbient[3] = 1.0f;
-
-    myuniformData.lightDiffuse[0] = 1.0f;
-    myuniformData.lightDiffuse[1] = 1.0f;
-    myuniformData.lightDiffuse[2] = 1.0f;
-    myuniformData.lightDiffuse[3] = 1.0f;
-
-    myuniformData.lightSpecular[0] = 1.0f;
-    myuniformData.lightSpecular[1] = 1.0f;
-    myuniformData.lightSpecular[2] = 1.0f;
-    myuniformData.lightSpecular[3] = 1.0f;
-
-    myuniformData.lightPosition[0] = 100.0f;
-    myuniformData.lightPosition[1] = 100.0f;
-    myuniformData.lightPosition[2] = 100.0f;
-    myuniformData.lightPosition[3] = 1.0f; // Positional Light*/
 
     // Update key press related uniform
     if(TRUE == bLight)
@@ -5292,38 +5236,23 @@ VkResult TsCreateShaders(void)
 
     vkTsResult = vkCreateShaderModule(vkDevice, &vkShaderModuleCreateInfo, NULL, &vkShaderModule_vertex_shader);
 
-    if(NULL == fp)
-
+    if(VK_SUCCESS != vkTsResult)
     {
-
         fprintf(gpTsFile, "[ERROR] TsCreateShaders() -> vkCreateShaderModule() Failed at %d\n", __LINE__);
-
         return(vkTsResult);
-
     }
-
     else
-
     {
-
         fprintf(gpTsFile, "[INFO] TsCreateShaders() -> vkCreateShaderModule() Succeeded at %d\n", __LINE__);
-
     }
 
  
-
     if(shaderData)
-
     {
-
         free(shaderData);
-
         shaderData = NULL;
-
     }
-
  
-
     fprintf(gpTsFile, "[INFO] TsCreateShaders() -> Vertex Shader Module is successfully created!!!\n");
 
  
@@ -5435,13 +5364,9 @@ VkResult TsCreateShaders(void)
  
 
     vkTsResult = vkCreateShaderModule(vkDevice, &vkShaderModuleCreateInfo, NULL, &vkShaderModule_fragment_shader);
-
-    if(NULL == fp)
-
+    if(VK_SUCCESS != vkTsResult)
     {
-
         fprintf(gpTsFile, "[ERROR] TsCreateShaders() -> vkCreateShaderModule() Failed in fragement shader at %d\n", __LINE__);
-
         return(vkTsResult);
 
     }
@@ -5467,13 +5392,9 @@ VkResult TsCreateShaders(void)
     }
 
  
-
-    fprintf(gpTsFile, "[INFO] TsCreateShaders() -> Fragment Shader Module is successfully created!!!\n");
-
- 
-
+   fprintf(gpTsFile, "[INFO] TsCreateShaders() -> Fragment Shader Module is successfully created!!!\n");
+  
     return(vkTsResult);
-
 }
 
  
@@ -5870,7 +5791,7 @@ VkResult TsCreatePipeline(void)
     vkPipelineRasterizationStateCreateInfo.flags = 0;   // Reserved
 
     vkPipelineRasterizationStateCreateInfo.polygonMode = VK_POLYGON_MODE_FILL;  // GL_POLYGON
-    vkPipelineRasterizationStateCreateInfo.cullMode = NULL ; //VK_CULL_MODE_BACK_BIT;    // While drawing line and point both front and back culling is required as it do not have face
+    vkPipelineRasterizationStateCreateInfo.cullMode = VK_CULL_MODE_NONE; //VK_CULL_MODE_BACK_BIT;    // While drawing line and point both front and back culling is required as it do not have face
     vkPipelineRasterizationStateCreateInfo.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE; // Triangle winding order
     vkPipelineRasterizationStateCreateInfo.lineWidth = 1.0f;    // Must be minimum 1
 
@@ -6360,9 +6281,7 @@ VkResult TsBuildCommandBuffers(void)
         else
         {
             fprintf(gpTsFile, "[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for %d index at %d \n", i, __LINE__);
-        }
-
- 
+        } 
 
         // Set clear value
         VkClearValue vkClearValue_array[2]; // 2nd is for depth attachment and 1st is for color attachment
@@ -6392,8 +6311,6 @@ VkResult TsBuildCommandBuffers(void)
         // INLINE => contents of this render pass are in-line with content of subpass & part of primary command buffer
         vkCmdBeginRenderPass(vkCommandBuffer_array[i], &vkRenderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
- 
-
         // Bind with the pipeline
         vkCmdBindPipeline(vkCommandBuffer_array[i], VK_PIPELINE_BIND_POINT_GRAPHICS, vkPipeline);
 
@@ -6414,9 +6331,9 @@ VkResult TsBuildCommandBuffers(void)
 
         // For normals
         // Bind with the vertex buffer
-        //VkDeviceSize vkDeviceSize_offset_texcoords[1];
-        //memset((void*)vkDeviceSize_offset_texcoords, 0, sizeof(VkDeviceSize) * ARRAY_SIZE(vkDeviceSize_offset_texcoords));
-        //vkCmdBindVertexBuffers(vkCommandBuffer_array[i], 2, 1, &vertexData_texcoord.vkBuffer, vkDeviceSize_offset_texcoords);
+        VkDeviceSize vkDeviceSize_offset_texcoords[1];
+        memset((void*)vkDeviceSize_offset_texcoords, 0, sizeof(VkDeviceSize) * ARRAY_SIZE(vkDeviceSize_offset_texcoords));
+        vkCmdBindVertexBuffers(vkCommandBuffer_array[i], 2, 1, &vertexData_texcoord.vkBuffer, vkDeviceSize_offset_texcoords);
 
         // For index
         // Bind with the index buffer
@@ -6434,8 +6351,7 @@ VkResult TsBuildCommandBuffers(void)
             0, // Index of first index to draw
             0, // Value added to vertex index before indexing into vertex buffer
             0); // 2nd parameter is number of instances for which we want to draw the geometry. We are not doing instancing so it is 1
-            */
-        
+        */
         // First Row
         // First Sphere
         // 50.0f, 30.0f, 8.0f may change depending upon resolution
