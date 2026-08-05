@@ -13,6 +13,7 @@ let canvas_format = null;
 let animation_frame_id = null;
 
 let buffer_position = null;
+let buffer_colors = null;
 let render_pipeline = null;
 let buffer_mvpUniform = null;
 let bindingGroups_mvpUniform = null;
@@ -118,6 +119,7 @@ function onDeviceLost(info) {
     animation_frame_id = null;
 
     buffer_position = null;
+    buffer_colors = null;
     render_pipeline = null;
     buffer_mvpUniform = null;
     bindingGroups_mvpUniform = null;
@@ -218,12 +220,18 @@ function initialize() {
     "{\n" +
         "mvpMatrix : mat4x4<f32>\n" +
     "};\n" +
+    "struct VertexOutput\n" +
+    "{\n" +
+        "@builtin(position) position: vec4<f32>,\n" +
+        "@location(0) color: vec4<f32>\n" +
+    "};\n" +
     "@group(0) @binding(0) var<uniform> mvpUniform : MVPUniform;\n" +
     "@vertex\n" +
-    "fn main(@location(0) pos : vec4<f32>) -> @builtin(position) vec4<f32>\n"+
+    "fn main(@location(0) pos : vec4<f32>, @location(1) col : vec4<f32>) -> VertexOutput\n"+
     "{\n"+
-     "let vPosition = mvpUniform.mvpMatrix * pos;\n" + 
-     "return vPosition;\n" +
+    "var output: VertexOutput;\n"+
+     "output.position = mvpUniform.mvpMatrix * pos;\n" + 
+     "return output;\n" +
     "}\n";
 
     // Create GPUShaderModuleDescriptor type for the vertex shader
@@ -245,10 +253,15 @@ function initialize() {
     }
 
     // Fragment shader code source in WGSL (WebGPU Shading Language)
-    const fragmentShaderSourceCode = "@fragment\n" +
-    "fn main() -> @location(0) vec4<f32>\n" +
+    const fragmentShaderSourceCode = "struct VertexOutput\n" +
     "{\n" +
-        "return vec4<f32>(1.0, 1.0, 1.0, 1.0);\n" + // white color
+        "@builtin(position) position: vec4<f32>,\n" +
+        "@location(0) color: vec4<f32>\n" +
+    "};\n" +
+    "@fragment\n" +
+    "fn main(output: VertexOutput) -> @location(0) vec4<f32>\n" +
+    "{\n" +
+        "return output.color;\n" + // return color
     "}\n";
 
     // Create GPUShaderModuleDescriptor type for the fragment shader
@@ -275,6 +288,12 @@ function initialize() {
         1.0, -1.0, 0.0, 1.0 // Right bottom
     ]);
 
+     const vertex_color = new Float32Array([
+        1.0, 0.0, 0.0, 1.0,// Red color for Apex
+        0.0, 1.0, 0.0, 1.0, // Green color for Left bottom
+        0.0, 0.0, 1.0, 1.0 // Blue color for Right bottom
+    ]);
+
     // Create GPU buffer for vertex positions GPUBufferDescriptor type
     const bufferDescriptor_position = {
         size: vertex_position.byteLength,
@@ -294,6 +313,26 @@ function initialize() {
     // Copy the vertex positions data to the GPU buffer
     queue.writeBuffer(buffer_position, 0, vertex_position, 0, vertex_position.length);
     console.log("initialize() Creating GPU buffer for vertex positions successfully done\n");
+
+    // Create GPU buffer for vertex colors GPUBufferDescriptor type
+    const bufferDescriptor_color = {
+        size: vertex_color.byteLength,
+        usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
+    };
+
+    // Create the GPU buffer for vertex colors GPUBuffer type
+    buffer_color = device.createBuffer(bufferDescriptor_color);
+
+    if(buffer_color == null)
+    {
+        console.log("initialize() Creating GPU buffer for vertex colors failed\n");
+        throw new Error("initialize() Creating GPU buffer for vertex colors failed\n");
+        return;
+    }
+
+    // Copy the vertex colors data to the GPU buffer
+    queue.writeBuffer(buffer_color, 0, vertex_color, 0, vertex_color.length);
+    console.log("initialize() Creating GPU buffer for vertex colors successfully done\n");
 
     // Uniform Plumbing
     // Bind group layout enter GPUBindGroupLayoutEntry type
@@ -389,11 +428,25 @@ function initialize() {
         stepMode: "vertex"  // jump vertex by vertex, not instance by instance
     };
 
+    // create GPUVertexBufferAttribute type for the vertex color buffer
+    const colorVertexBufferAttribute = {
+        shaderLocation: 1, // This matches with the 1st @location(1) in the vertex shader code
+        offset: 0,
+        format: "float32x4" // vec4<f32> is represented as float32x4 in WebGPU for R32G32B32A32 format
+    };
+
+    // create GPUVertexBufferLayout type for the vertex color buffer
+    const colorVertexBufferLayout = {
+        arrayStride: 4 * 4, // 4 floats * 4 bytes per float
+        attributes: [colorVertexBufferAttribute],
+        stepMode: "vertex"  // jump vertex by vertex, not instance by instance
+    };
+
     // Create GPUVertexState type for the vertex shader stage
     const vertexShaderState = {
         module: shaderModule_vertex,
         entryPoint: "main",
-        buffers: [positionVertexBufferLayout]
+        buffers: [positionVertexBufferLayout, colorVertexBufferLayout]
     };
 
     // Create GPUColorTargetState type for the fragment shader output
@@ -501,6 +554,7 @@ function draw() {
     render_pass_encoder.setScissorRect(0, 0, canvas.width, canvas.height);
     render_pass_encoder.setBindGroup(0, bindingGroups_mvpUniform);
     render_pass_encoder.setVertexBuffer(0, buffer_position);
+    render_pass_encoder.setVertexBuffer(1, buffer_color);
     render_pass_encoder.draw(3); // 3 vertices, 1 instance, first vertex = 0, first instance = 0
 
     // Step 14 end render pass
@@ -565,6 +619,7 @@ function uninitialize() {
         queue = null;
         canvas_format = null;
         buffer_position = null;
+        buffer_colors = null;
         render_pipeline = null;
         buffer_mvpUniform = null;
         bindingGroups_mvpUniform = null;        
