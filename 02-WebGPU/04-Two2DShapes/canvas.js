@@ -217,7 +217,7 @@ function initialize() {
         alphaMode: "opaque"
     };  
     context.configure(canvas_configuration);
-    console.log("initialize() Configuring WebGPU context successfully done with format: canvas_format\n");
+    console.log(`initialize() Configuring WebGPU context successfully done with format: ${canvas_format}\n`);
 
     // Vertex shader code source in WGSL (WebGPU Shading Language)
     const vertexShaderSourceCode = "struct MVPUniform\n" +
@@ -291,42 +291,53 @@ function initialize() {
         1.0, 1.0, 0.0, 1.0 // Right top
     ]);
 
-    // Create GPU buffer for vertex positions GPUBufferDescriptor type
+    // Bind group layout enter GPUBindGroupLayoutEntry type is common for both triangle and square, so we can use same bind group layout for both
+    const bindGroupLayout_mvpUniform = createBindGroupLayoutForUniform(0, GPUShaderStage.VERTEX, "uniform");
+
+    // Triangle: int positionBuffer, int bindGroup, int uniformBuffer;
+    // Triangle position buffer
     const bufferDescriptor_position_triangle = {
         size: vertex_position_triangle.byteLength,
         usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
     };
 
-    // Create the GPU buffer for vertex positions GPUBuffer type
     buffer_position_triangle = device.createBuffer(bufferDescriptor_position_triangle);
 
     if(buffer_position_triangle == null)
     {
-        console.log("initialize() Creating GPU buffer for vertex positions failed\n");
-        throw new Error("initialize() Creating GPU buffer for vertex positions failed\n");
+        console.log("initialize() Creating GPU buffer for vertex positions triangle failed\n");
+        throw new Error("initialize() Creating GPU buffer for vertex positions triangle failed\n");
         return;
     }
 
     // Copy the vertex positions data to the GPU buffer
     queue.writeBuffer(buffer_position_triangle, 0, vertex_position_triangle, 0, vertex_position_triangle.length);
-    console.log("initialize() Creating GPU buffer for vertex positions successfully done\n");
+    console.log("initialize() Creating GPU buffer for vertex positions triangle successfully done\n");
 
-    // Uniform Plumbing
-    // Bind group layout enter GPUBindGroupLayoutEntry type is common for both triangle and square, so we can use same bind group layout for both
-    const bindGroupLayoutEntry_mvpUniform = createBindGroupUniformLayout(0, "uniform"); //GPUShaderStage.VERTEX, 16 * 4); // 16 floats * 4 bytes per float
-    // Triangle
-    let positionBuffer, bindGroup, uniformBuffer;
-
-    // Triangle position buffer
     const mvpUniformBufferSize = 16 * 4; // 16 floats * 4 bytes per float
-    positionBuffer = buffer_position_triangle;
     buffer_mvpUniform_triangle = createUniformBuffer(mvpUniformBufferSize, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST);
 
     // create bind group for mvp uniform for triangle
     bindingGroups_mvpUniform_triangle = createBindGroupForUniform(buffer_mvpUniform_triangle, 0, mvpUniformBufferSize, 0, bindGroupLayout_mvpUniform);
 
     // Square position buffer
-    positionBuffer = buffer_position_square;
+    const bufferDescriptor_position_square = {
+        size: vertex_position_square.byteLength,
+        usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
+    };
+    buffer_position_square = device.createBuffer(bufferDescriptor_position_square);
+
+    if(buffer_position_square == null)
+    {
+        console.log("initialize() Creating GPU buffer for vertex positions square failed\n");
+        throw new Error("initialize() Creating GPU buffer for vertex positions square failed\n");
+        return;
+    }
+
+    // Copy the vertex positions data to the GPU buffer
+    queue.writeBuffer(buffer_position_square, 0, vertex_position_square, 0, vertex_position_square.length);
+    console.log("initialize() Creating GPU buffer for vertex positions square successfully done\n");
+
     buffer_mvpUniform_square = createUniformBuffer(mvpUniformBufferSize, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST);
     // create bind group for mvp uniform for square
     bindingGroups_mvpUniform_square = createBindGroupForUniform(buffer_mvpUniform_square, 0, mvpUniformBufferSize, 0, bindGroupLayout_mvpUniform);
@@ -617,7 +628,7 @@ function uninitialize() {
     // Step 19 Destroy the device
     if(null != device)
     {
-        device.destroy();
+        //device.destroy();
         device = null;
         queue = null;
         canvas_format = null;
