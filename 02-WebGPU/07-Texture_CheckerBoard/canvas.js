@@ -31,9 +31,7 @@ let perspectiveProjectionMatrix = null;
 let texture_checkerboard = null;
 let sampler_checkerboard = null;
 let bind_group_texture_and_sampler = null;
-let checkImage = null;
-let checkImageWidth = 64;
-let checkImageHeight = 64;
+let checkImage = null, checkImageWidth = 64, checkImageHeight = 64;
  
 // Animation related variables
 // To start animation -> To requestAnimationFrame() to be called cross-browser compatible
@@ -479,10 +477,8 @@ async function initialize() {
     }
 
     const samplerDescriptor = {
-        magFilter: "nearest",
-        minFilter: "nearest",
-        addressModeU: "repeat",
-        addressModeV: "repeat"
+        magFilter: "linear",
+        minFilter: "linear"
     };
 
     // Create texture sampler
@@ -615,18 +611,34 @@ async function initialize() {
 
     // step 9 Set clear color to blue
 
-    clear_color = {r: 0.25, g: 0.25, b: 0.25, a: 1.0};
+    clear_color = {r: 0.0, g: 0.0, b: 0.0, a: 1.0};
 
 }
 
- // 3 UDF for texture and sampler bind group layout and bind group creation
-async function loadTexture(_imageFileName) {
-    // Code
-    const image = new Image(); 
-    image.src = _imageFileName;
-    await image.decode(); // Wait for the image to be decoded
+function makeCheckImage() {
+    // Multiple by 4 as we need to specify RGBA component value for single pixel
+    let colorData = new Array(checkImageWidth * checkImageHeight * 4);
 
-    const imageBitmap = await createImageBitmap(image);
+    for (let heightCounter = 0; heightCounter < checkImageHeight; ++heightCounter) {
+        for (let widthCounter = 0; widthCounter < checkImageWidth; ++widthCounter) {
+            for (let componentCounter = 0; componentCounter < 4; ++componentCounter) {
+                let useWhiteColor = ((heightCounter & 0x8) ^ (widthCounter & 0x8)) === 0 || componentCounter === 3;
+                colorData[4 * heightCounter * checkImageHeight + 4 * widthCounter + componentCounter] = 255 * useWhiteColor;
+            }
+        }
+    }
+
+    checkImage = new Uint8ClampedArray(colorData);
+}
+
+ // 3 UDF for texture and sampler bind group layout and bind group creation
+async function loadTexture() {
+    // Code
+    makeCheckImage();
+
+    const imageData = new ImageData(checkImage, checkImageWidth, checkImageHeight);
+
+    const imageBitmap = await createImageBitmap(imageData);
     if(imageBitmap == null)
     {
         console.log("loadTexture() Creating ImageBitmap failed\n");
@@ -1105,16 +1117,12 @@ function uninitialize() {
     }
  
    // Destroy the texture and sampler for the square
-   if(texture_smiley != null)
+   if(texture_checkerboard != null)
    {
-       texture_smiley.destroy();
-       texture_smiley = null;
+       texture_checkerboard.destroy();
+       texture_checkerboard = null;
    }
-   if(sampler_smiley != null)
-   {
-       sampler_smiley.destroy();
-       sampler_smiley = null;
-   }
+   
 
    // Step 18 Unconfigure & Destroy the context
    if(null != context)
@@ -1139,10 +1147,13 @@ function uninitialize() {
         bindingGroups_mvpUniform_square = null;
         bindingGroups_mvpUniform_triangle = null;
 
-        sampler_smiley = null;
+        sampler_checkerboard = null;
         bind_group_texture_and_sampler = null;
     }
  
+    checkImage = null;
+    uint8clampedArray = null;
+    texture_checkerboard = null;
     perspectiveProjectionMatrix = null;
     console.log("WebGPU uninitialization done successfully\n");
 }
