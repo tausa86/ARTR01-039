@@ -382,13 +382,13 @@ async function initialize() {
     ]);
  
     const vertex_texcoords_square = new Float32Array([
-        1.0, 1.0, 
-        0.0, 1.0, 
-        0.0, 0.0, 
- 
-        0.0, 0.0, 
         1.0, 0.0, 
-        1.0, 1.0 
+        0.0, 0.0, 
+        0.0, 1.0, 
+ 
+        0.0, 1.0, 
+        1.0, 1.0, 
+        1.0, 0.0 
     ]);
  
     // Bind group layout enter GPUBindGroupLayoutEntry type is common for both triangle and square, so we can use same bind group layout for both
@@ -514,7 +514,7 @@ async function initialize() {
 
     // Create GPUPipelineLayoutDescriptor type
     const pipelineLayoutDescriptor = {
-        bindGroupLayouts: [bindGroupLayout_mvpUniform]
+        bindGroupLayouts: [bindGroupLayout_mvpUniform, bindGroupLayoutDescriptor_texture_and_sampler]
     };
  
     // Create GPUPipelineLayout type
@@ -1100,15 +1100,10 @@ function uninitialize() {
     }
  
    // Destroy the texture and sampler for the square
-   if(texture_checkerboard != null)
+   if(texture_smiley != null)
    {
        texture_smiley.destroy();
        texture_smiley = null;
-   }
-   if(sampler_smiley != null)
-   {
-       sampler_smiley.destroy();
-       sampler_smiley = null;
    }
 
    // Step 18 Unconfigure & Destroy the context
