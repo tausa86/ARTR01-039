@@ -605,7 +605,7 @@ async function initialize() {
     perspectiveProjectionMatrix = mat4.create();
  
     // step 9 Set clear color to blue
-    clear_color = {r: 0.25, g: 0.25, b: 0.25, a: 1.0};
+    clear_color = {r: 0.0, g: 0.0, b: 0.0, a: 1.0};
 }
 
 function makeCheckImage() {
