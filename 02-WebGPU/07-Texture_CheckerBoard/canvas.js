@@ -515,7 +515,7 @@ async function initialize() {
 
     // Create GPUPipelineLayoutDescriptor type
     const pipelineLayoutDescriptor = {
-        bindGroupLayouts: [bindGroupLayout_mvpUniform]
+        bindGroupLayouts: [bindGroupLayout_mvpUniform, bindGroupLayoutDescriptor_texture_and_sampler]
     };
  
     // Create GPUPipelineLayout type
@@ -601,18 +601,11 @@ async function initialize() {
 
     }
 
- 
-
     // create perspective projection matrix using gl-matrix library
-
     perspectiveProjectionMatrix = mat4.create();
-
  
-
     // step 9 Set clear color to blue
-
-    clear_color = {r: 0.0, g: 0.0, b: 0.0, a: 1.0};
-
+    clear_color = {r: 0.25, g: 0.25, b: 0.25, a: 1.0};
 }
 
 function makeCheckImage() {
@@ -623,7 +616,7 @@ function makeCheckImage() {
         for (let widthCounter = 0; widthCounter < checkImageWidth; ++widthCounter) {
             for (let componentCounter = 0; componentCounter < 4; ++componentCounter) {
                 let useWhiteColor = ((heightCounter & 0x8) ^ (widthCounter & 0x8)) === 0 || componentCounter === 3;
-                colorData[4 * heightCounter * checkImageHeight + 4 * widthCounter + componentCounter] = 255 * useWhiteColor;
+                colorData[4 * heightCounter * checkImageWidth + 4 * widthCounter + componentCounter] = 255 * useWhiteColor;
             }
         }
     }
@@ -1134,7 +1127,6 @@ function uninitialize() {
     // Step 19 Destroy the device
     if(null != device)
     {
-        device.destroy();
         device = null;
         queue = null;
         canvas_format = null;
@@ -1152,7 +1144,6 @@ function uninitialize() {
     }
  
     checkImage = null;
-    uint8clampedArray = null;
     texture_checkerboard = null;
     perspectiveProjectionMatrix = null;
     console.log("WebGPU uninitialization done successfully\n");
