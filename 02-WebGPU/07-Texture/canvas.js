@@ -492,7 +492,6 @@ async function initialize() {
     {
         console.log("initialize() Creating texture sampler for square succeeded\n");
     }
-
     const bindGroupLayoutDescriptor_texture_and_sampler = createBindGroupLayoutForTextureAndSampler(
         "float",
         "2d",
@@ -670,11 +669,13 @@ async function loadTexture(_imageFileName) {
     return _texture;
 }
 
-function createBindGroupLayoutForTextureAndSampler(_textureSampleType,
+function createBindGroupLayoutForTextureAndSampler(
+    _textureSampleType,
      _textureViewDimension, 
      _isTextureMultisampled, 
      _textureBindingIndex, 
      _textureShaderStageVisibility, 
+     _filtering,
      _samplerBindingIndex, 
      _samplerShaderStageVisibility) {
         // Code
@@ -694,7 +695,7 @@ function createBindGroupLayoutForTextureAndSampler(_textureSampleType,
 
         // Create binding layout for the sampler
         const bindingLayout_sampler = {
-            type: "filtering"
+            type: _filtering
         };
 
         // create bind group layout entry for the sampler
