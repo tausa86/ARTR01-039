@@ -16,14 +16,14 @@ let render_pipeline = null;
 let buffer_uniform = null;  // Now it will contains light, material and mvp matrices
 let bindingGroups_uniform = null;
 
-var lightAmbient = new Float32Array([0.0, 0.0, 0.0, 0.0]);
+var lightAmbient = new Float32Array([0.1, 0.1, 0.1, 0.0]);
 var lightDiffuse = new Float32Array([1.0, 1.0, 1.0, 0.0]);
 var lightSpecular = new Float32Array([1.0, 1.0, 1.0, 0.0]);
 var lightPosition = new Float32Array([100.0, 100.0, 100.0, 1.0]);
 var materialAmbient = new Float32Array([0.0, 0.0, 0.0, 0.0]);
-var materialDiffuse = new Float32Array([1.0, 1.0, 1.0, 0.0]);
-var materialSpecular = new Float32Array([1.0, 1.0, 1.0, 0.0]);
-var materialShininess = new Float32Array([50.0, 0.0, 0.0, 0.0]);
+var materialDiffuse = new Float32Array([0.5, 0.2, 0.7, 0.0]);
+var materialSpecular = new Float32Array([0.7, 0.7, 0.7, 0.0]);
+var materialShininess = new Float32Array([128.0, 0.0, 0.0, 0.0]);
 var lKeyPressed = new Uint32Array([0,0,0,0]); // we are using x component only for 1 = L key pressed, 0 = L key not pressed
 var isLightingEnabled = false; // we are using x component only for 1 = lighting enabled, 0 = lighting disabled
 
@@ -262,43 +262,34 @@ function initialize() {
     "struct VertexOutput\n" +
     "{\n" +
         "@builtin(position) Position : vec4<f32>,\n" +
-        "@location(0) phongAds : vec3<f32>,\n" +
+        "@location(0) transformedNormal : vec3<f32>,\n" +
+        "@location(1) lightDirection : vec3<f32>,\n" +
+        "@location(2) viewerVector : vec3<f32>\n" +
     "};\n" +    
     "@group(0) @binding(0) var<uniform> uMyUniformData : MyUniformData;\n" +
     "@vertex\n" +
     "fn main(@location(0) pos : vec3<f32>, @location(1) normal : vec3<f32>) -> VertexOutput\n"+
     "{\n"+
         "var output : VertexOutput;\n"+
-        "if(uMyUniformData.lKeyPressed.x == 1u)\n" +   // WGSL is strictly "typed" with no implicit type conversion or type promotion, so we need to use "u" suffix for unsigned integer literal
-        "{\n"+
-            "let eyeCoordinates : vec4<f32> = uMyUniformData.viewMatrix * uMyUniformData.modelMatrix * vec4<f32>(pos, 1.0);\n" +
-            "let modelViewMatrix : mat3x3<f32> = mat3FromMat4(uMyUniformData.viewMatrix * uMyUniformData.modelMatrix);\n" +
-            "let normalMatrix : mat3x3<f32> = transpose(inverse3x3(modelViewMatrix));\n" +
-            "let transformedNormals : vec3<f32> = normalize(normalMatrix * normal);\n" +
-            "let lightDirection : vec3<f32> = normalize(uMyUniformData.lightPosition.xyz - eyeCoordinates.xyz);\n" +
-            "let viewerVector : vec3<f32> = normalize(-eyeCoordinates.xyz);\n" +
-            "let reflectionVector : vec3<f32> = reflect(-lightDirection, transformedNormals);\n" +
-            "let ambient : vec3<f32> = uMyUniformData.lightAmbient.xyz * uMyUniformData.materialAmbient.xyz;\n" +
-            "let diffuse : vec3<f32> = uMyUniformData.lightDiffuse.xyz * uMyUniformData.materialDiffuse.xyz * max(dot(lightDirection, transformedNormals), 0.0);\n" +
-            "let specular : vec3<f32> = uMyUniformData.lightSpecular.xyz * uMyUniformData.materialSpecular.xyz * pow(max(dot(reflectionVector, viewerVector), 0.0), uMyUniformData.materialShininess.x);\n" +
-            "output.phongAds = ambient + diffuse + specular;\n" +
-        "}\n" +
-        "else\n" +
-        "{\n" +
-            "output.phongAds = vec3<f32>(1.0, 1.0, 1.0);\n" +
-        "}\n" +
+        "let eyeCoordinates : vec4<f32> = uMyUniformData.viewMatrix * uMyUniformData.modelMatrix * vec4<f32>(pos, 1.0);\n" +
+        "let modelViewMatrix : mat3x3<f32> = mat3FromMat4(uMyUniformData.viewMatrix * uMyUniformData.modelMatrix);\n" +
+        "let normalMatrix : mat3x3<f32> = transpose(inverse3x3(modelViewMatrix));\n" +
+        "output.transformedNormal  = normalize(normalMatrix * normal);\n" +
+        "output.lightDirection  = normalize(uMyUniformData.lightPosition.xyz - eyeCoordinates.xyz);\n" +
+        "output.viewerVector = normalize(-eyeCoordinates.xyz);\n" +
+        "let reflectionVector : vec3<f32> = reflect(-output.lightDirection, output.transformedNormal);\n" +
         "output.Position = uMyUniformData.projectionMatrix * uMyUniformData.viewMatrix * uMyUniformData.modelMatrix * vec4<f32>(pos, 1.0);\n" +
       "return output;\n" +
     "}\n" +
     "fn mat3FromMat4(m:mat4x4<f32>)->mat3x3<f32>\n"+
     "{\n"+
-    "return(mat3x3<f32>(m[0].xyz, m[1].xyz, m[2].xyz));\n"+
+        "return(mat3x3<f32>(m[0].xyz, m[1].xyz, m[2].xyz));\n"+
     "}\n"+
     "fn inverse3x3(m:mat3x3<f32>)->mat3x3<f32>\n"+
     "{\n"+
     "let determinant = m[0][0] * (m[1][1]*m[2][2] - m[2][1]*m[1][2]) - "+
     "                  m[1][0] * (m[0][1]*m[2][2] - m[2][1]*m[0][2]) + "+
-    "                  m[2][0] * (m[0][1]*m[1][2] - m[1][1]*m[0][2]);\n"+    
+    "                  m[2][0] * (m[0][1]*m[1][2] - m[1][1]*m[0][2]);\n"+
     "if(determinant == 0.0)\n"+
     "{\n"+
     "    return(mat3x3<f32>(vec3<f32>(0.0), vec3<f32>(0.0), vec3<f32>(0.0)));\n"+
@@ -344,15 +335,50 @@ function initialize() {
     }
 
     // Fragment shader code source in WGSL (WebGPU Shading Language)
-    const fragmentShaderSourceCode = "struct VertexOutput\n" +
+    const fragmentShaderSourceCode = "struct MyUniformData\n" +
+    "{\n" +
+        "modelMatrix : mat4x4<f32>,\n" +
+        "viewMatrix : mat4x4<f32>,\n" +
+        "projectionMatrix : mat4x4<f32>,\n" +
+        "lightAmbient : vec4<f32>,\n" +
+        "lightDiffuse : vec4<f32>,\n" +
+        "lightSpecular : vec4<f32>,\n" +
+        "lightPosition : vec4<f32>,\n" +
+        "materialAmbient : vec4<f32>,\n" +
+        "materialDiffuse : vec4<f32>,\n" +
+        "materialSpecular : vec4<f32>,\n" +
+        "materialShininess : vec4<f32>,\n" +
+        "lKeyPressed : vec4<u32>,\n" +
+    "};\n" +
+    "struct VertexOutput\n" +
     "{\n" +
         "@builtin(position) Position : vec4<f32>,\n" +
-        "@location(0) phongAds : vec3<f32>\n" +
-    "};\n" + 
+        "@location(0) transformedNormal : vec3<f32>,\n" +
+        "@location(1) lightDirection : vec3<f32>,\n" +
+        "@location(2) viewerVector : vec3<f32>\n" +
+    "};\n" +    
+    "@group(0) @binding(0) var<uniform> uMyUniformData : MyUniformData;\n" +
     "@fragment\n" +
     "fn main(output: VertexOutput) -> @location(0) vec4<f32>\n" +
     "{\n" +
-        "return vec4<f32>(output.phongAds, 1.0);\n" + // color
+        "var phong_ads_color : vec3<f32>;\n" +
+        "if(uMyUniformData.lKeyPressed.x == 1u)\n" +   // WGSL is strictly "typed" with no implicit type conversion or type promotion, so we need to use "u" suffix for unsigned integer literal
+        "{\n" +
+            "let normalized_transformedNormal : vec3<f32> = normalize(output.transformedNormal);\n" +
+            "let normalized_lightDirection : vec3<f32> = normalize(output.lightDirection);\n" +
+            "let normalized_viewerVector : vec3<f32> = normalize(output.viewerVector);\n" +
+            "let ambient : vec3<f32> = uMyUniformData.lightAmbient.xyz * uMyUniformData.materialAmbient.xyz;\n" +
+            "let diffuse : vec3<f32> = uMyUniformData.lightDiffuse.xyz * uMyUniformData.materialDiffuse.xyz * max(dot(normalized_lightDirection, normalized_transformedNormal), 0.0);\n" +
+            "let reflectionVector: vec3<f32> = -normalized_lightDirection * normalized_transformedNormal * 2.0 * dot(normalized_lightDirection, normalized_transformedNormal) + normalized_lightDirection;\n" +
+            "let normalized_reflectionVector : vec3<f32> = normalize(reflectionVector);\n" +
+            "let specular : vec3<f32> = uMyUniformData.lightSpecular.xyz * uMyUniformData.materialSpecular.xyz * pow(max(dot(normalized_reflectionVector, normalized_viewerVector), 0.0), uMyUniformData.materialShininess.x);\n" +
+            "phong_ads_color = ambient + diffuse + specular;\n" +
+        "}\n" +
+        "else" +
+        "{\n" +
+            "phong_ads_color = vec3<f32>(1.0, 1.0, 1.0);\n" +
+            "}\n" +
+        "return vec4<f32>(phong_ads_color, 1.0);\n" + // color
     "}\n";
 
     // Create GPUShaderModuleDescriptor type for the fragment shader
@@ -418,7 +444,7 @@ function initialize() {
     }
 
     // Bind group layout enter GPUBindGroupLayoutEntry type is common for both triangle and square, so we can use same bind group layout for both
-    const bindGroupLayout_myUniform = createBindGroupLayoutForUniform(0, GPUShaderStage.VERTEX, "uniform");
+    const bindGroupLayout_myUniform = createBindGroupLayoutForUniform(0, GPUShaderStage.VERTEX | GPUShaderStage.FRAGMENT, "uniform");
 
     if(bindGroupLayout_myUniform == null)
     {
