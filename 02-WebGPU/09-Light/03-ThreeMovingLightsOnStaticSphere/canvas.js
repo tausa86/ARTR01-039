@@ -777,9 +777,9 @@ function draw() {
         //console.log("Key pressed!!!");
 
         // Light[0] - Red light rotates around X-axis
-        lightAmbient[0] = [0.0, 0.0, 0.0, 1.0];
-        lightDiffuse[0] = [1.0, 0.0, 0.0, 1.0];
-        lightSpecular[0] = [1.0, 0.0, 0.0, 1.0];
+        //lightAmbient[0] = [0.0, 0.0, 0.0, 1.0];
+        //lightDiffuse[0] = [1.0, 0.0, 0.0, 1.0];
+        //lightSpecular[0] = [1.0, 0.0, 0.0, 1.0];
 
         lightPosition[0] = 0.0;
         lightPosition[1] = 5.0 * Math.sin(deg2rad(lightAngle_0));
@@ -792,9 +792,9 @@ function draw() {
         }
 
         // Light[1] - Green light rotates around Y-axis
-        lightAmbient[1] = [0.0, 0.0, 0.0, 1.0];
-        lightDiffuse[1] = [0.0, 1.0, 0.0, 1.0];
-        lightSpecular[1] = [0.0, 1.0, 0.0, 1.0];
+        //lightAmbient[1] = [0.0, 0.0, 0.0, 1.0];
+        //lightDiffuse[1] = [0.0, 1.0, 0.0, 1.0];
+        //lightSpecular[1] = [0.0, 1.0, 0.0, 1.0];
 
         lightPosition[4] = 5.0 * Math.sin(deg2rad(lightAngle_1));
         lightPosition[5] = 0.0;
@@ -807,9 +807,9 @@ function draw() {
         }
 
         // Light[2] - Blue light rotates around Z-axis
-        lightAmbient[2] = [0.0, 0.0, 0.0, 1.0];
-        lightDiffuse[2] = [0.0, 0.0, 1.0, 1.0];
-        lightSpecular[2] = [0.0, 0.0, 1.0, 1.0];
+        //lightAmbient[2] = [0.0, 0.0, 0.0, 1.0];
+        //lightDiffuse[2] = [0.0, 0.0, 1.0, 1.0];
+        //lightSpecular[2] = [0.0, 0.0, 1.0, 1.0];
 
         lightPosition[8] = 5.0 * Math.cos(deg2rad(lightAngle_2));
         lightPosition[9] = 5.0 * Math.sin(deg2rad(lightAngle_2));
