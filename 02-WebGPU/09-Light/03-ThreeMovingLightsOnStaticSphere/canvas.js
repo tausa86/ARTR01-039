@@ -52,9 +52,9 @@ var lightPosition = new Float32Array([0.0, 0.0, 0.0, 1.0, // YZ Position
     0.0, 0.0, 0.0, 1.0  // XY Position
 ]);
 
-var materialAmbient = new Float32Array([1.0, 1.0, 1.0, 1.0]);
-var materialDiffuse = new Float32Array([0.0, 0.0, 0.0, 1.0]);
-var materialSpecular = new Float32Array([0.0, 0.0, 0.0, 1.0]);
+var materialAmbient = new Float32Array([0.0, 0.0, 0.0, 1.0]);
+var materialDiffuse = new Float32Array([1.0, 1.0, 1.0, 1.0]);
+var materialSpecular = new Float32Array([1.0, 1.0, 1.0, 1.0]);
 
 var materialShininess = new Float32Array([128.0, 0.0, 0.0, 0.0]);
 
@@ -392,7 +392,7 @@ function initialize() {
     "@fragment\n" +
     "fn main(output: VertexOutput) -> @location(0) vec4<f32>\n" +
     "{\n" +
-        "var phong_ads_color : vec3<f32>;\n" +
+        "var phong_ads_color : vec3<f32> = vec3<f32>(0.0, 0.0, 0.0);\n" +
         "if(uMyUniformData.lKeyPressed.x == 1u)\n" +   // WGSL is strictly "typed" with no implicit type conversion or type promotion, so we need to use "u" suffix for unsigned integer literal
         "{\n" +
             "let normalized_transformedNormal : vec3<f32> = normalize(output.transformedNormal);\n" +
@@ -845,51 +845,51 @@ function draw() {
         lightAmbient.length);
 
     queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 1 * 3, // lightDiffuse from 208th byte offset to 223rd byte offset
+        240, // lightDiffuse from 208th byte offset to 223rd byte offset
         lightDiffuse, 
         0, 
         lightDiffuse.length);
     
     queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 2 * 3, // lightSpecular from 224th byte offset to 239th byte offset
+        288, // lightSpecular from 224th byte offset to 239th byte offset
         lightSpecular, 
         0, 
         lightSpecular.length);
 
     queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 3 * 3, // lightPosition from 240th byte offset to 255th byte offset
+        336, // lightPosition from 240th byte offset to 255th byte offset
         lightPosition, 
         0, 
         lightPosition.length);
 
     // 3: Material Ambient, Diffuse, Specular and Shininess
     queue.writeBuffer(buffer_uniform, // 96
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 3 * 3 + 4 * 1, // materialAmbient from 256th byte offset to 271st byte offset
+        384, // materialAmbient from 256th byte offset to 271st byte offset
         materialAmbient, 
         0, 
         materialAmbient.length);
     
     queue.writeBuffer(buffer_uniform, // 100
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 3 * 3 + 4 * 2, // materialDiffuse from 272nd byte offset to 287th byte offset
+        400, // materialDiffuse from 272nd byte offset to 287th byte offset
         materialDiffuse, 
         0, 
         materialDiffuse.length);
 
     queue.writeBuffer(buffer_uniform, // 104
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 3 * 3 + 4 * 3, // materialSpecular from 288th byte offset to 303rd byte offset
+        416, // materialSpecular from 288th byte offset to 303rd byte offset
         materialSpecular, 
         0, 
         materialSpecular.length);
     
     queue.writeBuffer(buffer_uniform, // 108
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 *  3 * 3 + 4 * 4, // materialShininess from 304th byte offset to 319th byte offset
+        432, // materialShininess from 304th byte offset to 319th byte offset
         materialShininess, 
         0, 
         materialShininess.length);
     
     // 4: LKeyPressed
     queue.writeBuffer(buffer_uniform, // 112
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 3 * 3 + 4 * 5, // lKeyPressed from 320th byte offset to 335th byte offset
+        448, // lKeyPressed from 320th byte offset to 335th byte offset
         lKeyPressed, 
         0, 
         lKeyPressed.length);
