@@ -301,7 +301,6 @@ function initialize() {
         "let modelViewMatrix : mat3x3<f32> = mat3FromMat4(uMyUniformData.viewMatrix * uMyUniformData.modelMatrix);\n" +
         "let normalMatrix : mat3x3<f32> = transpose(inverse3x3(modelViewMatrix));\n" +
         "output.transformedNormal  = normalize(normalMatrix * normal);\n" +
-        //"output.lightDirection  = normalize(uMyUniformData.lightPosition.xyz - eyeCoordinates.xyz);\n" +
         "output.lightDirection_0 = normalize(uMyUniformData.lightPosition[0].xyz - eyeCoordinates.xyz);\n" +
         "output.lightDirection_1 = normalize(uMyUniformData.lightPosition[1].xyz - eyeCoordinates.xyz);\n" +
         "output.lightDirection_2 = normalize(uMyUniformData.lightPosition[2].xyz - eyeCoordinates.xyz);\n" +
@@ -396,18 +395,19 @@ function initialize() {
         "if(uMyUniformData.lKeyPressed.x == 1u)\n" +   // WGSL is strictly "typed" with no implicit type conversion or type promotion, so we need to use "u" suffix for unsigned integer literal
         "{\n" +
             "let normalized_transformedNormal : vec3<f32> = normalize(output.transformedNormal);\n" +
-            "var normalized_lightDirections : array<vec3<f32>, 3>;\n" +
-            "normalized_lightDirections[0] = normalize(output.lightDirection_0);\n" +
-            "normalized_lightDirections[1] = normalize(output.lightDirection_1);\n" +
-            "normalized_lightDirections[2] = normalize(output.lightDirection_2);\n" +
             "let normalized_viewerVector : vec3<f32> = normalize(output.viewerVector);\n" +
+
+            "var lightDirections : array<vec3<f32>, 3>;\n" +
+            "lightDirections[0] = normalize(output.lightDirection_0);\n" +
+            "lightDirections[1] = normalize(output.lightDirection_1);\n" +
+            "lightDirections[2] = normalize(output.lightDirection_2);\n" +
+            
             "for(var i : u32 = 0u; i < 3u; i = i + 1u)\n" +
             "{\n" +
-                //"var normalized_lightDirections array<vec3<f32>, 3>;\n" +
-                //"let reflectionVector: vec3<f32> = -normalized_lightDirections[i] * normalized_transformedNormal * 2.0 * dot(normalized_lightDirections[i], normalized_trans"
+                "var lightDirection = lightDirections[i];\n" +                
                 "let ambient : vec3<f32> = uMyUniformData.lightAmbient[i].xyz * uMyUniformData.materialAmbient.xyz;\n" +
-                "let diffuse : vec3<f32> = uMyUniformData.lightDiffuse[i].xyz * uMyUniformData.materialDiffuse.xyz * max(dot(normalized_lightDirections[i], normalized_transformedNormal), 0.0);\n" +
-                "let reflectionVector: vec3<f32> = -normalized_lightDirections[i] * normalized_transformedNormal * 2.0 * dot(normalized_lightDirections[i], normalized_transformedNormal) + normalized_lightDirections[i];\n" +
+                "let diffuse : vec3<f32> = uMyUniformData.lightDiffuse[i].xyz * uMyUniformData.materialDiffuse.xyz * max(dot(lightDirection, normalized_transformedNormal), 0.0);\n" +
+                "let reflectionVector: vec3<f32> = reflect(-lightDirection, normalized_transformedNormal);\n" +
                 "let normalized_reflectionVector : vec3<f32> = normalize(reflectionVector);\n" +
                 "let specular : vec3<f32> = uMyUniformData.lightSpecular[i].xyz * uMyUniformData.materialSpecular.xyz * pow(max(dot(normalized_reflectionVector, normalized_viewerVector), 0.0), uMyUniformData.materialShininess.x);\n" +
                 "phong_ads_color = phong_ads_color + ambient + diffuse + specular;\n" +
@@ -717,6 +717,11 @@ function resize(){
     //gl.viewport(0,0,canvas.width,canvas.height);
 }
 
+function deg2rad(degrees) {
+    // Code
+    return (degrees * Math.PI / 180.0);
+}
+
 function draw() {
     // Code
     // Device may be lost, initialization may not be done yet
@@ -769,17 +774,19 @@ function draw() {
     if(isLightingEnabled == true)
     {
         lKeyPressed[0] = 1;
+        //console.log("Key pressed!!!");
 
         // Light[0] - Red light rotates around X-axis
         lightAmbient[0] = [0.0, 0.0, 0.0, 1.0];
         lightDiffuse[0] = [1.0, 0.0, 0.0, 1.0];
         lightSpecular[0] = [1.0, 0.0, 0.0, 1.0];
+
         lightPosition[0] = 0.0;
-        lightPosition[1] = 5.0 * Math.sin(lightAngle_0);
-        lightPosition[2] = 5.0 * Math.cos(lightAngle_0);
+        lightPosition[1] = 5.0 * Math.sin(deg2rad(lightAngle_0));
+        lightPosition[2] = 5.0 * Math.cos(deg2rad(lightAngle_0));
         lightPosition[3] = 1.0;
-        lightAngle_0 = lightAngle_0 + 0.01;
-        if(lightAngle_0 >= 2.0 * Math.PI)
+        lightAngle_0 = lightAngle_0 + 1.0;
+        if(lightAngle_0 >= 360.0)
         {
             lightAngle_0 = 0.0;
         }
@@ -788,12 +795,13 @@ function draw() {
         lightAmbient[1] = [0.0, 0.0, 0.0, 1.0];
         lightDiffuse[1] = [0.0, 1.0, 0.0, 1.0];
         lightSpecular[1] = [0.0, 1.0, 0.0, 1.0];
-        lightPosition[4] = 5.0 * Math.sin(lightAngle_1);
+
+        lightPosition[4] = 5.0 * Math.sin(deg2rad(lightAngle_1));
         lightPosition[5] = 0.0;
-        lightPosition[6] = 5.0 * Math.cos(lightAngle_1);
+        lightPosition[6] = 5.0 * Math.cos(deg2rad(lightAngle_1));
         lightPosition[7] = 1.0;
-        lightAngle_1 = lightAngle_1 + 0.01;
-        if(lightAngle_1 >= 2.0 * Math.PI)
+        lightAngle_1 = lightAngle_1 + 1.0;
+        if(lightAngle_1 >= 360.0)
         {
             lightAngle_1 = 0.0;
         }
@@ -802,12 +810,13 @@ function draw() {
         lightAmbient[2] = [0.0, 0.0, 0.0, 1.0];
         lightDiffuse[2] = [0.0, 0.0, 1.0, 1.0];
         lightSpecular[2] = [0.0, 0.0, 1.0, 1.0];
-        lightPosition[8] = 5.0 * Math.cos(lightAngle_2);
-        lightPosition[9] = 5.0 * Math.sin(lightAngle_2);
+
+        lightPosition[8] = 5.0 * Math.cos(deg2rad(lightAngle_2));
+        lightPosition[9] = 5.0 * Math.sin(deg2rad(lightAngle_2));
         lightPosition[10] = 0.0; //5.0 * Math.cos(lightAngle_2);
         lightPosition[11] = 1.0;
-        lightAngle_2 = lightAngle_2 + 0.01;
-        if(lightAngle_2 >= 2.0 * Math.PI)
+        lightAngle_2 = lightAngle_2 + 1.0;
+        if(lightAngle_2 >= 360.0)
         {
             lightAngle_2 = 0.0;
         }
