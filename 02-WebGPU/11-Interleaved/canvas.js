@@ -654,7 +654,7 @@ async function initialize() {
 }
 
 // Create vertex buffer UDF
-async function createVertexBuffer(_vertexData) {
+function createVertexBuffer(_vertexData) {
     // Code
     const bufferDescriptor = {
         size: _vertexData.byteLength,
@@ -768,14 +768,21 @@ function draw() {
     const viewMatrix = mat4.create();
     const projectionMatrix = perspectiveProjectionMatrix;
     const scaleMatrix = mat4.create();
+    const rotationMatrix = mat4.create();
+    const tranlationMatrix = mat4.create();
+
+    mat4.translate(tranlationMatrix, tranlationMatrix, [0.0, 0.0, -6.0]);
+
+    mat4.rotateY(rotationMatrix, rotationMatrix, deg2rad(angleCube));
+    mat4.rotateX(rotationMatrix, rotationMatrix, deg2rad(angleCube));
+    mat4.rotateZ(rotationMatrix, rotationMatrix, deg2rad(angleCube));
+
+    mat4.scale(scaleMatrix, scaleMatrix, [0.75, 0.75, 0.75]);
+
+    mat4.multiply(modelMatrix, modelMatrix, tranlationMatrix);
+    mat4.multiply(modelMatrix, modelMatrix, rotationMatrix);
+    mat4.multiply(modelMatrix, modelMatrix, scaleMatrix);
     
-    //scaleMatrix = mat4.scale();
-
-    mat4.translate(modelMatrix, modelMatrix, [0.0, 0.0, -6.0]);
-
-    mat4.rotateY(modelMatrix, modelMatrix, deg2rad(angleCube));
-    mat4.rotateX(modelMatrix, modelMatrix, deg2rad(angleCube));
-    mat4.rotateZ(modelMatrix, modelMatrix, deg2rad(angleCube));
 
     // 1: Matrices for Model, View and Projection
     queue.writeBuffer(buffer_uniform, 
@@ -938,7 +945,6 @@ function uninitialize() {
         canvas_format = null;
 
         render_pipeline = null;
-        buffer_uniform = null;
         bindingGroups_uniform = null;  
 
         if(buffer_interleaved != null)
@@ -951,16 +957,9 @@ function uninitialize() {
             buffer_uniform.destroy();
             buffer_uniform = null;
         }
-        if(sampler_marble != null)
-        {
-            sampler_marble.destroy();
+        
             sampler_marble = null;
-        }
-        if(bind_group_texture_and_sampler != null)
-        {
-            bind_group_texture_and_sampler.destroy();
             bind_group_texture_and_sampler = null;
-        }
     }
 
     perspectiveProjectionMatrix = null;
