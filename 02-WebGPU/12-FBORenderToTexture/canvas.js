@@ -3,7 +3,6 @@ var canvas = null;
 var canvas_original_width;
 var canvas_original_height;
 var bFullScreen = false;
-
 // Web GPU related variables
 var clear_color = null;
 var clear_color_fbo = null;
@@ -12,11 +11,9 @@ let context = null;
 let queue = null;
 let canvas_format = null;
 let animation_frame_id = null;
-
 /*let render_pipeline = null;
 let buffer_uniform = null;  // Now it will contains light, material and mvp matrices
 let bindingGroups_uniform = null;*/
-
 var lightAmbient = new Float32Array([0.4, 0.4, 0.4, 1.0]);
 var lightDiffuse = new Float32Array([1.0, 1.0, 1.0, 1.0]);
 var lightSpecular = new Float32Array([1.0, 1.0, 1.0, 1.0]);
@@ -31,37 +28,29 @@ var isTextureEnabled = false; // we are using y component only for 1 = texture e
 var isTeapotAnimating = false; // we are using z component only for 1 = teapot animating, 0 = teapot not animating
 var angleTeapot = 0.0; // we are using w component only for teapot angle
 var angleCube = 0.0; // we are using w component only for cube angle
-
-// 64 + 64 + 64 (mvp) + 
+// 64 + 64 + 64 (mvp) +
 // 16 + 16 + 16 + 16 + 16 + 16 + 16 + 16 (Light + Amibient + Diffuse + Specular + Position + Material Ambient + Material Diffuse + Material Specular + Material Shininess + LKeyPressed) = 320 bytes
 // 16 lightKeyPressed = 336 bytes
-
 let perspectiveProjectionMatrix = null;
 let perspectiveProjectionMatrix_fbo = null;
 let depthTexture = null;
-
 // Teapot related variable declaration
 const FBO_WIDTH = 512;
 const FBO_HEIGHT = 512;
 let texture_teapot_color = null;
 let texture_teapot_depth = null;
-
 let texture_marble = null;
 let sampler_marble = null;
-
 let sampler_teapot = null;
 let render_pipeline_teapot = null;
 let buffer_uniform_teapot = null;
 let bindgroup_uniform_teapot = null;
-
 let bindgroup_marble_texture_and_sampler = null;
-
 let buffer_teapot_position = null;
 let buffer_teapot_normals = null;
 let buffer_teapot_elements = null;  // Face Indices
 let buffer_teapot_texcoords = null;
 let num_teapot_indices = 0;
-
 // Cube related variable declaration
 let render_pipeline_cube = null;
 let buffer_uniform_cube = null;
@@ -80,20 +69,17 @@ let buffer_elements = null;
 // Animation related variables
 // To start animation -> To requestAnimationFrame() to be called cross-browser compatible
 var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame || 
-    window.oRequestAnimationFrame || 
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
     window.msRequestAnimationFrame;
-
-
 // To stop animation -> To call cancelAnimation frame
-var cancelAnimationFrame = window.cancelAnimationFrame || 
-                        window.webkitCancelRequestAnimationFrame || window.webkitCancelAnimationFrame || 
-                        window.mozCancelRequestAnimationFrame || window.mozCancelAnimationFrame || 
-                        window.oCancelRequestAnimationFrame || window.oCancelAnimationFrame || 
+var cancelAnimationFrame = window.cancelAnimationFrame ||
+                        window.webkitCancelRequestAnimationFrame || window.webkitCancelAnimationFrame ||
+                        window.mozCancelRequestAnimationFrame || window.mozCancelAnimationFrame ||
+                        window.oCancelRequestAnimationFrame || window.oCancelAnimationFrame ||
                         window.msCancelRequestAnimationFrame ||window.msCancelAnimationFrame;
-
 // onLoad() function
-// To avoid browser to get locked by long waiting for GPU to be completed, 
+// To avoid browser to get locked by long waiting for GPU to be completed,
 // we will use async function and await keyword to wait for GPU to be ready
 async function main() {
     // Get canvas element
@@ -102,20 +88,16 @@ async function main() {
         console.log("Obtaining canvas failed");
     else
         console.log("Obtained canvas successfully");
-
     // Store original canvas width and height
     canvas_original_width = canvas.width;
     canvas_original_height = canvas.height;
-
     // Register event handlers
     window.addEventListener("keydown", keyDown, false);
     window.addEventListener("click", mouseDown, false);
     window.addEventListener("resize", resize, false);
-
     // Best practices for WebGPU during fullscreen
     document.addEventListener("fullscreenchange", onFullScreenChange, false);
     document.addEventListener("webkitfullscreenchange", onFullScreenChange, false);
-
     // Initialize WebGPU
     // Step 1 Get GPU interface from navigator
     const tsGPU = navigator.gpu;
@@ -128,7 +110,6 @@ async function main() {
     else{
         console.log("WebGPU is supported on this browser\n");
     }
-
     // step 2 Get GPU adapter from GPU interface
     const tsAdapter = await tsGPU.requestAdapter();
     if(null == tsAdapter)
@@ -137,7 +118,6 @@ async function main() {
         throw new Error("Obtaining GPU adapter failed\n");
         return;
     }
-
     // step 3 Get GPU device from GPU adapter
     device = await tsAdapter.requestDevice();
     if(null == device)
@@ -146,28 +126,23 @@ async function main() {
         throw new Error("Obtaining GPU device failed\n");
         return;
     }
-
     // step 4 Get GPU queue from GPU device
-    // As browsers can be work on different devices may get lost such as due to reset, switch off, etc. 
+    // As browsers can be work on different devices may get lost such as due to reset, switch off, etc.
     // So, we will check if the device is lost or not
-    // In such case, we may not have capturable errormessage so register one generic error handler 
+    // In such case, we may not have capturable errormessage so register one generic error handler
     // to get the error message
     device.addEventListener("uncapturederror", onUncapturedError);
-    
     // Register a specific device lost handler to get the error message when device is lost
     device.lost.then(onDeviceLost);
-
     // Call stub function from here
     await initialize();
     resize();
     draw();
 }
-
 // Event handlers
 function onUncapturedError(event) {
     console.error("WebGPU onUncapturedError(): " + event.error.message);
 }
-
 function onDeviceLost(info) {
     console.warn("WebGPU onDeviceLost() device lost reason: " + info.reason + " message: " + info.message);
     device = null;
@@ -175,31 +150,25 @@ function onDeviceLost(info) {
     queue = null;
     canvas_format = null;
     animation_frame_id = null;
-
     /*sphere = null;
     numIndices = 0;
     buffer_position = null;
     buffer_normals = null;
     buffer_texcoords = null;
     buffer_elements = null;
-
     render_pipeline = null;
     buffer_uniform = null;
     bindingGroups_uniform = null;*/
     // Teapot related resources
     texture_teapot_color = null;
     texture_teapot_depth = null;
-
     texture_marble = null;
     sampler_marble = null;
-
     sampler_teapot = null;
     render_pipeline_teapot = null;
     buffer_uniform_teapot = null;
     bindgroup_uniform_teapot = null;
-
     bindgroup_marble_texture_and_sampler = null;
-
     buffer_teapot_position = null;
     buffer_teapot_normals = null;
     buffer_teapot_elements = null;  // Face Indices
@@ -215,16 +184,13 @@ function onDeviceLost(info) {
     perspectiveProjectionMatrix_fbo = null;
     depthTexture = null;
 }
-
 function toggleFullScreen() {
     var fullscreen_element = document.fullscreenElement ||
         document.webkitFullscreenElement ||
         document.mozFullScreenElement ||
         document.msFullscreenElement ||
         null;
-
     if(fullscreen_element == null){
-
         if(canvas.requestFullscreen)
             canvas.requestFullscreen();
         else if(canvas.mozRequestFullScreen)
@@ -233,10 +199,8 @@ function toggleFullScreen() {
             canvas.webkitRequestFullScreen();
         else if(canvas.msRequestFullscreen)
             canvas.msRequestFullscreen();
-
        // In web GL we initialize bFullScreen here not thinking about async operations
        // But in WebGPU, considering cross browser full screen compatibility we will do this on fullScreenchange event handler
-
     } else {
         if(document.exitFullscreen)
             document.exitFullscreen()
@@ -246,33 +210,27 @@ function toggleFullScreen() {
             document.webkitExitFullscreen();
         else if(document.msExitFullscreen)
             document.msExitFullscreen();
-
         // In web GL we initialize bFullScreen here not thinking about async operations
        // But in WebGPU, considering cross browser full screen compatibility we will do this on fullScreenchange event handler
     }
 }
-
 function onFullScreenChange() {
-
     // Code
     var fullscreen_element = document.fullscreenElement ||
         document.webkitFullscreenElement ||
         document.mozFullScreenElement ||
         document.msFullscreenElement ||
         null;
-
     if(fullscreen_element == null){
         bFullScreen = false;
-    }   
+    }  
     else{
         bFullScreen = true;
     }
-
     // Call resize() here because when we go to full screen or come out of full screen, we need to resize the canvas and re-render the scene
     resize();
 }
-
-// After recieving the gpu adapter & device, 
+// After recieving the gpu adapter & device,
 // Remember getting queue is always synchronous never fail if we already successfully have GPU, adapter and device
 // So there is no need of await and error checking
 async function initialize() {
@@ -280,7 +238,6 @@ async function initialize() {
     // step 5 Get GPU queue from GPU device
     queue = device.queue;
     console.log("Obtaining GPU queue successfully\n");
-
     // step 6 Get WebGPU context from canvas
     context = canvas.getContext("webgpu");
     if(context == null)
@@ -289,22 +246,19 @@ async function initialize() {
         throw new Error("Obtaining WebGPU context failed\n");
         return;
     }
-
     // step 7 Get WebGPU preferred canvas format from context
     // gpu texture format is a string that represents the format of the texture, such as "rgba8unorm" or "bgra8unorm"
     canvas_format = navigator.gpu.getPreferredCanvasFormat();
     console.log("Obtaining WebGPU preferred canvas format successfully\n");
-
     // step 8 Configure the canvas with the device and format to suit our needs
     const canvas_configuration = {
         device: device,
         format: canvas_format,
         usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_SRC,
         alphaMode: "opaque"
-    };  
+    }; 
     context.configure(canvas_configuration);
     console.log("initialize() Configuring WebGPU context successfully done with format: canvas_format\n");
-
     // Teapot Vertex shader code source in WGSL (WebGPU Shading Language)
     const teapotVertexShaderSourceCode = "struct MyUniformData_fbo\n" +
     "{\n" +
@@ -328,7 +282,7 @@ async function initialize() {
         "@location(1) lightDirection : vec3<f32>,\n" +
         "@location(2) viewerVector : vec3<f32>,\n" +
         "@location(3) texcoord : vec2<f32>\n" +
-    "};\n" +    
+    "};\n" +   
     "@group(0) @binding(0) var<uniform> uMyUniformData : MyUniformData_fbo;\n" +
     "@vertex\n" +
     "fn main(@location(0) pos : vec3<f32>, @location(1) normal : vec3<f32>, @location(2) tex : vec2<f32>) -> VertexOutput\n"+
@@ -379,12 +333,10 @@ async function initialize() {
     ");\n"+
     "return(mat3x3<f32>(column0, column1, column2));\n"+
     "}\n";
-
     // Create GPUShaderModuleDescriptor type for the vertex shader
     const shaderModuleDescriptor_teapot_vertex = {
         code: teapotVertexShaderSourceCode
     };
-
     // Create GPUShaderModule type for the vertex shader
     const shaderModule_teapot_vertex = device.createShaderModule(shaderModuleDescriptor_teapot_vertex);
     if(shaderModule_teapot_vertex == null)
@@ -397,7 +349,6 @@ async function initialize() {
     {
         console.log("initialize() Creating GPUShaderModule for teapot vertex shader successful\n");
     }
-
     // Fragment shader code source in WGSL (WebGPU Shading Language)
     const teapotFragmentShaderSourceCode = "struct MyUniformData_fbo\n" +
     "{\n" +
@@ -421,7 +372,7 @@ async function initialize() {
         "@location(1) lightDirection : vec3<f32>,\n" +
         "@location(2) viewerVector : vec3<f32>,\n" +
         "@location(3) texcoord : vec2<f32>\n" +
-    "};\n" +    
+    "};\n" +   
     "@group(0) @binding(0) var<uniform> uMyUniformData : MyUniformData_fbo;\n" +
     "@group(1) @binding(0) var marbleTexture2D : texture_2d<f32>;\n" +
     "@group(1) @binding(1) var marbleSampler : sampler;\n" +
@@ -463,12 +414,10 @@ async function initialize() {
         "}\n" +
         "return vec4<f32>(phong_ads_color, 1.0);\n" + // color
     "}\n";
-
     // Create GPUShaderModuleDescriptor type for the fragment shader
     const shaderModuleDescriptor_teapot_fragment = {
         code: teapotFragmentShaderSourceCode
     };
-
     // Create GPUShaderModule type for the fragment shader
     const shaderModule_teapot_fragment = device.createShaderModule(shaderModuleDescriptor_teapot_fragment);
     if(shaderModule_teapot_fragment == null)
@@ -481,7 +430,6 @@ async function initialize() {
     {
         console.log("initialize() Creating GPUShaderModule for teapot fragment shader successful\n");
     }
-
     // Cube Vertex shader code source in WGSL (WebGPU Shading Language)
     const cubeVertexShaderSourceCode = "struct MVPUniform\n" +
     "{\n" +
@@ -501,11 +449,9 @@ async function initialize() {
      "output.texcoords = tex;\n" +
      "return output;\n" +
     "}\n";
-
     const shaderModuleDescriptor_cube_vertex = {
         code: cubeVertexShaderSourceCode
     };
-
     const shaderModule_cube_vertex = device.createShaderModule(shaderModuleDescriptor_cube_vertex);
     if(shaderModule_cube_vertex == null)
     {
@@ -517,7 +463,6 @@ async function initialize() {
     {
         console.log("initialize() Creating GPUShaderModule for cube vertex shader successful\n");
     }
-
     const cubeFragmentShaderSourceCode = "struct VertexOutput\n" +
     "{\n" +
         "@builtin(position) position: vec4<f32>,\n" +
@@ -531,11 +476,9 @@ async function initialize() {
         "var colors = textureSample(teapotTexture2D, teapotSampler, output.texcoords);\n" + // Active texture sampling using textureSample() function, which takes texture, sampler and texture coordinates as input and returns the sampled color
         "return colors;\n" + // return sampled texture color
     "}\n";
-
     const shaderModuleDescriptor_cube_fragmentShader = {
         code: cubeFragmentShaderSourceCode
     };
-
     const shaderModule_cube_fragment = device.createShaderModule(shaderModuleDescriptor_cube_fragmentShader);
     if(shaderModule_cube_fragment == null)
     {
@@ -547,17 +490,16 @@ async function initialize() {
     {
         console.log("initialize() Creating GPUShaderModule for cube fragment shader successful\n");
     }
-
     // Teapot Geometry
     const teapot = new Mesh();
-    teapot.allocateMeshData(teapotVertexCount);
+    teapot.allocate(teapotVertexCount);
     const startTime = performance.now();
     for(let i = 0; i < teapotVertexCount; i = i+3)
     {
         // Initialize teapot vertex data
         // Positions
         const single_vertex =
-        [            
+        [           
             [teapotPositions[(i+0)*3 + 0], teapotPositions[(i+0)*3 + 1], teapotPositions[(i+0)*3 + 2]],
             [teapotPositions[(i+1)*3 + 0], teapotPositions[(i+1)*3 + 1], teapotPositions[(i+1)*3 + 2]],
             [teapotPositions[(i+2)*3 + 0], teapotPositions[(i+2)*3 + 1], teapotPositions[(i+2)*3 + 2]]
@@ -579,20 +521,16 @@ async function initialize() {
         // Add the triangle to the teapot mesh
         teapot.addTriangle(single_vertex, single_normal, single_texcoord);
     }
-
     num_teapot_indices = teapot.getIndexCount();
     const teapotMeshData = teapot.getMeshData();
-
     // Create the GPU buffer for vertex positions GPUBuffer type
     buffer_teapot_position = createVertexBuffer(teapotMeshData.verticesArray);
-
     if(buffer_teapot_position == null)
     {
         console.log("initialize() Creating GPU buffer for teapot vertex positions failed\n");
         throw new Error("initialize() Creating GPU buffer for teapot vertex positions failed\n");
         return;
     }
-
     buffer_teapot_normals = createVertexBuffer(teapotMeshData.normalsArray);
     if(buffer_teapot_normals == null)
     {
@@ -600,7 +538,6 @@ async function initialize() {
         throw new Error("initialize() Creating GPU buffer for teapot vertex normals failed\n");
         return;
     }
-
     buffer_teapot_texcoords = createVertexBuffer(teapotMeshData.texCoordsArray);
     if(buffer_teapot_texcoords == null)
     {
@@ -608,7 +545,6 @@ async function initialize() {
         throw new Error("initialize() Creating GPU buffer for teapot vertex texture coordinates failed\n");
         return;
     }
-
     buffer_teapot_elements = createIndexBuffer(teapotMeshData.indicesArray);
     if(buffer_teapot_elements == null)
     {
@@ -616,74 +552,96 @@ async function initialize() {
         throw new Error("initialize() Creating GPU buffer for teapot vertex elements failed\n");
         return;
     }
-
     // Cube geometry
+    // Cube vertices (6 faces, 36 vertices)
     const cube_vertex_positions = new Float32Array([
-        // Front face
-        -1.0, -1.0,  1.0,
-         1.0, -1.0,  1.0,
-         1.0,  1.0,  1.0,
+        // Front
+        1.0,  1.0,  1.0,
         -1.0,  1.0,  1.0,
-        // Back face
+        -1.0, -1.0,  1.0,
+        -1.0, -1.0,  1.0,
+        1.0, -1.0,  1.0,
+        1.0,  1.0,  1.0,
+        // Back
+        1.0,  1.0, -1.0,
+        1.0, -1.0, -1.0,
+        -1.0, -1.0, -1.0,
         -1.0, -1.0, -1.0,
         -1.0,  1.0, -1.0,
-            1.0,  1.0, -1.0,
-            1.0, -1.0, -1.0,
-        // Top face
+        1.0,  1.0, -1.0,
+        // Left
+        -1.0,  1.0,  1.0,
+        -1.0,  1.0, -1.0,
+        -1.0, -1.0, -1.0,
+        -1.0, -1.0, -1.0,
+        -1.0, -1.0,  1.0,
+        -1.0,  1.0,  1.0,
+        // Right
+        1.0,  1.0,  1.0,
+        1.0, -1.0,  1.0,
+        1.0, -1.0, -1.0,
+        1.0, -1.0, -1.0,
+        1.0,  1.0, -1.0,
+        1.0,  1.0,  1.0,
+        // Top
+        1.0,  1.0,  1.0,
+        1.0,  1.0, -1.0,
+        -1.0,  1.0, -1.0,
         -1.0,  1.0, -1.0,
         -1.0,  1.0,  1.0,
-         1.0,  1.0,  1.0,
-            1.0,  1.0, -1.0,
-        // Bottom face
-        -1.0, -1.0, -1.0,
-         1.0, -1.0, -1.0,
-         1.0, -1.0,  1.0,
+        1.0,  1.0,  1.0,
+        // Bottom
+        1.0, -1.0,  1.0,
         -1.0, -1.0,  1.0,
-        // Right face
-         1.0, -1.0, -1.0,
-            1.0,  1.0, -1.0,
-            1.0,  1.0,  1.0,
-            1.0, -1.0,  1.0,
-        // Left face
         -1.0, -1.0, -1.0,
-        -1.0, -1.0,  1.0,
-        -1.0,  1.0,  1.0,
-        -1.0,  1.0, -1.0
+        -1.0, -1.0, -1.0,
+        1.0, -1.0, -1.0,
+        1.0, -1.0,  1.0
     ]);
     const cube_vertex_texcoords = new Float32Array([
-        // Front face
-        0.0, 0.0,
+        // Front
         1.0, 0.0,
-        1.0, 1.0,
+        0.0, 0.0,
         0.0, 1.0,
-        // Back face
-        1.0, 0.0,
-        1.0, 1.0,
         0.0, 1.0,
+        1.0, 1.0,
+        1.0, 0.0,
+        // Back
+        1.0, 0.0,
         0.0, 0.0,
-        // Top face
         0.0, 1.0,
-        0.0, 0.0,
-        1.0, 0.0,
-        1.0, 1.0,
-        // Bottom face
-        1.0, 1.0,
         0.0, 1.0,
-        0.0, 0.0,
-        1.0, 0.0,
-        // Right face
-        1.0, 0.0,
         1.0, 1.0,
+        1.0, 0.0,
+        // Left
+        1.0, 0.0,
+        0.0, 0.0,
         0.0, 1.0,
-        0.0, 0.0,
-        // Left face
-        0.0, 0.0,
-        1.0, 0.0,
+        0.0, 1.0,
         1.0, 1.0,
-        0.0, 1.0
-    ]);
-   
-
+        1.0, 0.0,
+        // Right
+        1.0, 0.0,
+        0.0, 0.0,
+        0.0, 1.0,
+        0.0, 1.0,
+        1.0, 1.0,
+        1.0, 0.0,
+        // Top
+        1.0, 0.0,
+        0.0, 0.0,
+        0.0, 1.0,
+        0.0, 1.0,
+        1.0, 1.0,
+        1.0, 0.0,
+        // Bottom
+        1.0, 0.0,
+        0.0, 0.0,
+        0.0, 1.0,
+        0.0, 1.0,
+        1.0, 1.0,
+        1.0, 0.0
+    ]);  
     buffer_cube_position = createVertexBuffer(cube_vertex_positions);
     if(buffer_cube_position == null)
     {
@@ -691,7 +649,6 @@ async function initialize() {
         throw new Error("initialize() Creating vertex buffer for cube position failed\n");
         return;
     }
-
     buffer_cube_texcoords = createVertexBuffer(cube_vertex_texcoords);
     if(buffer_cube_texcoords == null)
     {
@@ -699,7 +656,6 @@ async function initialize() {
         throw new Error("initialize() Creating vertex buffer for cube texture coordinates failed\n");
         return;
     }
-
     // Marble texture image loading and creating texture and sampler for the square
     // Load image and create texture and sampler for the square
     texture_marble = await loadTexture("marble.png");
@@ -713,12 +669,10 @@ async function initialize() {
     {
         console.log("initialize() Loading texture for cube succeeded\n");
     }
-
     const samplerMarbleDescriptor = {
         magFilter: "linear",
         minFilter: "linear"
     };
-
     // Create texture sampler
     sampler_marble = device.createSampler(samplerMarbleDescriptor);
     if(sampler_marble == null)
@@ -731,8 +685,6 @@ async function initialize() {
     {
         console.log("initialize() Creating texture marble sampler for cube succeeded\n");
     }
-
-    
     // Teapot texture image loading and creating texture and sampler for the teapot
     // Remember this texture will not have any image but in this texture teapot will be rendered as cube's texture, so we will create this texture as a render target for teapot rendering
     // This a procedural texture, so we will create this texture as a render target for teapot rendering
@@ -742,7 +694,6 @@ async function initialize() {
         format: "rgba8unorm",
         usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING  // This texture will be used as a render target for teapot rendering and as a texture for cube rendering
     };
-
     texture_teapot_color = device.createTexture(teapotColorTextureDescriptor);
     if(texture_teapot_color == null)
     {
@@ -754,14 +705,12 @@ async function initialize() {
     {
         console.log("initialize() Creating teapot color texture succeeded\n");
     }
-
     const teapotDepthTextureDescriptor = {
         size: [FBO_WIDTH, FBO_HEIGHT, 1],
         dimension: "2d",
         format: "depth24plus-stencil8",
         usage: GPUTextureUsage.RENDER_ATTACHMENT // This texture will be used as a render target for teapot rendering
     };
-
     texture_teapot_depth = device.createTexture(teapotDepthTextureDescriptor);
     if(texture_teapot_depth == null)
     {
@@ -773,13 +722,11 @@ async function initialize() {
     {
         console.log("initialize() Creating teapot depth texture succeeded\n");
     }
-
     // Teapot texture sampler creation
     const teapotSamplerDescriptor = {
         magFilter: "linear",
         minFilter: "linear"
     };
-
     sampler_teapot = device.createSampler(teapotSamplerDescriptor);
     if(sampler_teapot == null)
     {
@@ -791,53 +738,42 @@ async function initialize() {
     {
         console.log("initialize() Creating teapot texture sampler succeeded\n");
     }
-
     // Teapot uniform
     const teapotUniformBufferSize = Float32Array.BYTES_PER_ELEMENT * 16 * 3 + // Model View Projection Matrices: 3 * 4 * 4 floats * 4 bytes per float: from 0th to 191st byte offset
                                      Float32Array.BYTES_PER_ELEMENT * 16 * 4 * 8 + // 128 bytes Light and material: 4 * 4 floats * 4 bytes per float * 8 bytes for alignment: from 64th to 319th byte offset
                                      Uint32Array.BYTES_PER_ELEMENT * 4;  // 4 bytes Key Pressed: 4 bytes for alignment: from 320th to 335th byte offset
-
     buffer_uniform_teapot = createUniformBuffer(teapotUniformBufferSize, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST);
-
     if(buffer_uniform_teapot == null)
     {
         console.log("initialize() Creating teapot uniform buffer failed\n");
         throw new Error("initialize() Creating teapot uniform buffer failed\n");
         return;
     }
-
     // Cube uniform
     const cubeUniformBufferSize = Float32Array.BYTES_PER_ELEMENT * 16; // Model View Projection Matrices: 4 * 4 floats * 4 bytes per float: from 0th to 63rd byte offset
-
     buffer_uniform_cube = createUniformBuffer(cubeUniformBufferSize, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST);
-
     if(buffer_uniform_cube == null)
     {
         console.log("initialize() Creating cube uniform buffer failed\n");
         throw new Error("initialize() Creating cube uniform buffer failed\n");
         return;
     }
-
     // Teapot bindgroup layout creation for uniform buffer
     const bindGroupLayout_teapot_uniform = createBindGroupLayoutForUniform(0, GPUShaderStage.VERTEX | GPUShaderStage.FRAGMENT, "uniform");
-
     if(bindGroupLayout_teapot_uniform == null)
     {
         console.log("initialize() Creating GPUBindGroupLayout for teapot uniform failed\n");
         throw new Error("initialize() Creating GPUBindGroupLayout for teapot uniform failed\n");
         return;
     }
-
     // Bind group layout enter GPUBindGroupLayoutEntry type is common, so we can use same bind group layout for both
     const bindGroupLayout_cube_uniform = createBindGroupLayoutForUniform(0, GPUShaderStage.VERTEX, "uniform");
-
     if(bindGroupLayout_cube_uniform == null)
     {
         console.log("initialize() Creating GPUBindGroupLayout for cube uniform failed\n");
         throw new Error("initialize() Creating GPUBindGroupLayout for cube uniform failed\n");
         return;
-    }    
-
+    }   
     // As both teapot and cube will use same texture format and sampler, we can use same bind group layout for both
     const bindGroupLayoutDescriptor_texture_and_sampler = createBindGroupLayoutForTextureAndSampler(
         // Texture properties
@@ -851,16 +787,14 @@ async function initialize() {
         1,
         GPUShaderStage.FRAGMENT
     );
-
     // Create teapot texture and sampler bind group
     bindgroup_marble_texture_and_sampler = createBindGroupForTextureAndSampler(
         0,
         texture_marble,
         1,
-        sampler_marble, 
+        sampler_marble,
         bindGroupLayoutDescriptor_texture_and_sampler
     );
-
     // Create cube texture and sampler bind group
     bindgroup_teapot_texture_and_sampler = createBindGroupForTextureAndSampler(
         0,
@@ -869,32 +803,26 @@ async function initialize() {
         sampler_teapot,
         bindGroupLayoutDescriptor_texture_and_sampler
     );
-
     // Teapot uniform bind group creation
-    bindgroup_uniform_teapot = createBindGroupForUniform(buffer_uniform_teapot, 
-        0, teapotUniformBufferSize, 
+    bindgroup_uniform_teapot = createBindGroupForUniform(buffer_uniform_teapot,
+        0, teapotUniformBufferSize,
         0, bindGroupLayout_teapot_uniform);
-
     // Cube uniform bind group creation
-    bindgroup_uniform_cube = createBindGroupForUniform(buffer_uniform_cube, 
-        0, cubeUniformBufferSize, 
+    bindgroup_uniform_cube = createBindGroupForUniform(buffer_uniform_cube,
+        0, cubeUniformBufferSize,
         0, bindGroupLayout_cube_uniform);
-
     // Create GPUPipelineLayoutDescriptor type
     const pipelineLayoutDescriptor_teapot = {
         bindGroupLayouts: [bindGroupLayout_teapot_uniform, bindGroupLayoutDescriptor_texture_and_sampler]
     };
-
     // Create GPUPipelineLayout type
     const pipelineLayout_teapot = device.createPipelineLayout(pipelineLayoutDescriptor_teapot);
-
     if(pipelineLayout_teapot == null)
     {
         console.log("initialize() Creating Teapot GPUPipelineLayout failed\n");
         throw new Error("initialize() Creating Teapot GPUPipelineLayout failed\n");
         return;
-    }   
-
+    }  
     // Cube pipeline layout creation
     const pipelineLayoutDescriptor_cube = {
         bindGroupLayouts: [bindGroupLayout_cube_uniform, bindGroupLayoutDescriptor_texture_and_sampler]
@@ -906,94 +834,139 @@ async function initialize() {
         throw new Error("initialize() Creating Cube GPUPipelineLayout failed\n");
         return;
     }
-    
     // Vertex attributes
     // create GPUVertexBufferAttribute type for the vertex position buffer
+    // Shared between Teapot and Cube
     const positionVertexBufferAttribute = {
         shaderLocation: 0, // This matches with the 0th @location(0) in the vertex shader code
         offset: 0,
         format: "float32x3" // vec3<f32> is represented as float32x3 in WebGPU for R32G32B32 format
     };
-
     // create GPUVertexBufferLayout type for the vertex position buffer
     const positionVertexBufferLayout = {
         arrayStride: Float32Array.BYTES_PER_ELEMENT * 3, // 4 * 3 floats * 4 bytes per float
         attributes: [positionVertexBufferAttribute],
         stepMode: "vertex"  // jump vertex by vertex, not instance by instance
     };
-
+    // For Teapot
     const normalVertexBufferAttribute = {
         shaderLocation: 1, // This matches with the 1st @location(1) in the vertex shader code
         offset: 0,
         format: "float32x3" // vec3<f32> is represented as float32x3 in WebGPU for R32G32B32 format
     };
-
-    // Create GPUVertexBufferLayout type for the vertex normal buffer
+    // Create GPUVertexBufferLayout type for the vertex normal buffer only for teapot
     const normalVertexBufferLayout = {
         arrayStride: Float32Array.BYTES_PER_ELEMENT * 3, // 4 * 3 floats * 4 bytes per float
         attributes: [normalVertexBufferAttribute],
         stepMode: "vertex"  // jump vertex by vertex, not instance by instance
     };
-
-    // Create GPUVertexState type for the vertex shader stage
-    const vertexShaderState = {
-        module: shaderModule_vertex,
-        entryPoint: "main",
-        buffers: [positionVertexBufferLayout, normalVertexBufferLayout]
+    const texcoordsVertexAttribute_teapot = {
+        shaderLocation: 2,
+        offset: 0,
+        format: "float32x2"
     };
-
+    const texcoordsVertexAttribute_cube = {
+        shaderLocation: 1,
+        offset: 0,
+        format: "float32x2"
+    };
+    const texcoordsVertexBufferLayout_teapot = {
+        arrayStride: Float32Array.BYTES_PER_ELEMENT * 2,
+        attributes: [texcoordsVertexAttribute_teapot],
+        stepMode: "vertex"
+    };
+    const texcoordsVertexBufferLayout_cube = {
+        arrayStride: Float32Array.BYTES_PER_ELEMENT * 2,
+        attributes: [texcoordsVertexAttribute_cube],
+        stepMode: "vertex"
+    };
+    // Create GPUVertexState type for the vertex shader stage
+    const vertexShaderState_teapot = {
+        module: shaderModule_teapot_vertex,
+        entryPoint: "main",
+        buffers: [positionVertexBufferLayout, normalVertexBufferLayout, texcoordsVertexBufferLayout_teapot]
+    };
+    const vertexShaderState_cube = {
+        module: shaderModule_cube_vertex,
+        entryPoint: "main",
+        buffers: [positionVertexBufferLayout, texcoordsVertexBufferLayout_cube]
+    };
     // Create GPUColorTargetState type for the fragment shader output
-    const colorTargetState = {
+    const colorTargetState_cube = {
         format: canvas_format
     };
-
-    // Create GPUFragmentState type for the fragment shader stage
-    const fragmentShaderState = {
-        module: shaderModule_fragment,
-        entryPoint: "main",
-        targets: [colorTargetState]
+    const colorTargetState_teapot = {
+        format: "rgba8unorm"
     };
-
-    // Create Primitive state for the render pipeline
+    // Create GPUFragmentState type for the fragment shader stage
+    const fragmentShaderState_teapot = {
+        module: shaderModule_teapot_fragment,
+        entryPoint: "main",
+        targets: [colorTargetState_teapot]
+    };
+    const fragmentShaderState_cube = {
+        module: shaderModule_cube_fragment,
+        entryPoint: "main",
+        targets: [colorTargetState_cube]
+    };
+    // Create Primitive state for the render pipeline common to both teapot and cube
     const primitiveState = {
         topology: "triangle-list",
         stripIndexFormat: undefined,
-        frontFace: "ccw",   // ccw = counter-clockwise winding order for front face, cw = clockwise winding order for front face
+        frontFace: "cw",   // ccw = counter-clockwise winding order for front face, cw = clockwise winding order for front face
         cullMode: "none"    // none = no culling, front = cull front face, back = cull back face
     };
-
     // Depth and Stencil State
     const depthStencilState = {
         depthWriteEnabled: true,
         depthCompare: "less-equal", // glsl: GL_LEQUAL, Vulkan: VK_COMPARE_OP_LESS_OR_EQUAL, DirectX: D3D12_COMPARISON_FUNC_LESS_EQUAL
         format: "depth24plus-stencil8" // glsl: GL_DEPTH24_STENCIL8, Vulkan: VK_FORMAT_D24_UNORM_S8_UINT, DirectX: DXGI_FORMAT_D24_UNORM_S8_UINT
     };
-
+    // Teapot pipeline
     // create render pipeline descriptor of GPURenderPipelineDescriptor type
-    const renderPipelineDescriptor = {
-        layout: pipelineLayout,
-        vertex: vertexShaderState,
-        fragment: fragmentShaderState,
+    const renderPipelineDescriptor_teapot = {
+        layout: pipelineLayout_teapot,
+        vertex: vertexShaderState_teapot,
+        fragment: fragmentShaderState_teapot,
         primitive: primitiveState,
         depthStencil: depthStencilState
     };
-
     // Create render pipeline of GPURenderPipeline type
-    render_pipeline = device.createRenderPipeline(renderPipelineDescriptor);
-    if(render_pipeline == null)
+    render_pipeline_teapot = device.createRenderPipeline(renderPipelineDescriptor_teapot);
+    if(render_pipeline_teapot == null)
     {
-        console.log("initialize() Creating GPURenderPipeline failed\n");
-        throw new Error("initialize() Creating GPURenderPipeline failed\n");
+        console.log("initialize() Creating GPURenderPipeline teapot failed\n");
+        throw new Error("initialize() Creating GPURenderPipeline teapot failed\n");
         return;
     }
-
+    const renderPipelineDescriptor_cube = {
+        layout: pipelineLayout_cube,
+        vertex: vertexShaderState_cube,
+        fragment: fragmentShaderState_cube,
+        primitive: primitiveState,
+        depthStencil: depthStencilState
+    };
+    // Create render pipeline of GPURenderPipeline type
+    render_pipeline_cube = device.createRenderPipeline(renderPipelineDescriptor_cube);
+    if(render_pipeline_cube == null)
+    {
+        console.log("initialize() Creating GPURenderPipeline cube failed\n");
+        throw new Error("initialize() Creating GPURenderPipeline cube failed\n");
+        return;
+    }
     // create perspective projection matrix using gl-matrix library
     perspectiveProjectionMatrix = mat4.create();
-
-    // step 9 Set clear color to blue
-    clear_color = {r: 0.0, g: 0.0, b: 0.0, a: 1.0};
+    perspectiveProjectionMatrix_fbo = mat4.create();
+    // Initialize teapot/fbo's projection matrix
+    mat4.perspective(perspectiveProjectionMatrix_fbo, 45.0 * Math.PI / 180.0, FBO_WIDTH / FBO_HEIGHT, 0.1, 100.0);
+    // step 9 Set clear color to white background for black cube
+    clear_color = {r: 1.0, g: 1.0, b: 1.0, a: 1.0};
+    clear_color_fbo = {r: 0.0, g: 0.0, b: 0.0, a:1.0};  // black cube background for teapot
 }
-
+function deg2rad(degrees) {
+    // Code
+    return (degrees * Math.PI / 180.0);
+}
 // Create vertex buffer UDF
 function createVertexBuffer(_vertexData) {
     // Code
@@ -1001,7 +974,6 @@ function createVertexBuffer(_vertexData) {
         size: _vertexData.byteLength,
         usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
     };
-
     const buffer = device.createBuffer(bufferDescriptor);
     if(buffer == null)
     {
@@ -1009,13 +981,10 @@ function createVertexBuffer(_vertexData) {
         //throw new Error("createVertexBuffer() Creating GPU buffer failed\n");
         return null;
     }
-
     queue.writeBuffer(buffer, 0, _vertexData, 0, _vertexData.length);
     console.log("createVertexBuffer() Creating GPU buffer successfully done\n");
-
     return buffer;
 }
-
 // Create index buffer UDF
 function createIndexBuffer(_indexData) {
     // Code
@@ -1023,7 +992,6 @@ function createIndexBuffer(_indexData) {
         size: _indexData.byteLength,
         usage: GPUBufferUsage.INDEX | GPUBufferUsage.COPY_DST
     };
-
     const buffer = device.createBuffer(bufferDescriptor);
     if(buffer == null)
     {
@@ -1031,15 +999,11 @@ function createIndexBuffer(_indexData) {
         //throw new Error("createIndexBuffer() Creating GPU buffer failed\n");
         return null;
     }
-
     queue.writeBuffer(buffer, 0, _indexData, 0, _indexData.length);
     console.log("createIndexBuffer() Creating GPU buffer successfully done\n");
-
     return buffer;
 }
-
 function resize(){
-
     // Code
     if(bFullScreen){
         canvas.width = window.innerWidth;
@@ -1048,7 +1012,6 @@ function resize(){
         canvas.width = canvas_original_width;
         canvas.height = canvas_original_height;
     }
-
     // Depth texture creation
     if(device != null)
     {
@@ -1057,7 +1020,6 @@ function resize(){
             depthTexture.destroy();
             depthTexture = null;
         }
-
         // To create depth texture, we need to create a GPUTextureDescriptor type
         const depthTextureDescriptor = {
             //       width,        height, depthOrArrayLayers
@@ -1066,10 +1028,8 @@ function resize(){
             format: "depth24plus-stencil8",
             usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_SRC
         };
-
         // Now create the depth texture using device.createTexture() method
         depthTexture = device.createTexture(depthTextureDescriptor);
-
         if(depthTexture == null)
         {
             console.log("resize() Creating depth texture failed\n");
@@ -1077,21 +1037,17 @@ function resize(){
             return;
         }
     }
-
     mat4.perspective(perspectiveProjectionMatrix, 45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100.0);
-
     //gl.viewport(0,0,canvas.width,canvas.height);
 }
-
 function draw() {
     // Code
     // Device may be lost, initialization may not be done yet
     if(device == null || context == null || queue == null || canvas_format == null)
         return;
-
     // Display
-    // step 10 Create a command encoder from device 
-    // to record commands for the GPU due to async nature & possibility of device lost 
+    // step 10 Create a command encoder from device
+    // to record commands for the GPU due to async nature & possibility of device lost
     // it is better to create command encoder inside draw() function
     const command_encoder = device.createCommandEncoder();  // GPUCommandEncoder type
     if(command_encoder == null)
@@ -1100,154 +1056,214 @@ function draw() {
         throw new Error("Obtaining GPU command encoder failed\n");
         return;
     }
-
     // Step 11 create render pass color attachment descriptor to clear the canvas with blue color
-    const render_pass_color_attachment = {
+    /*const render_pass_color_attachment = {
         view: context.getCurrentTexture().createView(),
         clearValue: clear_color,
         loadOp: "clear",
         storeOp: "store"
     };
-
     // Depth and Stencil attachment descriptor
     const render_pass_depth_stencil_attachment = {
         view: depthTexture.createView(),
-        depthClearValue: 1.0,   // glsl: GL_DEPTH_BUFFER_BIT, Vulkan: VK_IMAGE_ASPECT_DEPTH_BIT, DirectX: D3D12_CLEAR_FLAG_DEPTH        
+        depthClearValue: 1.0,   // glsl: GL_DEPTH_BUFFER_BIT, Vulkan: VK_IMAGE_ASPECT_DEPTH_BIT, DirectX: D3D12_CLEAR_FLAG_DEPTH       
         depthLoadOp: "clear",   // glsl: GL_CLEAR, Vulkan: VK_ATTACHMENT_LOAD_OP_CLEAR, DirectX: D3D12_CLEAR_FLAG_DEPTH
         depthStoreOp: "store",
-
         stencilClearValue: 0,   // glsl: GL_STENCIL_BUFFER_BIT, Vulkan: VK_IMAGE_ASPECT_STENCIL_BIT, DirectX: D3D12_CLEAR_FLAG_STENCIL
         stencilLoadOp: "clear",
         stencilStoreOp: "store"
     };
-
     // Step 12 create render pass descriptor to begin render pass of GPURenderPassDescriptor type
     const render_pass_descriptor = {
         colorAttachments: [render_pass_color_attachment],
         depthStencilAttachment: render_pass_depth_stencil_attachment
-    };
-
-    const modelMatrix = mat4.create();
-    const viewMatrix = mat4.create();
-    const projectionMatrix = perspectiveProjectionMatrix;
-    mat4.translate(modelMatrix, modelMatrix, [0.0, 0.0, -6.0]);
+    };*/
+    // Teapot transformation
+    var teapotModelMatrix = mat4.create();
+    var teapotViewMatrix = mat4.create();
+    mat4.translate(teapotModelMatrix, teapotModelMatrix, [0.0, 0.0, -1.5]);
+    mat4.rotateY(teapotModelMatrix, teapotModelMatrix, deg2rad(angleTeapot));
+    //mat4.translate(modelMatrix, modelMatrix, [0.0, 0.0, -6.0]);
     // toggle lighting
     if(isLightingEnabled == true)
     {
-        lKeyPressed[0] = 1;
+        keyFlags[0] = 1;   
     }
     else
     {
-        lKeyPressed[0] = 0;
+        keyFlags[0] = 0;
     }
-
-    // 1: Matrices for Model, View and Projection
-    queue.writeBuffer(buffer_uniform, 
+    // Toggle texture
+    if(isTextureEnabled == true)
+    {
+        keyFlags[1] = 1;
+    }
+    else
+    {
+        keyFlags[1] = 0;
+    }   
+    // Sending per frame data of teapot to shader
+    queue.writeBuffer(buffer_uniform_teapot,
         0, // modelMatrix from 0th byte offset to 63rd byte offset
-        modelMatrix, 
-        0, 
-        modelMatrix.length);
-    
-    queue.writeBuffer(buffer_uniform, 
+        teapotModelMatrix,
+        0,
+        teapotModelMatrix.length);
+    queue.writeBuffer(buffer_uniform_teapot,
         Float32Array.BYTES_PER_ELEMENT * 16, // viewMatrix from 64th byte offset to 127th byte offset
-        viewMatrix, 
-        0, 
-        viewMatrix.length);
-    
-    queue.writeBuffer(buffer_uniform, 
-            Float32Array.BYTES_PER_ELEMENT * 16 + Float32Array.BYTES_PER_ELEMENT * 16, // projectionMatrix from 128th byte offset to 191st byte offset
-        projectionMatrix, 
-        0, 
-        projectionMatrix.length);
-    
-
+        teapotViewMatrix,
+        0,
+        teapotViewMatrix.length);
+    queue.writeBuffer(buffer_uniform_teapot,
+        Float32Array.BYTES_PER_ELEMENT * 32, // projectionMatrix from 128th byte offset to 191st byte offset
+        perspectiveProjectionMatrix_fbo,
+        0,
+        perspectiveProjectionMatrix_fbo.length);
     // 2: Light Ambient, Diffuse, Specular and Position
-    queue.writeBuffer(buffer_uniform, 
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3, // lightAmbient from 192nd byte offset to 207th byte offset
-        lightAmbient, 
-        0, 
+    queue.writeBuffer(buffer_uniform_teapot,
+        Float32Array.BYTES_PER_ELEMENT * 48, // lightAmbient from 192nd byte offset to 207th byte offset
+        lightAmbient,
+        0,
         lightAmbient.length);
-
-    queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 1, // lightDiffuse from 208th byte offset to 223rd byte offset
-        lightDiffuse, 
-        0, 
+    queue.writeBuffer(buffer_uniform_teapot,
+        Float32Array.BYTES_PER_ELEMENT * 48 + Float32Array.BYTES_PER_ELEMENT * 4 * 1, // lightDiffuse from 208th byte offset to 223rd byte offset
+        lightDiffuse,
+        0,
         lightDiffuse.length);
-    
-    queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 2, // lightSpecular from 224th byte offset to 239th byte offset
-        lightSpecular, 
-        0, 
+    queue.writeBuffer(buffer_uniform_teapot,
+        Float32Array.BYTES_PER_ELEMENT * 48 + Float32Array.BYTES_PER_ELEMENT * 8, // lightSpecular from 224th byte offset to 239th byte offset
+        lightSpecular,
+        0,
         lightSpecular.length);
-
-    queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 3, // lightPosition from 240th byte offset to 255th byte offset
-        lightPosition, 
-        0, 
+    queue.writeBuffer(buffer_uniform_teapot,
+        Float32Array.BYTES_PER_ELEMENT * 48 + Float32Array.BYTES_PER_ELEMENT * 12, // lightPosition from 240th byte offset to 255th byte offset
+        lightPosition,
+        0,
         lightPosition.length);
-
     // 3: Material Ambient, Diffuse, Specular and Shininess
-    queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 4, // materialAmbient from 256th byte offset to 271st byte offset
-        materialAmbient, 
-        0, 
+    queue.writeBuffer(buffer_uniform_teapot,
+        Float32Array.BYTES_PER_ELEMENT * 48 + Float32Array.BYTES_PER_ELEMENT * 16, // materialAmbient from 256th byte offset to 271st byte offset
+        materialAmbient,
+        0,
         materialAmbient.length);
-    
-    queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 5, // materialDiffuse from 272nd byte offset to 287th byte offset
-        materialDiffuse, 
-        0, 
+    queue.writeBuffer(buffer_uniform_teapot,
+        Float32Array.BYTES_PER_ELEMENT * 48 + Float32Array.BYTES_PER_ELEMENT * 20, // materialDiffuse from 272nd byte offset to 287th byte offset
+        materialDiffuse,
+        0,
         materialDiffuse.length);
-
-    queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 6, // materialSpecular from 288th byte offset to 303rd byte offset
-        materialSpecular, 
-        0, 
+    queue.writeBuffer(buffer_uniform_teapot,
+        Float32Array.BYTES_PER_ELEMENT * 48 + Float32Array.BYTES_PER_ELEMENT * 24, // materialSpecular from 288th byte offset to 303rd byte offset
+        materialSpecular,
+        0,
         materialSpecular.length);
-    
-    queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 7, // materialShininess from 304th byte offset to 319th byte offset
-        materialShininess, 
-        0, 
+    queue.writeBuffer(buffer_uniform_teapot,
+        Float32Array.BYTES_PER_ELEMENT * 48 + Float32Array.BYTES_PER_ELEMENT * 28, // materialShininess from 304th byte offset to 319th byte offset
+        materialShininess,
+        0,
         materialShininess.length);
-    
-    // 4: LKeyPressed
-    queue.writeBuffer(buffer_uniform,
-        Float32Array.BYTES_PER_ELEMENT * 16  * 3 + Float32Array.BYTES_PER_ELEMENT * 4 * 8, // lKeyPressed from 320th byte offset to 335th byte offset
-        lKeyPressed, 
-        0, 
-        lKeyPressed.length);
-
+    // 4: KeyPressed
+    queue.writeBuffer(buffer_uniform_teapot,
+        Float32Array.BYTES_PER_ELEMENT * 48 + Float32Array.BYTES_PER_ELEMENT * 32, // lKeyPressed from 320th byte offset to 335th byte offset
+        keyFlags,
+        0,
+        keyFlags.length);
+    // Cube transformation
+    const cubeModelMatrix = mat4.create();
+    const cubeMvpMatrix = mat4.create();
+    mat4.translate(cubeModelMatrix, cubeModelMatrix, [0.0,0.0,-5.0]);
+    mat4.rotateX(cubeModelMatrix, cubeModelMatrix, deg2rad(angleCube));
+    mat4.rotateY(cubeModelMatrix, cubeModelMatrix, deg2rad(angleCube));
+    mat4.rotateZ(cubeModelMatrix, cubeModelMatrix, deg2rad(angleCube));
+    mat4.multiply(cubeMvpMatrix, perspectiveProjectionMatrix, cubeModelMatrix);
+    // 1: Matrices for Model, View and Projection
+    queue.writeBuffer(buffer_uniform_cube,
+        0, // modelMatrix from 0th byte offset to 63rd byte offset
+        cubeMvpMatrix,
+        0,
+        cubeMvpMatrix.length);  
+    // Teapot render pass
+    const teapotColorAttachment = {
+        view: texture_teapot_color.createView(),
+        clearValue: clear_color_fbo,
+        loadOp: "clear",
+        storeOp: "store"
+    };
+    const teapotDepthAttachment = {
+        view: texture_teapot_depth.createView(),
+        depthClearValue: 1.0,
+        depthLoadOp: "clear",
+        depthStoreOp: "store",
+        stencilClearValue: 0,
+        stencilLoadOp: "clear",
+        stencilStoreOp: "store"
+    };
+    const teapotRenderPassDescriptor = {
+        colorAttachments: [teapotColorAttachment],
+        depthStencilAttachment: teapotDepthAttachment
+    };
     // Step 13 create render pass encoder to record commands for the GPU
-    const render_pass_encoder = command_encoder.beginRenderPass(render_pass_descriptor);
-
-    render_pass_encoder.setPipeline(render_pipeline);
-    render_pass_encoder.setViewport(0, 0, canvas.width, canvas.height, 0, 1);   // Viewport and scissor rect are same in WebGPU, so we can set viewport only do not have any GPU structure
-    render_pass_encoder.setScissorRect(0, 0, canvas.width, canvas.height);
-    render_pass_encoder.setBindGroup(0, bindingGroups_uniform);
-    render_pass_encoder.setVertexBuffer(0, buffer_position);
-    render_pass_encoder.setVertexBuffer(1, buffer_normals);
-    render_pass_encoder.setIndexBuffer(buffer_elements, "uint16"); // uint16 = 2 bytes per index, uint32 = 4 bytes per index
-    render_pass_encoder.drawIndexed(numIndices); // 3 vertices, 1 instance, first vertex = 0, first instance = 0
-
+    const teapot_render_pass_encoder = command_encoder.beginRenderPass(teapotRenderPassDescriptor);
+    teapot_render_pass_encoder.setPipeline(render_pipeline_teapot);
+    teapot_render_pass_encoder.setViewport(0, 0, FBO_WIDTH, FBO_HEIGHT, 0, 1);   // must be equal to teapot texture size
+    teapot_render_pass_encoder.setScissorRect(0, 0, FBO_WIDTH, FBO_HEIGHT);
+    teapot_render_pass_encoder.setBindGroup(0, bindgroup_uniform_teapot);
+    teapot_render_pass_encoder.setBindGroup(1, bindgroup_marble_texture_and_sampler);
+    teapot_render_pass_encoder.setVertexBuffer(0, buffer_teapot_position);
+    teapot_render_pass_encoder.setVertexBuffer(1, buffer_teapot_normals);
+    teapot_render_pass_encoder.setVertexBuffer(2, buffer_teapot_texcoords);
+    teapot_render_pass_encoder.setIndexBuffer(buffer_teapot_elements, "uint16"); // uint16 = 2 bytes per index, uint32 = 4 bytes per index
+    teapot_render_pass_encoder.drawIndexed(num_teapot_indices); // 3 vertices, 1 instance, first vertex = 0, first instance = 0
     // Step 14 end render pass
-    render_pass_encoder.end();    
-
+    teapot_render_pass_encoder.end();   
+    // Cube render pass
+    const cubeColorAttachment = {
+        view: context.getCurrentTexture().createView(),
+        clearValue: clear_color,
+        loadOp: "clear",
+        storeOp: "store"
+    };
+    const cubeDepthAttachment = {
+        view: depthTexture.createView(),
+        depthClearValue: 1.0,   // glsl: GL_DEPTH_BUFFER_BIT, Vulkan: VK_IMAGE_ASPECT_DEPTH_BIT, DirectX: D3D12_CLEAR_FLAG_DEPTH       
+        depthLoadOp: "clear",   // glsl: GL_CLEAR, Vulkan: VK_ATTACHMENT_LOAD_OP_CLEAR, DirectX: D3D12_CLEAR_FLAG_DEPTH
+        depthStoreOp: "store",
+        stencilClearValue: 0,   // glsl: GL_STENCIL_BUFFER_BIT, Vulkan: VK_IMAGE_ASPECT_STENCIL_BIT, DirectX: D3D12_CLEAR_FLAG_STENCIL
+        stencilLoadOp: "clear",
+        stencilStoreOp: "store"
+    };
+    const cubeRenderPassdescriptor = {
+        colorAttachments: [cubeColorAttachment],
+        depthStencilAttachment: cubeDepthAttachment
+    };
+    const cube_render_pass_encoder = command_encoder.beginRenderPass(cubeRenderPassdescriptor);
+    cube_render_pass_encoder.setPipeline(render_pipeline_cube);
+    cube_render_pass_encoder.setViewport(0,0,canvas.width, canvas.height, 0, 1); // must be equal to canvas
+    cube_render_pass_encoder.setScissorRect(0, 0, canvas.width, canvas.height);
+    cube_render_pass_encoder.setVertexBuffer(0, buffer_cube_position);
+    cube_render_pass_encoder.setVertexBuffer(1, buffer_cube_texcoords);
+    cube_render_pass_encoder.setBindGroup(0, bindgroup_uniform_cube);
+    cube_render_pass_encoder.setBindGroup(1, bindgroup_teapot_texture_and_sampler);
+    cube_render_pass_encoder.draw(36);
+    cube_render_pass_encoder.end();
     // Step 15 finish command encoder to get GPUCommandBuffer type
-    // there can be multiple commaand encoder/s and submit to the queue in one go, 
+    // there can be multiple commaand encoder/s and submit to the queue in one go,
     // but here we have only one command encoder
     queue.submit([command_encoder.finish()]);
-
     // Step 16 request to call draw() function again for next frame
     animation_frame_id = requestAnimationFrame(draw); // Analogus to image id in Vulkan, DirectX, OpenGL, WebGL
-
     update(); // Call update() function to update animation related variables for next frame
 }
-
 function update() {
     // Code
+    if(isTeapotAnimating)
+    {
+        angleTeapot = angleTeapot + 1.0;
+        if(angleTeapot >= 360.0)
+            angleTeapot = 0.0;
+    }
+    angleCube = angleCube + 1.0;
+    if(angleCube >= 360.0)
+        angleCube = 0.0;
 }
-
 function keyDown(event) {
     // Code
     switch(event.key){      // event.keyCode is deprecated, so using event.key instead and key is a string, so using string values instead of integer key codes
@@ -1265,16 +1281,28 @@ function keyDown(event) {
                 isLightingEnabled = true;
             else
                 isLightingEnabled = false;
-            break; 
+            break;
+        case "T":
+        case "t":
+            if(isTextureEnabled == false)
+                isTextureEnabled = true;
+            else
+                isTextureEnabled = false;
+            break;
+        case "A":
+        case "a":
+            if(isTeapotAnimating == false)
+                isTeapotAnimating = true;
+            else
+                isTeapotAnimating = false;
+            break;
         default:
-            break; 
+            break;
     }
 }
-
 function mouseDown() {
     // Code
 }
-
 function uninitialize() {
     // Code
     // Step 17 Use animation_frame_id for safe cancellation of the animation frame request if it is not null
@@ -1283,195 +1311,129 @@ function uninitialize() {
         cancelAnimationFrame(animation_frame_id);
         animation_frame_id = null;
     }
-
+    if(texture_teapot_color != null)
+    {
+        texture_teapot_color.destroy();
+        texture_teapot_color = null;
+    }
+    if(texture_teapot_depth != null)
+    {
+        texture_teapot_depth.destroy();
+        texture_teapot_depth = null;
+    }
+    if(texture_marble != null)
+    {
+        texture_marble.destroy();
+        texture_marble = null;
+    }
     // Destroy the depth texture
     if(null != depthTexture)
     {
         depthTexture.destroy();
         depthTexture = null;
     }
-
     // Step 18 Unconfigure & Destroy the context
     if(null != context)
     {
         context.unconfigure();
         context = null;
     }
-
     // Step 19 Destroy the device
     if(null != device)
     {
         device = null;
         queue = null;
         canvas_format = null;
-
-        buffer_position = null;
-        buffer_normals = null;
-        buffer_texcoords = null;
-        buffer_elements = null;
-
-        render_pipeline = null;
-        buffer_uniform = null;
-        bindingGroups_uniform = null;        
+        buffer_teapot_position = null;
+        buffer_teapot_normals = null;
+        buffer_teapot_texcoords = null;
+        buffer_teapot_elements = null;
+        render_pipeline_teapot = null;
+        buffer_uniform_teapot = null;
+        bindgroup_uniform_teapot = null;
+        bindgroup_teapot_texture_and_sampler = null;
+        buffer_cube_position = null;
+        buffer_cube_normals = null;
+        buffer_cube_texcoords = null;
+        render_pipeline_cube = null;
+        buffer_uniform_cube = null;
+        bindgroup_uniform_cube = null;
+        bindgroup_marble_texture_and_sampler = null;
+        num_teapot_indices = 0;
     }
-
     sphere = null;
     perspectiveProjectionMatrix = null;
-
     console.log("WebGPU uninitialization done successfully\n");
-}   
-
+}  
 // User defined functions
 function createBindGroupLayoutForUniform(_bindingIndex, _shaderStageVisibility, _uniformType) {
-
     // Code
-
     const bindGroupLayoutEntry = {
-
         binding: _bindingIndex,
-
         visibility: _shaderStageVisibility,
-
         buffer: {
-
             type: _uniformType
-
         }
-
     };
-
- 
-
     const bindgroupLayoutDescriptor = {
-
         entries: [bindGroupLayoutEntry]
-
     };
-
- 
-
     const bindGroupLayout = device.createBindGroupLayout(bindgroupLayoutDescriptor);
-
     if(bindGroupLayout == null)
-
     {
-
         console.log("createBindGroupLayoutForUniform() Creating bind group layout failed\n");
-
         throw new Error("createBindGroupLayoutForUniform() Creating bind group layout failed\n");
-
         return null;
-
     }
-
-   
-
     return bindGroupLayout;
-
 }
-
- 
-
 function createUniformBuffer(_uniformBufferSize, _uniformBufferUsage)
-
 {
-
     // Code
-
     const bufferDescriptor = {
-
         size: _uniformBufferSize,
-
         usage: _uniformBufferUsage
-
     };
-
- 
-
     const uniformBuffer = device.createBuffer(bufferDescriptor);
-
     if(uniformBuffer == null)
-
     {
-
         console.log("createUniformBuffer() Creating uniform buffer failed\n");
-
         throw new Error("createUniformBuffer() Creating uniform buffer failed\n");
-
         return null;
-
     }
-
- 
-
     return uniformBuffer;
-
 }
-
- 
-
 function createBindGroupForUniform(_uniformBuffer, _uniformBufferOffset, _uniformBufferSize, _bindingIndex, _bindGroupLayout)
-
 {
-
     // Code
-
     const bufferBinding = {
-
         buffer: _uniformBuffer,
-
         offset: _uniformBufferOffset,
-
         size: _uniformBufferSize
-
     };
-
- 
-
     const bindGroupEntry = {
-
         binding: _bindingIndex,
-
         resource: bufferBinding
-
     };
-
- 
-
     const bindGroupDescriptor = {
-
         layout: _bindGroupLayout,
-
         entries: [bindGroupEntry]
-
     };
-
- 
-
     const bindGroup = device.createBindGroup(bindGroupDescriptor);
-
     if(bindGroup == null)
-
     {
-
         console.log("createBindGroupForUniform() Creating bind group failed\n");
-
         throw new Error("createBindGroupForUniform() Creating bind group failed\n");
-
         return null;
-
     }
- 
     return bindGroup;
 }
-
 // 3 UDF for texture and sampler bind group layout and bind group creation
 async function loadTexture(_imageFileName) {
     // Code
-    const image = new Image(); 
+    const image = new Image();
     image.src = _imageFileName;
     await image.decode(); // Wait for the image to be decoded
-
     const imageBitmap = await createImageBitmap(image);
     if(imageBitmap == null)
     {
@@ -1496,7 +1458,6 @@ async function loadTexture(_imageFileName) {
         throw new Error("loadTexture() Creating GPUTextureDescriptor failed\n");
         return null;
     }
-
     const _texture = device.createTexture(textureDescriptor);
     if(_texture == null)
     {
@@ -1504,30 +1465,25 @@ async function loadTexture(_imageFileName) {
         throw new Error("loadTexture() Creating createTexture() failed\n");
         return null;
     }
-
     // Copy the image bitmap to the GPU texture
     const copySource = {
         source : imageBitmap
     };
-
     const copyDestination = {
         texture: _texture,
         mipLevel: 0
     };
-
     queue.copyExternalImageToTexture(copySource, copyDestination, textureDescriptor.size);
-
     return _texture;
 }
-
 function createBindGroupLayoutForTextureAndSampler(
     _textureSampleType,
-     _textureViewDimension, 
-     _isTextureMultisampled, 
-     _textureBindingIndex, 
-     _textureShaderStageVisibility, 
+     _textureViewDimension,
+     _isTextureMultisampled,
+     _textureBindingIndex,
+     _textureShaderStageVisibility,
      _filtering,
-     _samplerBindingIndex, 
+     _samplerBindingIndex,
      _samplerShaderStageVisibility) {
         // Code
         // Create binding layout
@@ -1536,73 +1492,58 @@ function createBindGroupLayoutForTextureAndSampler(
             viewDimension: _textureViewDimension,
             multisampled: _isTextureMultisampled
         };
-
         // create bind group layout entry
         const bindGroupLayoutEntry_texture = {
             binding: _textureBindingIndex,
             visibility: _textureShaderStageVisibility,
             texture: bindingLayout_texture
         };
-
         // Create binding layout for the sampler
         const bindingLayout_sampler = {
             type: _filtering
         };
-
         // create bind group layout entry for the sampler
         const bindGroupLayoutEntry_sampler = {
             binding: _samplerBindingIndex,
             visibility: _samplerShaderStageVisibility,
             sampler: bindingLayout_sampler
         };
-
         // Create the bind group layout descriptor
         const bindGroupLayoutDescriptor = {
             entries: [bindGroupLayoutEntry_texture, bindGroupLayoutEntry_sampler]
         };
-
         // Create the bind group layout
         const bindGroupLayout = device.createBindGroupLayout(bindGroupLayoutDescriptor);
-
         if(bindGroupLayout == null) {
             console.log("createBindGroupLayoutForTextureAndSampler() Creating bind group layout failed\n");
             throw new Error("createBindGroupLayoutForTextureAndSampler() Creating bind group layout failed\n");
             return null;
         }
-
         return bindGroupLayout;
 }
-
 function createBindGroupForTextureAndSampler(_textureBindingIndex, _texture, _samplerBindingIndex, _sampler, _bindGroupLayout) {
-
     // Code
     // Create the bind group entry for the texture
     const bindGroupEntry_texture = {
         binding: _textureBindingIndex,
         resource: _texture.createView()
     };
-
     // Create the bind group entry for the sampler
     const bindGroupEntry_sampler = {
         binding: _samplerBindingIndex,
         resource: _sampler
     };
-
     // Create the bind group descriptor
     const bindGroupDescriptor = {
         layout: _bindGroupLayout,
         entries: [bindGroupEntry_texture, bindGroupEntry_sampler]
     };
-
     // Create the bind group
     const bindGroup = device.createBindGroup(bindGroupDescriptor);
-
     if(bindGroup == null) {
         console.log("createBindGroupForTextureAndSampler() Creating bind group failed\n");
         throw new Error("createBindGroupForTextureAndSampler() Creating bind group failed\n");
         return null;
     }
-
     return bindGroup;
 }
-
