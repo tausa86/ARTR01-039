@@ -13,12 +13,12 @@ let canvas_format = null;
 let animation_frame_id = null;
 
 let buffer_position_pyramid = null;
-let buffer_position_cube = null;
+
 let buffer_mvpUniform_pyramid = null;
-let buffer_mvpUniform_cube = null;
+
 let render_pipeline = null;
 let bindingGroups_mvpUniform_pyramid = null;
-let bindingGroups_mvpUniform_cube = null;
+
 let perspectiveProjectionMatrix = null;
 let depthTexture = null;
 
@@ -124,12 +124,12 @@ function onDeviceLost(info) {
     animation_frame_id = null;
 
     buffer_position_pyramid = null;
-    buffer_position_cube = null;
+    
     render_pipeline = null;
     buffer_mvpUniform_pyramid = null;
-    buffer_mvpUniform_cube = null;
+    
     bindingGroups_mvpUniform_pyramid = null;
-    bindingGroups_mvpUniform_cube = null;
+    
     perspectiveProjectionMatrix = null;
     depthTexture = null;
 }
@@ -303,28 +303,6 @@ function initialize() {
         0.0, 1.0, 0.0, 1.0, -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0
     ]);
 
-    // Cube vertices (6 faces, 36 vertices)
-    const vertex_position_cube = new Float32Array([
-        // Front face
-        1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0,
-        -1.0, -1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-        // Back face
-        1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0, -1.0, -1.0, 1.0,
-        -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, 1.0, 1.0, -1.0, 1.0,
-        // Left face
-        -1.0, 1.0, 1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, -1.0, 1.0,
-        -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0,
-        // Right face
-        1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0,
-        1.0, -1.0, -1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-        // Top face
-        1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0,
-        -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-        // Bottom face
-        1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, 1.0,
-        -1.0, -1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0
-    ]);
-
     // Bind group layout enter GPUBindGroupLayoutEntry type is common for both pyramid and cube, so we can use same bind group layout for both
     const bindGroupLayout_mvpUniform = createBindGroupLayoutForUniform(0, GPUShaderStage.VERTEX, "uniform");
 
@@ -353,28 +331,6 @@ function initialize() {
 
     // create bind group for mvp uniform for pyramid
     bindingGroups_mvpUniform_pyramid = createBindGroupForUniform(buffer_mvpUniform_pyramid, 0, mvpUniformBufferSize, 0, bindGroupLayout_mvpUniform);
-
-    // cube position buffer
-    const bufferDescriptor_position_cube = {
-        size: vertex_position_cube.byteLength,
-        usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
-    };
-    buffer_position_cube = device.createBuffer(bufferDescriptor_position_cube);
-
-    if(buffer_position_cube == null)
-    {
-        console.log("initialize() Creating GPU buffer for vertex positions cube failed\n");
-        throw new Error("initialize() Creating GPU buffer for vertex positions cube failed\n");
-        return;
-    }
-
-    // Copy the vertex positions data to the GPU buffer
-    queue.writeBuffer(buffer_position_cube, 0, vertex_position_cube, 0, vertex_position_cube.length);
-    console.log("initialize() Creating GPU buffer for vertex positions cube successfully done\n");
-
-    buffer_mvpUniform_cube = createUniformBuffer(mvpUniformBufferSize, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST);
-    // create bind group for mvp uniform for cube
-    bindingGroups_mvpUniform_cube = createBindGroupForUniform(buffer_mvpUniform_cube, 0, mvpUniformBufferSize, 0, bindGroupLayout_mvpUniform);
 
     // Create GPUPipelineLayoutDescriptor type
     const pipelineLayoutDescriptor = {
@@ -638,7 +594,7 @@ function draw() {
     // pyramid
     var mvpMatrix = mat4.create();
     var modelViewMatrix = mat4.create();
-    mat4.translate(modelViewMatrix, modelViewMatrix, [-1.5, 0.0, -7.0]);
+    mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -7.0]);
     mat4.rotateY(modelViewMatrix, modelViewMatrix, deg2rad(angle_pyramid));
     mat4.multiply(mvpMatrix, perspectiveProjectionMatrix, modelViewMatrix);
     queue.writeBuffer(buffer_mvpUniform_pyramid, 0, mvpMatrix, 0, mvpMatrix.length);
@@ -646,19 +602,6 @@ function draw() {
     render_pass_encoder.setBindGroup(0, bindingGroups_mvpUniform_pyramid);
     render_pass_encoder.draw(12); // 3 vertices, 1 instance, first vertex = 0, first instance = 0 draw(3, 1, 0, 0) analogus to glDrawArrays(GL_pyramidS, 0, 3) in OpenGL
 
-    // cube
-    mvpMatrix = mat4.create();
-    modelViewMatrix = mat4.create();
-    mat4.translate(modelViewMatrix, modelViewMatrix, [1.5, 0.0, -7.0]);
-    mat4.rotateX(modelViewMatrix, modelViewMatrix, deg2rad(angle_pyramid));
-    mat4.rotateY(modelViewMatrix, modelViewMatrix, deg2rad(angle_pyramid));
-    mat4.rotateZ(modelViewMatrix, modelViewMatrix, deg2rad(angle_pyramid));
-    mat4.multiply(mvpMatrix, perspectiveProjectionMatrix, modelViewMatrix);
-    queue.writeBuffer(buffer_mvpUniform_cube, 0, mvpMatrix, 0, mvpMatrix.length);
-    render_pass_encoder.setVertexBuffer(0, buffer_position_cube);
-    render_pass_encoder.setBindGroup(0, bindingGroups_mvpUniform_cube);
-    render_pass_encoder.draw(36); // 6 vertices, 1 instance, first vertex = 0, first instance = 0 draw(6, 1, 0, 0) analogus to glDrawArrays(GL_pyramidS, 0, 6) in OpenGL
-    
     // Step 14 end render pass
     render_pass_encoder.end();    
 
@@ -735,12 +678,12 @@ function uninitialize() {
         device = null;
         queue = null;
         canvas_format = null;
-        buffer_position_cube = null;
+        
         buffer_position_pyramid = null;
         render_pipeline = null;
-        buffer_mvpUniform_cube = null;
+        
         buffer_mvpUniform_pyramid = null;
-        bindingGroups_mvpUniform_cube = null;
+        
         bindingGroups_mvpUniform_pyramid = null;
     }
 
