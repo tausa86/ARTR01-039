@@ -1,15 +1,9 @@
 // Global variables
-
 var canvas = null;
-
 var canvas_original_width;
-
 var canvas_original_height;
-
 var bFullScreen = false;
-
  
-
 // Web GPU related variables
 var clear_color;
 let device = null;
