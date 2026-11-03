@@ -323,78 +323,6 @@ WinMain() -> Log file created successfully
 [INFO] TsInitialize() -> TsBuildCommandBuffers() succeeded at 851 
 [INFO] TsInitialize() -> Initialization completed successfully at 858 
 [INFO] Winmain() TsInitialize() succeeded
-[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3423
-[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3455
-[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> vkSurfaceFormatKHR_array freed successfully vkFormat_color: 44 and vkColorSpaceKHR: 0
-[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 3693 
-[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 3723 
-[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 1536 x 864 maxImageCount = 8 and minImageCount = 2 at 3767
-[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3555
-[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3587
-[INFO] TsGetPhysicalDevicePresentMode() -> vkPresentModeKHR_array freed successfully vkPresentModeKHR: 1 
-[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 3832 
-[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 3896 
-[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 3933 
-[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 3952 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 4034 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 4034 
-[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 4204
-[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 4050 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 4081 
-[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 4129 
-[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4141 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4170 
-[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 7378 
-[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 7063
-[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 7593
-[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 7645
-[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 7653
-[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 7714 
-[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 7714 
-[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4329 
-[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4329 
-[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 7908 
-[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 7926 
-[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 8031 
-[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 7908 
-[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 7926 
-[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 8031 
-[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> First call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3423
-[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> Second call to vkGetPhysicalDeviceSurfaceFormatsKHR() succeeded at 3455
-[INFO] TsGetPhysicalDeviceSurfaceFormatAndColorSpace() -> vkSurfaceFormatKHR_array freed successfully vkFormat_color: 44 and vkColorSpaceKHR: 0
-[INFO] TsCreateSwapchain() -> TsGetPhysicalDeviceSurfaceFormatAndColorSpace() succeeded at 3693 
-[INFO] TsCreateSwapchain() -> vkGetPhysicalDeviceSurfaceCapabilitiesKHR() succeeded at 3723 
-[INFO] TsCreateSwapchain() -> Swapchain Image width x height = 784 x 561 maxImageCount = 8 and minImageCount = 2 at 3767
-[INFO] TsGetPhysicalDevicePresentMode() -> First call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3555
-[INFO] TsGetPhysicalDevicePresentMode() -> Second call to vkGetPhysicalDeviceSurfacePresentModesKHR() succeeded at 3587
-[INFO] TsGetPhysicalDevicePresentMode() -> vkPresentModeKHR_array freed successfully vkPresentModeKHR: 1 
-[INFO] TsCreateSwapchain() -> TsGetPhysicalDevicePresentMode() succeeded at 3832 
-[INFO] TsCreateSwapchain() -> vkCreateSwapchainKHR() succeeded at 3896 
-[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() first call with swapchain desired image count: 2 succeeded at 3933 
-[INFO] TsCreateImagesAndImageViews() -> vkGetSwapchainImagesKHR() second call succeeded at 3952 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:0 succeeded at 4034 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for iteration:1 succeeded at 4034 
-[INFO] TsGetSupportedDepthFormat() -> Supported depth format found: 130 at 4204
-[INFO] TsCreateImagesAndImageViews() -> TsGetSupportedDepthFormat() succeeded at 4050 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImage() for depth image succeeded at 4081 
-[INFO] TsCreateImagesAndImageViews() -> vkAllocateMemory() succeeded at 4129 
-[INFO] TsCreateImagesAndImageViews() -> vkBindImageMemory() succeeded at 4141 
-[INFO] TsCreateImagesAndImageViews() -> vkCreateImageView() for depth image succeeded at 4170 
-[INFO] TsCreateRenderPass() -> vkCreateRenderPass() succeeded at 7378 
-[INFO] TsCreatePipelineLayout() -> vkCreatePipelineLayoutg() Succeeded at 7063
-[INFO] TsCreatePipeline() -> vkCreatePipelineCache() Succeeded at 7593
-[INFO] TsCreatePipeline() -> vkCreateGraphicsPipelines() Succeeded at 7645
-[INFO] TsCreatePipeline() -> vkDestroyPipelineCache() Succeeded at 7653
-[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 0 index at 7714 
-[INFO] TsCreateFrameBuffers() -> vkCreateFramebuffer() succeeded  for 1 index at 7714 
-[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:0 succeeded at 4329 
-[INFO] TsCreateCommandBuffers() -> vkAllocateCommandBuffers() for iteration:1 succeeded at 4329 
-[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 0 index at 7908 
-[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 0 index at 7926 
-[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 0 index at 8031 
-[INFO] TsBuildCommandBuffers() -> vkResetCommandBuffer() succeeded for 1 index at 7908 
-[INFO] TsBuildCommandBuffers() -> vkBeginCommandBuffer() succeeded for 1 index at 7926 
-[INFO] TsBuildCommandBuffers() -> vkEndCommandBuffer() succeeded for 1 index at 8031 
 [INFO] TsUninitialize() -> vkDeviceWaitIdle() is done
 [INFO] TsUninitialize() -> vkDestroyFence() is successfully done for 0 index
 [INFO] TsUninitialize() -> vkDestroyFence() is successfully done for 1 index
@@ -441,9 +369,9 @@ WinMain() -> Log file created successfully
 [INFO] TsUninitialize() -> swapchainImageView_array is successfully destroyed
 [INFO] TsUninitialize() -> swapchainImage_array is successfully destroyed
 [INFO] TsUninitialize() -> vkDestroySwapchainKHR() is successfully done
-[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkDestroyDevice(): Object Tracking - For VkDevice 0x1f2002306a8, VkImageView 0x1e000000001e has not been destroyed.
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkDestroyDevice(): Object Tracking - For VkDevice 0x1b8e89fc3f8, VkImageView 0x1e000000001e has not been destroyed.
 The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
-[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkDestroyDevice(): Object Tracking - For VkDevice 0x1f2002306a8, VkImageView 0x180000000018 has not been destroyed.
+[TS_VALIDATION]: debugReportCallback() -> Validation (0) = vkDestroyDevice(): Object Tracking - For VkDevice 0x1b8e89fc3f8, VkImageView 0x180000000018 has not been destroyed.
 The Vulkan spec states: All child objects created on device that can be destroyed or freed must have been destroyed or freed prior to destroying device (https://vulkan.lunarg.com/doc/view/1.4.313.2/windows/antora/spec/latest/chapters/devsandqueues.html#VUID-vkDestroyDevice-device-05137)
 [INFO] TsUninitialize() -> vkDestroyDevice() is successfully done
 [INFO] TsUninitialize() -> vkDestroySurfaceKHR() successfully done
